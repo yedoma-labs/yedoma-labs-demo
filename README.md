@@ -7,6 +7,10 @@
 
 Comprehensive demo showcasing Yedoma Labs' TypeScript ecosystem for building type-safe, production-ready Next.js applications.
 
+## 🌐 Live Demo
+
+**[yedoma-labs-demo.vercel.app](https://yedoma-labs-demo.vercel.app)**
+
 ## 🎯 What's Inside
 
 This demo showcases **six** Yedoma Labs packages working together:
@@ -291,7 +295,8 @@ const handleSubmit = useFormSubmit(
 
 ## 📖 Documentation
 
-- **Main Demo:** Browse pages at http://localhost:3000
+- **Live Demo:** [yedoma-labs-demo.vercel.app](https://yedoma-labs-demo.vercel.app)
+- **Local:** Browse pages at http://localhost:3000
 - **Library Comparison:** Visit `/comparison` page
 
 ## 🧪 Examples
