@@ -1,6 +1,10 @@
 'use server'
 
 import { createLogger } from '@yedoma-labs/suruk-logger'
+// dist/index.d.ts is absent from the published package; context exports live in dist/src but types resolve correctly at runtime
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { runWithContext, getContext, setContextValue, bindRequestContext } from '@yedoma-labs/suruk-logger'
 import { logger, actionLogger } from '@/lib/logger'
 
 // Test 1: Log Levels
@@ -371,6 +375,58 @@ export async function testAsyncLogging(): Promise<string> {
   output += '- Non-blocking I/O\n'
   output += '- High throughput\n'
   output += '- No backpressure on application\n'
-  
+
+  return output
+}
+
+// Test 8: Request Context
+export async function testRequestContext(): Promise<string> {
+  let output = '=== Testing Request Context ===\n\n'
+
+  // Demo 1: runWithContext — scoped context for the duration of a function
+  const capturedCtx = runWithContext(
+    { requestId: 'req-abc123', userId: 'user-456', ip: '127.0.0.1' },
+    () => {
+      const ctx = getContext()
+      logger.info('Request handler started', { endpoint: '/api/users' })
+      setContextValue('step', 'validation')
+      logger.info('Input validation complete')
+      setContextValue('step', 'db-query')
+      logger.info('Database query executed', { rows: 42, duration: 18 })
+      setContextValue('step', 'response')
+      logger.info('Response sent', { statusCode: 200 })
+      return ctx
+    }
+  )
+  output += '✅ runWithContext: scoped context for the whole handler\n'
+  output += `   Context at start: ${JSON.stringify(capturedCtx)}\n\n`
+
+  // Demo 2: bindRequestContext — attach request metadata to async context
+  runWithContext({}, () => {
+    bindRequestContext('req-xyz789', { userId: 'user-999', route: '/api/orders' })
+    const bound = getContext()
+    logger.info('Order processing started', { orderId: 'ord-001' })
+    logger.info('Inventory check passed', { sku: 'PROD-42', stock: 8 })
+    output += '✅ bindRequestContext: requestId + fields on current async context\n'
+    output += `   Bound context: ${JSON.stringify(bound)}\n\n`
+  })
+
+  // Demo 3: setContextValue — mutate individual keys mid-request
+  runWithContext({ requestId: 'req-pipeline', phase: 'init' }, () => {
+    logger.info('Pipeline starting')
+    setContextValue('phase', 'fetch')
+    logger.info('Fetching upstream data')
+    setContextValue('phase', 'transform')
+    logger.info('Transforming records', { count: 1024 })
+    setContextValue('phase', 'persist')
+    logger.info('Writing to store')
+    setContextValue('phase', 'complete')
+    logger.info('Pipeline finished', { duration: 347 })
+  })
+  output += '✅ setContextValue: evolve specific keys as request progresses\n\n'
+
+  output += '💡 All logs above carry full context in your terminal!\n'
+  output += 'Context propagates automatically through async boundaries — no prop drilling.\n'
+
   return output
 }

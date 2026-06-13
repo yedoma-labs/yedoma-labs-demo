@@ -10,6 +10,7 @@ import {
   testRedaction,
   testPerformance,
   testAsyncLogging,
+  testRequestContext,
 } from './actions'
 import { formLogger, clientLogger } from '@/lib/clientLogger'
 
@@ -56,6 +57,7 @@ export default function LoggingPage() {
     { label: '❌ Error Logging',      desc: 'Auto error serialisation with stack traces and context',        fn: testErrorLogging,      name: 'Error Logging',          gradient: 'linear-gradient(135deg,#78350f,#f59e0b)' },
     { label: '🌐 Client Logging',     desc: 'Same API client-side — check your DevTools Console',           fn: null,                  name: 'Client Logging',         gradient: 'linear-gradient(135deg,#1e1b4b,#6366f1)' },
     { label: '⚡ Async Logging',      desc: 'Non-blocking high-throughput logging for heavy workloads',      fn: testAsyncLogging,      name: 'Async Logging',          gradient: 'linear-gradient(135deg,#831843,#ec4899)' },
+    { label: '🔗 Request Context',    desc: 'runWithContext, bindRequestContext, setContextValue — async context propagation', fn: testRequestContext, name: 'Request Context', gradient: 'linear-gradient(135deg,#0c4a6e,#0ea5e9)' },
   ] as const
 
   return (

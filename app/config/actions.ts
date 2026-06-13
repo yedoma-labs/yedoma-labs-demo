@@ -2,6 +2,7 @@
 
 import { config } from '@/lib/config.server'
 import { env } from '@/env'
+import { eg, generateMarkdownDocs, generateEnvExample } from '@yedoma-labs/bylyt-env-guard'
 
 export async function loadConfig() {
   'use server'
@@ -42,6 +43,28 @@ export async function loadConfig() {
       },
     },
   }
+}
+
+export async function generateSchemaDocs(): Promise<{ markdown: string; envExample: string }> {
+  'use server'
+
+  const schema = {
+    NODE_ENV:            eg.enum(['development', 'staging', 'production'] as const).default('development'),
+    PORT:                eg.number().default(3000),
+    NEXT_PUBLIC_API_URL: eg.url().default('http://localhost:3000/api'),
+    DATABASE_URL:        eg.string(),
+    REDIS_URL:           eg.string(),
+    SECRET_KEY:          eg.string(),
+    DEMO_MODE:           eg.boolean().default(true),
+    MAX_UPLOAD_MB:       eg.number().default(10),
+    LOG_LEVEL:           eg.enum(['debug', 'info', 'warn', 'error'] as const).default('info'),
+    API_KEY:             eg.string(),
+  }
+
+  const markdown = generateMarkdownDocs(schema)
+  const envExample = generateEnvExample(schema)
+
+  return { markdown, envExample }
 }
 
 export async function checkEnvHealth() {

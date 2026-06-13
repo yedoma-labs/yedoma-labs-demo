@@ -1,12 +1,16 @@
 'use client'
 
 import { useServerAction } from '@yedoma-labs/sir-forms'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   computed,
   crossTabSync,
   createSnapshots,
   createOptimisticUpdates,
+  createStore,
+  createHistoryBranching,
+  createBatcher,
+  subscribeToField,
 } from '@yedoma-labs/ichchi-state'
 import { formStore, useFormState } from '@/lib/formStore'
 import { incrementLikes, addTodoOptimistic } from './actions'
@@ -240,6 +244,273 @@ function OptimisticTodoList() {
   )
 }
 
+// ─── New Showcase Components ─────────────────────────────────────────────────
+
+function HistoryBranchingDemo() {
+  const [count, setCount] = useState(0)
+  const [branches, setBranches] = useState<string[]>(['main'])
+  const [currentBranch, setCurrentBranch] = useState('main')
+  const [tree, setTree] = useState('')
+  const [newBranchName, setNewBranchName] = useState('')
+  const storeRef = useRef<ReturnType<typeof createStore<{ count: number }>> | null>(null)
+  const branchingRef = useRef<ReturnType<typeof createHistoryBranching> | null>(null)
+
+  useEffect(() => {
+    const store = createStore({ count: 0 })
+    const branching = createHistoryBranching(store)
+    storeRef.current = store
+    branchingRef.current = branching
+    const refresh = () => {
+      setCount(store.getState().count)
+      setBranches(branching.getBranches().map((b: any) => b.name))
+      setCurrentBranch(branching.getCurrentBranch())
+      setTree(branching.visualize())
+    }
+    const unsub = store.subscribe(refresh)
+    refresh()
+    return () => { unsub(); branching.destroy() }
+  }, [])
+
+  const inc = () => storeRef.current?.setState((s: any) => ({ count: s.count + 1 }))
+  const dec = () => storeRef.current?.setState((s: any) => ({ count: s.count - 1 }))
+  const back = () => { branchingRef.current?.back(); setCount(storeRef.current?.getState().count ?? 0); setTree(branchingRef.current?.visualize() ?? '') }
+  const fwd = () => { branchingRef.current?.forward(); setCount(storeRef.current?.getState().count ?? 0); setTree(branchingRef.current?.visualize() ?? '') }
+  const branch = () => {
+    const name = newBranchName.trim() || `branch-${Date.now().toString(36)}`
+    branchingRef.current?.createBranch(name)
+    branchingRef.current?.checkout(name)
+    setNewBranchName('')
+    setBranches(branchingRef.current?.getBranches().map((b: any) => b.name) ?? [])
+    setCurrentBranch(branchingRef.current?.getCurrentBranch() ?? 'main')
+    setTree(branchingRef.current?.visualize() ?? '')
+    setCount(storeRef.current?.getState().count ?? 0)
+  }
+
+  return (
+    <div style={{ background:'#0a0f1e',borderRadius:'12px',padding:'1.5rem',border:'1px solid #1e293b' }}>
+      <div style={{ display:'inline-flex',alignItems:'center',gap:'0.5rem',background:'rgba(99,102,241,0.12)',border:'1px solid rgba(99,102,241,0.3)',padding:'0.25rem 0.65rem',borderRadius:'2rem',marginBottom:'0.75rem' }}>
+        <span style={{ color:'#818cf8',fontSize:'0.7rem',fontWeight:700 }}>createHistoryBranching()</span>
+      </div>
+      <h3 style={{ color:'#e2e8f0',marginBottom:'0.4rem',fontSize:'1rem',fontWeight:700 }}>🌿 Git-like State History</h3>
+      <p style={{ color:'#64748b',fontSize:'0.78rem',marginBottom:'1rem',lineHeight:1.5 }}>
+        Branch, checkout, and time-travel through state — just like git.
+      </p>
+      <div style={{ display:'flex',alignItems:'center',gap:'0.6rem',marginBottom:'1rem',flexWrap:'wrap' }}>
+        <button type="button" onClick={dec} style={{ width:32,height:32,background:'rgba(239,68,68,0.15)',border:'1px solid rgba(239,68,68,0.3)',borderRadius:'7px',color:'#ef4444',fontSize:'1rem',fontWeight:900,cursor:'pointer' }}>−</button>
+        <span style={{ color:'#e2e8f0',fontSize:'1.6rem',fontWeight:900,fontFamily:'monospace',minWidth:36,textAlign:'center' }}>{count}</span>
+        <button type="button" onClick={inc} style={{ width:32,height:32,background:'rgba(16,185,129,0.15)',border:'1px solid rgba(16,185,129,0.3)',borderRadius:'7px',color:'#10b981',fontSize:'1rem',fontWeight:900,cursor:'pointer' }}>+</button>
+        <div style={{ width:1,height:20,background:'#1e293b',margin:'0 0.1rem' }} />
+        <button type="button" onClick={back} style={{ padding:'0.25rem 0.6rem',background:'rgba(99,102,241,0.12)',border:'1px solid rgba(99,102,241,0.3)',borderRadius:'5px',color:'#818cf8',fontSize:'0.72rem',cursor:'pointer' }}>← back</button>
+        <button type="button" onClick={fwd} style={{ padding:'0.25rem 0.6rem',background:'rgba(99,102,241,0.12)',border:'1px solid rgba(99,102,241,0.3)',borderRadius:'5px',color:'#818cf8',fontSize:'0.72rem',cursor:'pointer' }}>fwd →</button>
+      </div>
+      <div style={{ display:'flex',gap:'0.4rem',marginBottom:'0.75rem' }}>
+        <input type="text" value={newBranchName} onChange={e => setNewBranchName(e.target.value)} placeholder="branch name…"
+          onKeyDown={e => e.key === 'Enter' && branch()}
+          style={{ flex:1,padding:'0.35rem 0.55rem',background:'#1e293b',border:'1px solid #334155',borderRadius:'6px',color:'#e2e8f0',fontSize:'0.75rem' }} />
+        <button type="button" onClick={branch} style={{ padding:'0.35rem 0.75rem',background:'linear-gradient(135deg,#3730a3,#6366f1)',color:'white',border:'none',borderRadius:'6px',fontSize:'0.75rem',fontWeight:700,cursor:'pointer',flexShrink:0 }}>Branch</button>
+      </div>
+      <div style={{ display:'flex',gap:'0.35rem',flexWrap:'wrap',marginBottom:'0.75rem' }}>
+        {branches.map(br => (
+          <button key={br} type="button"
+            onClick={() => { branchingRef.current?.checkout(br); setCurrentBranch(br); setCount(storeRef.current?.getState().count ?? 0); setTree(branchingRef.current?.visualize() ?? '') }}
+            style={{ padding:'0.2rem 0.6rem',borderRadius:'5px',fontSize:'0.68rem',fontWeight:700,cursor:'pointer',
+              background: br === currentBranch ? 'rgba(99,102,241,0.25)' : 'rgba(30,41,59,0.8)',
+              border: br === currentBranch ? '1px solid #6366f1' : '1px solid #334155',
+              color: br === currentBranch ? '#818cf8' : '#64748b' }}
+          >{br === currentBranch ? '● ' : ''}{br}</button>
+        ))}
+      </div>
+      {tree && (
+        <pre style={{ background:'#020817',borderRadius:'8px',padding:'0.75rem',fontSize:'0.68rem',color:'#10b981',fontFamily:'monospace',margin:0,lineHeight:1.5,maxHeight:130,overflowY:'auto' }}>{tree}</pre>
+      )}
+    </div>
+  )
+}
+
+function FieldSubscriptionDemo() {
+  type FState = { name: string; score: number; active: boolean }
+  const storeRef = useRef<ReturnType<typeof createStore<FState>> | null>(null)
+  const [values, setValues] = useState<FState>({ name: '', score: 0, active: false })
+  const [log, setLog] = useState<{ field: string; value: string; ts: string }[]>([])
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    const store = createStore<FState>({ name: '', score: 0, active: false })
+    storeRef.current = store
+    setMounted(true)
+    const addLog = (field: string, value: unknown) =>
+      setLog(l => [{ field, value: String(value), ts: new Date().toLocaleTimeString() }, ...l].slice(0, 10))
+
+    const u1 = subscribeToField(store, 'name', (v: string) => { addLog('name', v); setValues(s => ({ ...s, name: v })) })
+    const u2 = subscribeToField(store, 'score', (v: number) => { addLog('score', v); setValues(s => ({ ...s, score: v })) })
+    const u3 = subscribeToField(store, 'active', (v: boolean) => { addLog('active', v); setValues(s => ({ ...s, active: v })) })
+    return () => { u1(); u2(); u3() }
+  }, [])
+
+  const set = (patch: Partial<FState>) => storeRef.current?.setState((s: FState) => ({ ...s, ...patch }))
+
+  const fieldColors: Record<string, string> = { name: '#a78bfa', score: '#34d399', active: '#fb923c' }
+
+  return (
+    <div style={{ background:'#0a0f1e',borderRadius:'12px',padding:'1.5rem',border:'1px solid #1e293b' }}>
+      <div style={{ display:'inline-flex',alignItems:'center',gap:'0.5rem',background:'rgba(6,182,212,0.12)',border:'1px solid rgba(6,182,212,0.3)',padding:'0.25rem 0.65rem',borderRadius:'2rem',marginBottom:'0.75rem' }}>
+        <span style={{ color:'#22d3ee',fontSize:'0.7rem',fontWeight:700 }}>subscribeToField()</span>
+      </div>
+      <h3 style={{ color:'#e2e8f0',marginBottom:'0.4rem',fontSize:'1rem',fontWeight:700 }}>🎯 Per-Field Subscriptions</h3>
+      <p style={{ color:'#64748b',fontSize:'0.78rem',marginBottom:'1rem',lineHeight:1.5 }}>
+        Each field has its own subscriber — fires only when that field changes.
+      </p>
+      {!mounted ? <p style={{ color:'#334155',fontSize:'0.8rem' }}>Loading…</p> : (
+        <>
+          <div style={{ display:'flex',flexDirection:'column',gap:'0.45rem',marginBottom:'1rem' }}>
+            <div style={{ display:'flex',gap:'0.5rem',alignItems:'center' }}>
+              <label style={{ color:'#64748b',fontSize:'0.7rem',width:40,flexShrink:0,fontFamily:'monospace' }}>name</label>
+              <input type="text" value={values.name} onChange={e => set({ name: e.target.value })} placeholder="type something…"
+                style={{ flex:1,padding:'0.32rem 0.55rem',background:'#1e293b',border:'1px solid #334155',borderRadius:'6px',color:'#e2e8f0',fontSize:'0.78rem' }} />
+            </div>
+            <div style={{ display:'flex',gap:'0.5rem',alignItems:'center' }}>
+              <label style={{ color:'#64748b',fontSize:'0.7rem',width:40,flexShrink:0,fontFamily:'monospace' }}>score</label>
+              <input type="number" value={values.score} onChange={e => set({ score: Number(e.target.value) })}
+                style={{ flex:1,padding:'0.32rem 0.55rem',background:'#1e293b',border:'1px solid #334155',borderRadius:'6px',color:'#e2e8f0',fontSize:'0.78rem' }} />
+            </div>
+            <div style={{ display:'flex',gap:'0.5rem',alignItems:'center' }}>
+              <label style={{ color:'#64748b',fontSize:'0.7rem',width:40,flexShrink:0,fontFamily:'monospace' }}>active</label>
+              <button type="button" onClick={() => set({ active: !values.active })}
+                style={{ padding:'0.25rem 0.8rem',borderRadius:'6px',fontSize:'0.75rem',fontWeight:700,cursor:'pointer',
+                  background: values.active ? 'rgba(16,185,129,0.2)' : 'rgba(30,41,59,0.8)',
+                  border: values.active ? '1px solid #10b981' : '1px solid #334155',
+                  color: values.active ? '#10b981' : '#475569' }}>
+                {values.active ? 'true' : 'false'}
+              </button>
+            </div>
+          </div>
+          <div style={{ fontSize:'0.65rem',color:'#334155',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:'0.35rem' }}>field change log</div>
+          <div style={{ display:'flex',flexDirection:'column',gap:'0.2rem',maxHeight:130,overflowY:'auto' }}>
+            {log.length === 0
+              ? <p style={{ color:'#334155',fontSize:'0.72rem' }}>Edit a field above to see targeted notifications…</p>
+              : log.map((e, i) => (
+                <div key={i} style={{ display:'flex',gap:'0.5rem',alignItems:'center',background:'#1e293b',borderRadius:'4px',padding:'0.2rem 0.5rem' }}>
+                  <span style={{ color: fieldColors[e.field] ?? '#94a3b8',fontSize:'0.65rem',fontFamily:'monospace',width:36,flexShrink:0 }}>{e.field}</span>
+                  <span style={{ color:'#475569',fontSize:'0.6rem' }}>→</span>
+                  <span style={{ color:'#e2e8f0',fontSize:'0.65rem',fontFamily:'monospace',flex:1,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap' }}>{e.value}</span>
+                  <span style={{ color:'#334155',fontSize:'0.6rem',flexShrink:0 }}>{e.ts}</span>
+                </div>
+              ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+function BatchUpdateDemo() {
+  type BState = { x: number; y: number; z: number }
+  const normalStoreRef = useRef<ReturnType<typeof createStore<BState>> | null>(null)
+  const batchedStoreRef = useRef<ReturnType<typeof createStore<BState>> | null>(null)
+  const batcherRef = useRef<ReturnType<typeof createBatcher> | null>(null)
+  const [normalState, setNormalState] = useState<BState>({ x: 0, y: 0, z: 0 })
+  const [batchedState, setBatchedState] = useState<BState>({ x: 0, y: 0, z: 0 })
+  const [normalNotifs, setNormalNotifs] = useState(0)
+  const [batchedNotifs, setBatchedNotifs] = useState(0)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    const ns = createStore<BState>({ x: 0, y: 0, z: 0 })
+    const bs = createStore<BState>({ x: 0, y: 0, z: 0 })
+    const batcher = createBatcher(bs)
+    normalStoreRef.current = ns
+    batchedStoreRef.current = bs
+    batcherRef.current = batcher
+    setMounted(true)
+    const u1 = ns.subscribe((s: BState) => { setNormalState(s); setNormalNotifs(n => n + 1) })
+    const u2 = bs.subscribe((s: BState) => { setBatchedState(s); setBatchedNotifs(n => n + 1) })
+    return () => { u1(); u2() }
+  }, [])
+
+  const updateNormal = () => {
+    const s = normalStoreRef.current!
+    s.setState((st: BState) => ({ ...st, x: st.x + 1 }))
+    s.setState((st: BState) => ({ ...st, y: st.y + 1 }))
+    s.setState((st: BState) => ({ ...st, z: st.z + 1 }))
+  }
+
+  const updateBatched = () => {
+    const b = batcherRef.current!
+    b.batch(() => {
+      b.setState((st: BState) => ({ ...st, x: st.x + 1 }))
+      b.setState((st: BState) => ({ ...st, y: st.y + 1 }))
+      b.setState((st: BState) => ({ ...st, z: st.z + 1 }))
+    })
+  }
+
+  const barColor = (v: number, max: number) => `${Math.min(100, max > 0 ? (v / max) * 100 : 0)}%`
+  const maxVal = Math.max(normalState.x, normalState.y, normalState.z, batchedState.x, batchedState.y, batchedState.z, 1)
+
+  return (
+    <div style={{ background:'#0a0f1e',borderRadius:'12px',padding:'1.5rem',border:'1px solid #1e293b' }}>
+      <div style={{ display:'inline-flex',alignItems:'center',gap:'0.5rem',background:'rgba(245,158,11,0.12)',border:'1px solid rgba(245,158,11,0.3)',padding:'0.25rem 0.65rem',borderRadius:'2rem',marginBottom:'0.75rem' }}>
+        <span style={{ color:'#fbbf24',fontSize:'0.7rem',fontWeight:700 }}>createBatcher()</span>
+      </div>
+      <h3 style={{ color:'#e2e8f0',marginBottom:'0.4rem',fontSize:'1rem',fontWeight:700 }}>⚡ Batched State Updates</h3>
+      <p style={{ color:'#64748b',fontSize:'0.78rem',marginBottom:'1rem',lineHeight:1.5 }}>
+        3 setState calls → 3 notifications vs 1. Same result, 3× fewer renders.
+      </p>
+      {!mounted ? <p style={{ color:'#334155',fontSize:'0.8rem' }}>Loading…</p> : (
+        <>
+          <div style={{ display:'grid',gridTemplateColumns:'1fr 1fr',gap:'0.75rem',marginBottom:'1rem' }}>
+            {/* Normal */}
+            <div style={{ background:'rgba(239,68,68,0.06)',borderRadius:'10px',padding:'0.85rem',border:'1px solid rgba(239,68,68,0.2)' }}>
+              <div style={{ color:'#ef4444',fontSize:'0.68rem',fontWeight:700,marginBottom:'0.5rem',textTransform:'uppercase',letterSpacing:'0.08em' }}>Normal (3 setState)</div>
+              {(['x','y','z'] as const).map(k => (
+                <div key={k} style={{ display:'flex',gap:'0.4rem',alignItems:'center',marginBottom:'0.25rem' }}>
+                  <span style={{ color:'#64748b',fontSize:'0.65rem',fontFamily:'monospace',width:10 }}>{k}</span>
+                  <div style={{ flex:1,height:4,background:'#1e293b',borderRadius:'2px',overflow:'hidden' }}>
+                    <div style={{ width:barColor(normalState[k],maxVal),height:'100%',background:'#ef4444',transition:'width 0.2s' }} />
+                  </div>
+                  <span style={{ color:'#e2e8f0',fontSize:'0.65rem',fontFamily:'monospace',width:20,textAlign:'right' }}>{normalState[k]}</span>
+                </div>
+              ))}
+              <div style={{ marginTop:'0.6rem',textAlign:'center' }}>
+                <span style={{ color:'#ef4444',fontSize:'1.2rem',fontWeight:900,fontFamily:'monospace' }}>{normalNotifs}</span>
+                <div style={{ color:'#475569',fontSize:'0.6rem' }}>notifications</div>
+              </div>
+              <button type="button" onClick={updateNormal} style={{ width:'100%',marginTop:'0.6rem',padding:'0.4rem',background:'rgba(239,68,68,0.15)',border:'1px solid rgba(239,68,68,0.3)',borderRadius:'7px',color:'#ef4444',fontSize:'0.72rem',fontWeight:700,cursor:'pointer' }}>
+                3 separate calls
+              </button>
+            </div>
+            {/* Batched */}
+            <div style={{ background:'rgba(16,185,129,0.06)',borderRadius:'10px',padding:'0.85rem',border:'1px solid rgba(16,185,129,0.2)' }}>
+              <div style={{ color:'#10b981',fontSize:'0.68rem',fontWeight:700,marginBottom:'0.5rem',textTransform:'uppercase',letterSpacing:'0.08em' }}>Batched (1 notify)</div>
+              {(['x','y','z'] as const).map(k => (
+                <div key={k} style={{ display:'flex',gap:'0.4rem',alignItems:'center',marginBottom:'0.25rem' }}>
+                  <span style={{ color:'#64748b',fontSize:'0.65rem',fontFamily:'monospace',width:10 }}>{k}</span>
+                  <div style={{ flex:1,height:4,background:'#1e293b',borderRadius:'2px',overflow:'hidden' }}>
+                    <div style={{ width:barColor(batchedState[k],maxVal),height:'100%',background:'#10b981',transition:'width 0.2s' }} />
+                  </div>
+                  <span style={{ color:'#e2e8f0',fontSize:'0.65rem',fontFamily:'monospace',width:20,textAlign:'right' }}>{batchedState[k]}</span>
+                </div>
+              ))}
+              <div style={{ marginTop:'0.6rem',textAlign:'center' }}>
+                <span style={{ color:'#10b981',fontSize:'1.2rem',fontWeight:900,fontFamily:'monospace' }}>{batchedNotifs}</span>
+                <div style={{ color:'#475569',fontSize:'0.6rem' }}>notifications</div>
+              </div>
+              <button type="button" onClick={updateBatched} style={{ width:'100%',marginTop:'0.6rem',padding:'0.4rem',background:'linear-gradient(135deg,#065f46,#10b981)',border:'none',borderRadius:'7px',color:'white',fontSize:'0.72rem',fontWeight:700,cursor:'pointer' }}>
+                batch(3 calls)
+              </button>
+            </div>
+          </div>
+          {(normalNotifs > 0 || batchedNotifs > 0) && (
+            <div style={{ background:'rgba(245,158,11,0.08)',borderRadius:'8px',padding:'0.65rem 0.85rem',border:'1px solid rgba(245,158,11,0.2)',fontSize:'0.72rem',color:'#94a3b8' }}>
+              Ratio: <strong style={{ color:'#fbbf24' }}>{normalNotifs} vs {batchedNotifs}</strong> notifications for the same state change
+              {normalNotifs > 0 && batchedNotifs > 0 && <> — batching saved <strong style={{ color:'#10b981' }}>{Math.round((1 - batchedNotifs/normalNotifs)*100)}% of renders</strong></>}
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  )
+}
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function FeaturesPage() {
@@ -276,7 +547,7 @@ export default function FeaturesPage() {
                   Computed values, time-travel debugging, optimistic updates, and cross-tab sync — all powered by ichchi-state.
                 </p>
                 <div style={{ display:'flex',gap:'0.6rem',flexWrap:'wrap' }}>
-                  {['Computed Values','Time-Travel Debug','Optimistic Updates','Cross-Tab Sync','useServerAction','Atomic State'].map(t => (
+                  {['Computed Values','Time-Travel Debug','Optimistic Updates','Cross-Tab Sync','History Branching','subscribeToField','createBatcher','Atomic State'].map(t => (
                     <span key={t} style={{ padding:'0.3rem 0.7rem',background:'rgba(139,92,246,0.1)',border:'1px solid rgba(139,92,246,0.25)',borderRadius:'6px',color:'#c4b5fd',fontSize:'0.72rem',fontWeight:700 }}>{t}</span>
                   ))}
                 </div>
@@ -297,6 +568,15 @@ export default function FeaturesPage() {
           <div style={{ display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(340px,1fr))',gap:'1.25rem',marginBottom:'1.5rem' }}>
             <TimeTravelDebugger />
             <OptimisticTodoList />
+          </div>
+
+          <div style={{ display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(340px,1fr))',gap:'1.25rem',marginBottom:'1.5rem' }}>
+            <HistoryBranchingDemo />
+            <FieldSubscriptionDemo />
+          </div>
+
+          <div style={{ marginBottom:'1.5rem' }}>
+            <BatchUpdateDemo />
           </div>
 
           {/* Cross-Tab Sync banner */}

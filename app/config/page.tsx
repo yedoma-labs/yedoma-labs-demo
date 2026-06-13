@@ -2,10 +2,11 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { loadConfig, checkEnvHealth } from './actions'
+import { loadConfig, checkEnvHealth, generateSchemaDocs } from './actions'
 
 type ConfigData = Awaited<ReturnType<typeof loadConfig>>
 type EnvHealthData = Awaited<ReturnType<typeof checkEnvHealth>>
+type SchemaDocs = Awaited<ReturnType<typeof generateSchemaDocs>>
 
 function CodeBlock({ code }: { code: string; lang?: string }) {
   return (
@@ -42,7 +43,9 @@ function SectionHeader({ emoji, title, subtitle, gradient }: { emoji:string;titl
 export default function ConfigPage() {
   const [configData, setConfigData] = useState<ConfigData | { error: string } | null>(null)
   const [envHealth, setEnvHealth] = useState<EnvHealthData | { error: string } | null>(null)
+  const [schemaDocs, setSchemaDocs] = useState<SchemaDocs | { error: string } | null>(null)
   const [loading, setLoading] = useState(false)
+  const [docsTab, setDocsTab] = useState<'markdown' | 'env'>('env')
 
   const handleLoadConfig = async () => {
     setLoading(true)
@@ -60,6 +63,16 @@ export default function ConfigPage() {
       setEnvHealth(await checkEnvHealth())
     } catch (e) {
       setEnvHealth({ error: e instanceof Error ? e.message : 'Unknown error' })
+    }
+    setLoading(false)
+  }
+
+  const handleGenerateDocs = async () => {
+    setLoading(true)
+    try {
+      setSchemaDocs(await generateSchemaDocs())
+    } catch (e) {
+      setSchemaDocs({ error: e instanceof Error ? e.message : 'Unknown error' })
     }
     setLoading(false)
   }
@@ -168,6 +181,46 @@ export default function ConfigPage() {
                   </pre>
                 )}
               </div>
+            </div>
+          </Card>
+
+          {/* Schema Docs Generator */}
+          <Card style={{ marginBottom:'1.5rem' }}>
+            <SectionHeader emoji="📄" title="Schema Documentation Generator" subtitle="bylyt-env-guard can auto-generate markdown docs and .env.example from your schema — zero effort" gradient="linear-gradient(135deg,#166534,#16a34a)" />
+            <div style={{ background:'#0a0f1e',borderRadius:'12px',padding:'1.5rem',border:'1px solid #1e293b' }}>
+              <div style={{ display:'flex',alignItems:'center',gap:'0.75rem',marginBottom:'1rem',flexWrap:'wrap' }}>
+                <button
+                  type="button"
+                  onClick={handleGenerateDocs}
+                  disabled={loading}
+                  style={{ background:'linear-gradient(135deg,#166534,#16a34a)',color:'white',border:'none',borderRadius:'8px',padding:'0.55rem 1.1rem',fontSize:'0.82rem',fontWeight:700,cursor:loading?'not-allowed':'pointer',opacity:loading?0.6:1 }}
+                >
+                  {loading && !schemaDocs ? 'Generating…' : '📄 Generate from Schema'}
+                </button>
+                <span style={{ color:'#475569',fontSize:'0.75rem' }}>
+                  Calls <code style={{ color:'#4ade80',background:'rgba(74,222,128,0.1)',padding:'0.1rem 0.35rem',borderRadius:'3px',fontSize:'0.7rem' }}>generateMarkdownDocs()</code> + <code style={{ color:'#4ade80',background:'rgba(74,222,128,0.1)',padding:'0.1rem 0.35rem',borderRadius:'3px',fontSize:'0.7rem' }}>generateEnvExample()</code>
+                </span>
+              </div>
+              {schemaDocs && !('error' in schemaDocs) && (
+                <>
+                  <div style={{ display:'flex',gap:'0.5rem',marginBottom:'0.75rem' }}>
+                    {(['env', 'markdown'] as const).map(tab => (
+                      <button key={tab} type="button" onClick={() => setDocsTab(tab)}
+                        style={{ padding:'0.3rem 0.8rem',borderRadius:'6px',fontSize:'0.75rem',fontWeight:700,cursor:'pointer',
+                          background: docsTab === tab ? 'rgba(74,222,128,0.15)' : 'rgba(30,41,59,0.8)',
+                          border: docsTab === tab ? '1px solid #16a34a' : '1px solid #334155',
+                          color: docsTab === tab ? '#4ade80' : '#64748b' }}
+                      >{tab === 'env' ? '.env.example' : 'Markdown Docs'}</button>
+                    ))}
+                  </div>
+                  <pre style={{ background:'#020817',color: docsTab === 'env' ? '#34d399' : '#93c5fd',padding:'1rem',borderRadius:'8px',fontSize:'0.72rem',overflowX:'auto',fontFamily:"'Fira Code','Consolas',monospace",lineHeight:1.7,border:'1px solid #1e293b',maxHeight:300,overflow:'auto',margin:0 }}>
+                    {docsTab === 'env' ? schemaDocs.envExample : schemaDocs.markdown}
+                  </pre>
+                </>
+              )}
+              {'error' in (schemaDocs ?? {}) && (
+                <div style={{ color:'#ef4444',fontSize:'0.8rem',marginTop:'0.5rem' }}>Error: {(schemaDocs as any).error}</div>
+              )}
             </div>
           </Card>
 
