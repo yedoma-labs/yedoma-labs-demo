@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import CyberBg from './components/CyberBg'
+import MatrixNeo from './components/MatrixNeo'
 
 // ─── Pinned package versions (from lockfile) ──────────────────────────────────
 const PKG = {
@@ -167,6 +168,7 @@ export default function Home() {
   return (
     <>
       <CyberBg />
+      <MatrixNeo />
 
       <style>{`
         html, body { background: #0f172a !important; }
@@ -456,13 +458,26 @@ export default function Home() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2.5rem', marginBottom: '2.5rem' }}>
                 {/* Left: Yedoma explanation */}
                 <div>
-                  <h2 style={{
-                    fontSize: '2rem', fontWeight: 900, margin: '0 0 0.75rem',
-                    background: 'linear-gradient(135deg, #e2e8f0, #a78bfa)',
-                    WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-                  }}>
+                  <h2
+                    data-neo-trigger="true"
+                    title="Wake up..."
+                    style={{
+                      fontSize: '2rem', fontWeight: 900, margin: '0 0 0.15rem',
+                      background: 'linear-gradient(135deg, #e2e8f0, #a78bfa)',
+                      WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+                      cursor: 'pointer', display: 'inline-flex', alignItems: 'baseline', gap: '0.35rem',
+                    }}
+                  >
                     едо́ма
+                    <span style={{
+                      display: 'inline-block', width: '0.45em', height: '1.1em',
+                      background: '#a78bfa', verticalAlign: 'text-bottom', borderRadius: '1px',
+                      animation: 'blink-cursor 1s step-end infinite', opacity: 0.7,
+                    }} />
                   </h2>
+                  <p style={{ color: '#475569', fontSize: '0.62rem', fontFamily: 'monospace', margin: '0 0 0.75rem', letterSpacing: '0.08em', opacity: 0.6 }}>
+                    click to wake up
+                  </p>
                   <p style={{ color: '#64748b', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.75rem', letterSpacing: '0.05em' }}>
                     YEDOMA /ˈjɛdəmə/ — Pleistocene permafrost deposits, NE Siberia
                   </p>
