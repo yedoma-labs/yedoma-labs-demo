@@ -8,7 +8,15 @@ import {
   LocalDate,
   LocalTime,
   Timezone,
+  setDefaultLocale,
+  getDefaultLocale,
+  TIMEZONE_COUNT,
+  TZDATA_VERSION,
+  TIMEZONE_LINKS,
+  en,
   es, fr, de, ja, zh, ru, ar, ko, pt, it,
+  hi, bn, id, tr, vi, pl, nl, th, fa, ur, uk,
+  da, sv, nb, fi, is as isl, hu, ro, bg, el, cs, sk, hr, sr,
 } from '@yedoma-labs/tuuru-chrono-tz'
 
 // ─── Config ───────────────────────────────────────────────────────────────────
@@ -24,22 +32,46 @@ const WORLD_CITIES = [
   { city: 'Los Angeles',  tz: 'America/Los_Angeles',   flag: '🇺🇸', gradient: 'linear-gradient(135deg,#312e81,#6366f1)' },
 ]
 
-const LOCALE_SHOWCASE = [
-  { locale: es, name: 'Español',   flag: '🇪🇸' },
-  { locale: fr, name: 'Français',  flag: '🇫🇷' },
-  { locale: de, name: 'Deutsch',   flag: '🇩🇪' },
-  { locale: ja, name: '日本語',     flag: '🇯🇵' },
-  { locale: zh, name: '中文',       flag: '🇨🇳' },
-  { locale: ru, name: 'Русский',   flag: '🇷🇺' },
-  { locale: ar, name: 'العربية',   flag: '🇸🇦' },
-  { locale: ko, name: '한국어',     flag: '🇰🇷' },
-  { locale: pt, name: 'Português', flag: '🇧🇷' },
-  { locale: it, name: 'Italiano',  flag: '🇮🇹' },
-]
-
 const ACCENT_COLORS = [
   '#3b82f6','#8b5cf6','#ec4899','#f59e0b','#ef4444','#10b981',
   '#06b6d4','#6366f1','#fb923c','#34d399','#60a5fa','#a78bfa','#f472b6',
+]
+
+const ALL_LOCALES = [
+  { locale: es,  name: 'Español',    flag: '🇪🇸', code: 'es' },
+  { locale: fr,  name: 'Français',   flag: '🇫🇷', code: 'fr' },
+  { locale: de,  name: 'Deutsch',    flag: '🇩🇪', code: 'de' },
+  { locale: ja,  name: '日本語',      flag: '🇯🇵', code: 'ja' },
+  { locale: zh,  name: '中文',        flag: '🇨🇳', code: 'zh' },
+  { locale: ru,  name: 'Русский',    flag: '🇷🇺', code: 'ru' },
+  { locale: ar,  name: 'العربية',    flag: '🇸🇦', code: 'ar' },
+  { locale: ko,  name: '한국어',      flag: '🇰🇷', code: 'ko' },
+  { locale: pt,  name: 'Português',  flag: '🇧🇷', code: 'pt' },
+  { locale: it,  name: 'Italiano',   flag: '🇮🇹', code: 'it' },
+  { locale: hi,  name: 'हिन्दी',       flag: '🇮🇳', code: 'hi' },
+  { locale: bn,  name: 'বাংলা',       flag: '🇧🇩', code: 'bn' },
+  { locale: id,  name: 'Bahasa',     flag: '🇮🇩', code: 'id' },
+  { locale: tr,  name: 'Türkçe',     flag: '🇹🇷', code: 'tr' },
+  { locale: vi,  name: 'Tiếng Việt', flag: '🇻🇳', code: 'vi' },
+  { locale: pl,  name: 'Polski',     flag: '🇵🇱', code: 'pl' },
+  { locale: nl,  name: 'Nederlands', flag: '🇳🇱', code: 'nl' },
+  { locale: th,  name: 'ภาษาไทย',    flag: '🇹🇭', code: 'th' },
+  { locale: fa,  name: 'فارسی',      flag: '🇮🇷', code: 'fa' },
+  { locale: ur,  name: 'اردو',       flag: '🇵🇰', code: 'ur' },
+  { locale: uk,  name: 'Українська', flag: '🇺🇦', code: 'uk' },
+  { locale: da,  name: 'Dansk',      flag: '🇩🇰', code: 'da' },
+  { locale: sv,  name: 'Svenska',    flag: '🇸🇪', code: 'sv' },
+  { locale: nb,  name: 'Norsk',      flag: '🇳🇴', code: 'nb' },
+  { locale: fi,  name: 'Suomi',      flag: '🇫🇮', code: 'fi' },
+  { locale: isl, name: 'Íslenska',   flag: '🇮🇸', code: 'is' },
+  { locale: hu,  name: 'Magyar',     flag: '🇭🇺', code: 'hu' },
+  { locale: ro,  name: 'Română',     flag: '🇷🇴', code: 'ro' },
+  { locale: bg,  name: 'Български',  flag: '🇧🇬', code: 'bg' },
+  { locale: el,  name: 'Ελληνικά',   flag: '🇬🇷', code: 'el' },
+  { locale: cs,  name: 'Čeština',    flag: '🇨🇿', code: 'cs' },
+  { locale: sk,  name: 'Slovenčina', flag: '🇸🇰', code: 'sk' },
+  { locale: hr,  name: 'Hrvatski',   flag: '🇭🇷', code: 'hr' },
+  { locale: sr,  name: 'Српски',     flag: '🇷🇸', code: 'sr' },
 ]
 
 // ─── Utilities ────────────────────────────────────────────────────────────────
@@ -692,32 +724,32 @@ function MultiLocaleShowcase() {
   useEffect(() => setMounted(true), [])
   if (!mounted) return null
 
-  const ref = DateTime.now('Europe/Paris')
+  const ref = DateTime.fromObject({ year: 2025, month: 6, day: 15, hour: 14, minute: 30 }, { timezone: 'UTC' })
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(260px,1fr))', gap: '1rem' }}>
-      {LOCALE_SHOWCASE.map(({ locale, name, flag }, i) => {
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(195px,1fr))', gap: '0.75rem' }}>
+      {ALL_LOCALES.map(({ locale, name, flag, code }, i) => {
         const dt = ref.setLocale(locale)
         return (
-          <div key={name} style={{
-            background: '#0a0f1e', borderRadius: '12px', padding: '1.1rem',
+          <div key={code} style={{
+            background: '#0a0f1e', borderRadius: '10px', padding: '0.9rem',
             border: `1px solid ${ACCENT_COLORS[i % ACCENT_COLORS.length]}22`,
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.65rem' }}>
-              <span style={{ fontSize: '1.2rem' }}>{flag}</span>
-              <span style={{ color: '#e2e8f0', fontWeight: 700, fontSize: '0.9rem' }}>{name}</span>
-              <code style={{ color: '#334155', fontSize: '0.65rem', fontFamily: 'monospace', marginLeft: 'auto' }}>{locale.name}</code>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+              <span style={{ fontSize: '1.1rem' }}>{flag}</span>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ color: '#e2e8f0', fontWeight: 700, fontSize: '0.82rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</div>
+                <code style={{ color: '#334155', fontSize: '0.62rem' }}>{locale.name}</code>
+              </div>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-              <div style={{ color: ACCENT_COLORS[i % ACCENT_COLORS.length], fontSize: '0.88rem', fontFamily: 'monospace' }}>
-                {dt.format('dddd, D MMMM YYYY')}
-              </div>
-              <div style={{ color: '#64748b', fontSize: '0.78rem', fontFamily: 'monospace' }}>
-                {dt.format('MMMM')} · {dt.format('ddd')} · {dt.format('h:mm A')}
-              </div>
-              <div style={{ color: '#475569', fontSize: '0.75rem', fontFamily: 'monospace' }}>
-                {dt.fromNow()}
-              </div>
+            <div style={{ color: ACCENT_COLORS[i % ACCENT_COLORS.length], fontSize: '0.8rem', fontFamily: 'monospace', marginBottom: '0.2rem' }}>
+              {dt.format('D MMMM YYYY')}
+            </div>
+            <div style={{ color: '#64748b', fontSize: '0.73rem', fontFamily: 'monospace', marginBottom: '0.15rem' }}>
+              {dt.format('dddd')}
+            </div>
+            <div style={{ color: '#475569', fontSize: '0.7rem' }}>
+              {dt.subtract({ days: 3 }).fromNow()}
             </div>
           </div>
         )
@@ -779,6 +811,322 @@ function ComparisonsDemo() {
           </div>
         )
       })}
+    </div>
+  )
+}
+
+// ─── Duration Arithmetic ──────────────────────────────────────────────────────
+
+function DurationArithmeticDemo() {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  if (!mounted) return null
+
+  const a   = Duration.fromObject({ hours: 3, minutes: 30 })
+  const b   = Duration.fromObject({ hours: 1, minutes: 45 })
+  const c   = Duration.fromObject({ days: 2, hours: 4 })
+  const neg = Duration.fromISO('-PT2H30M')
+
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(260px,1fr))', gap: '0.75rem' }}>
+      {([
+        { l: 'a  = fromObject({ hours:3, minutes:30 })',   v: a.humanize(),                     c: '#a78bfa' },
+        { l: 'b  = fromObject({ hours:1, minutes:45 })',   v: b.humanize(),                     c: '#a78bfa' },
+        { l: 'c  = fromObject({ days:2, hours:4 })',       v: c.humanize(),                     c: '#a78bfa' },
+        { l: 'a.add(b).humanize()',                        v: a.add(b).humanize(),              c: '#10b981' },
+        { l: 'a.add(b).toISO()',                           v: a.add(b).toISO(),                 c: '#06b6d4' },
+        { l: 'a.add(c).humanize()',                        v: a.add(c).humanize(),              c: '#10b981' },
+        { l: 'c.subtract(b).humanize()',                   v: c.subtract(b).humanize(),         c: '#f59e0b' },
+        { l: 'a.subtract(b).humanize()',                   v: a.subtract(b).humanize(),         c: '#f59e0b' },
+        { l: 'a.subtract(b).toISO()',                      v: a.subtract(b).toISO(),            c: '#f59e0b' },
+        { l: 'a.add(b).totalDays',                         v: a.add(b).totalDays.toFixed(6),    c: '#ec4899' },
+        { l: 'c.totalDays',                                v: c.totalDays.toFixed(4),           c: '#ec4899' },
+        { l: "Duration.fromISO('-PT2H30M').isNegative()", v: String(neg.isNegative()),          c: '#ef4444' },
+        { l: 'neg.abs().humanize()',                       v: neg.abs().humanize(),             c: '#34d399' },
+        { l: 'neg.abs().toISO()',                          v: neg.abs().toISO(),                c: '#34d399' },
+        { l: 'neg.abs().totalHours',                       v: neg.abs().totalHours.toFixed(4),  c: '#60a5fa' },
+        { l: 'a.add(b).add(c).humanize()',                 v: a.add(b).add(c).humanize(),       c: '#fb923c' },
+      ] as { l: string; v: string; c: string }[]).map(({ l, v, c }) => (
+        <Chip key={l} label={l} value={v} color={c} />
+      ))}
+    </div>
+  )
+}
+
+// ─── Relative Between ─────────────────────────────────────────────────────────
+
+function RelativeBetweenDemo() {
+  const [mounted, setMounted] = useState(false)
+  const [dtAStr, setDtAStr]   = useState('')
+  const [dtBStr, setDtBStr]   = useState('')
+
+  useEffect(() => {
+    setMounted(true)
+    const n = DateTime.now()
+    setDtAStr(n.subtract({ days: 3 }).format('YYYY-MM-DDTHH:mm'))
+    setDtBStr(n.add({ days: 7 }).format('YYYY-MM-DDTHH:mm'))
+  }, [])
+
+  if (!mounted || !dtAStr || !dtBStr) return null
+
+  const dtA = DateTime.fromISO(dtAStr + ':00')
+  const dtB = DateTime.fromISO(dtBStr + ':00')
+
+  const inputStyle: React.CSSProperties = {
+    width: '100%', padding: '0.55rem 0.75rem', background: '#0a0f1e',
+    border: '1px solid #334155', borderRadius: '8px', color: '#e2e8f0', fontSize: '0.85rem',
+  }
+
+  return (
+    <div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.25rem' }}>
+        <div>
+          <div style={{ color: '#64748b', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.4rem' }}>Date A</div>
+          <input type="datetime-local" value={dtAStr} onChange={e => setDtAStr(e.target.value)} style={inputStyle} />
+        </div>
+        <div>
+          <div style={{ color: '#64748b', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.4rem' }}>Date B</div>
+          <input type="datetime-local" value={dtBStr} onChange={e => setDtBStr(e.target.value)} style={inputStyle} />
+        </div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(240px,1fr))', gap: '0.75rem' }}>
+        {([
+          { l: 'a.fromNow()',                 v: dtA.fromNow(),                c: '#10b981' },
+          { l: 'a.fromNow({ short: true })',  v: dtA.fromNow({ short: true }), c: '#06b6d4' },
+          { l: 'b.fromNow()',                 v: dtB.fromNow(),                c: '#10b981' },
+          { l: 'b.fromNow({ short: true })',  v: dtB.fromNow({ short: true }), c: '#06b6d4' },
+          { l: 'a.toNow()',                   v: dtA.toNow(),                  c: '#f59e0b' },
+          { l: 'a.toNow({ short: true })',    v: dtA.toNow({ short: true }),   c: '#fb923c' },
+          { l: 'b.toNow()',                   v: dtB.toNow(),                  c: '#f59e0b' },
+          { l: 'b.toNow({ short: true })',    v: dtB.toNow({ short: true }),   c: '#fb923c' },
+          { l: 'a.to(b)',                     v: dtA.to(dtB),                  c: '#a78bfa' },
+          { l: 'a.to(b, { short: true })',    v: dtA.to(dtB, { short: true }), c: '#8b5cf6' },
+          { l: 'b.to(a)',                     v: dtB.to(dtA),                  c: '#a78bfa' },
+          { l: 'b.to(a, { short: true })',    v: dtB.to(dtA, { short: true }), c: '#8b5cf6' },
+        ] as { l: string; v: string; c: string }[]).map(({ l, v, c }) => (
+          <Chip key={l} label={l} value={v} color={c} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ─── DateTime Conversions ─────────────────────────────────────────────────────
+
+function DateTimeConversionsDemo() {
+  const [mounted, setMounted] = useState(false)
+  const [yr, setYr] = useState(2025)
+  const [mo, setMo] = useState(6)
+  const [dy, setDy] = useState(15)
+  const [hr, setHr] = useState(14)
+  const [mn, setMn] = useState(30)
+
+  useEffect(() => {
+    setMounted(true)
+    const n = DateTime.now('America/New_York')
+    setYr(n.year); setMo(n.month); setDy(n.day); setHr(n.hour); setMn(n.minute)
+  }, [])
+
+  if (!mounted) return null
+
+  const base    = DateTime.fromObject({ year: yr, month: mo, day: dy, hour: hr, minute: mn, second: 0 }, { timezone: 'America/New_York' })
+  const asJSDate = base.toDate()
+  const asLocal  = base.toLocal()
+  const asUTC    = base.toUTC()
+
+  const numStyle: React.CSSProperties = {
+    width: '100%', padding: '0.45rem', background: '#0a0f1e',
+    border: '1px solid #1e293b', borderRadius: '6px', color: '#e2e8f0',
+    fontSize: '0.85rem', textAlign: 'center',
+  }
+
+  return (
+    <div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: '0.5rem', marginBottom: '1.25rem' }}>
+        {([
+          { l: 'Year',   v: yr, set: setYr, min: 1900, max: 2099 },
+          { l: 'Month',  v: mo, set: setMo, min: 1,    max: 12   },
+          { l: 'Day',    v: dy, set: setDy, min: 1,    max: 31   },
+          { l: 'Hour',   v: hr, set: setHr, min: 0,    max: 23   },
+          { l: 'Minute', v: mn, set: setMn, min: 0,    max: 59   },
+        ] as { l: string; v: number; set: (n: number) => void; min: number; max: number }[]).map(({ l, v, set, min, max }) => (
+          <div key={l}>
+            <div style={{ color: '#64748b', fontSize: '0.62rem', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.3rem', textAlign: 'center' }}>{l}</div>
+            <input type="number" min={min} max={max} value={v} onChange={e => set(Number(e.target.value))} style={numStyle} />
+          </div>
+        ))}
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(280px,1fr))', gap: '0.75rem' }}>
+        {([
+          { l: 'base.toISO()',                               v: base.toISO(),                                         c: '#a78bfa' },
+          { l: 'base.toUTC().toISO()',                       v: asUTC.toISO(),                                        c: '#06b6d4' },
+          { l: 'base.toLocal().timezone',                    v: asLocal.timezone,                                     c: '#10b981' },
+          { l: 'base.toLocal().toISO()',                     v: asLocal.toISO(),                                      c: '#34d399' },
+          { l: 'base.toDate().toISOString()',                v: asJSDate.toISOString(),                               c: '#f59e0b' },
+          { l: 'base.valueOf()',                             v: base.valueOf().toString(),                            c: '#fb923c' },
+          { l: 'base.locale',                               v: JSON.stringify(base.locale),                         c: '#ec4899' },
+          { l: 'base.setYear(2030).year',                   v: String(base.setYear(2030).year),                     c: '#60a5fa' },
+          { l: 'base.setMonth(1).toISO().slice(0,10)',       v: base.setMonth(1).toISO().slice(0, 10),               c: '#818cf8' },
+          { l: 'base.setDay(1).toISO().slice(0,10)',         v: base.setDay(1).toISO().slice(0, 10),                 c: '#818cf8' },
+          { l: 'base.setTime(9, 0).format("HH:mm")',                v: base.setTime(9, 0).format('HH:mm'),                  c: '#f472b6' },
+          { l: 'base.setYear(2000).setMonth(1).setDay(1)',  v: base.setYear(2000).setMonth(1).setDay(1).toISO().slice(0, 10), c: '#fbbf24' },
+        ] as { l: string; v: string; c: string }[]).map(({ l, v, c }) => (
+          <Chip key={l} label={l} value={v} color={c} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ─── LocalDate & LocalTime Extended ───────────────────────────────────────────
+
+function LocalExtendedDemo() {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  if (!mounted) return null
+
+  const today   = LocalDate.today()
+  const dt      = DateTime.now('America/New_York')
+  const fromObj = LocalDate.fromObject({ year: 2025, month: 3, day: 14 })
+  const fromDt  = LocalDate.fromDateTime(dt)
+  const dateA   = LocalDate.of(today.year, 1, 15)
+  const dateB   = LocalDate.of(today.year, 6, 1)
+  const dateC   = LocalDate.of(today.year, 12, 31)
+
+  const nowTime     = LocalTime.now()
+  const timeFromObj = LocalTime.fromObject({ hour: 14, minute: 30, second: 45 })
+  const timeFromDt  = LocalTime.fromDateTime(dt)
+  const midnight    = LocalTime.of(0, 0, 0)
+  const noon        = LocalTime.of(12, 0, 0)
+
+  const subHead = (label: string) => (
+    <div style={{ color: '#94a3b8', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.65rem' }}>{label}</div>
+  )
+
+  return (
+    <div style={{ display: 'grid', gap: '1.5rem' }}>
+      <div>
+        {subHead('LocalDate — fromObject, fromDateTime, min, max, extended comparisons')}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(260px,1fr))', gap: '0.65rem' }}>
+          {([
+            { l: "LocalDate.fromObject({ year:2025, month:3, day:14 }).toISO()",    v: fromObj.toISO(),                              c: '#f59e0b' },
+            { l: 'LocalDate.fromDateTime(DateTime.now()).toISO()',                   v: fromDt.toISO(),                               c: '#fb923c' },
+            { l: 'LocalDate.min(dateA, dateB, dateC).toISO()',                      v: LocalDate.min(dateA, dateB, dateC).toISO(),   c: '#10b981' },
+            { l: 'LocalDate.max(dateA, dateB, dateC).toISO()',                      v: LocalDate.max(dateA, dateB, dateC).toISO(),   c: '#34d399' },
+            { l: 'dateA.isAfter(today)',                                             v: String(dateA.isAfter(today)),                 c: '#a78bfa' },
+            { l: 'dateC.isAfter(today)',                                             v: String(dateC.isAfter(today)),                 c: '#a78bfa' },
+            { l: 'dateA.isSameOrBefore(today)',                                      v: String(dateA.isSameOrBefore(today)),          c: '#8b5cf6' },
+            { l: 'dateC.isSameOrAfter(today)',                                       v: String(dateC.isSameOrAfter(today)),           c: '#8b5cf6' },
+            { l: 'today.isBetween(dateA, dateC)',                                    v: String(today.isBetween(dateA, dateC)),        c: '#ec4899' },
+            { l: "today.toDateTime('UTC', { hour:9 }).format('YYYY-MM-DD HH:mm')",  v: today.toDateTime('UTC', { hour: 9 }).format('YYYY-MM-DD HH:mm'), c: '#06b6d4' },
+          ] as { l: string; v: string; c: string }[]).map(({ l, v, c }) => (
+            <Chip key={l} label={l} value={v} color={c} />
+          ))}
+        </div>
+      </div>
+      <div>
+        {subHead('LocalTime — fromObject, fromDateTime, millisecondOfDay, extended comparisons')}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(260px,1fr))', gap: '0.65rem' }}>
+          {([
+            { l: "LocalTime.fromObject({ hour:14, minute:30, second:45 }).toISO()",   v: timeFromObj.toISO(),                                          c: '#f59e0b' },
+            { l: 'LocalTime.fromDateTime(DateTime.now()).toISO()',                     v: timeFromDt.toISO(),                                           c: '#fb923c' },
+            { l: 'LocalTime.of(0,0,0).millisecondOfDay',                              v: String(midnight.millisecondOfDay),                            c: '#10b981' },
+            { l: 'LocalTime.of(12,0,0).millisecondOfDay',                             v: String(noon.millisecondOfDay),                                c: '#34d399' },
+            { l: 'LocalTime.now().millisecondOfDay',                                  v: String(nowTime.millisecondOfDay),                             c: '#06b6d4' },
+            { l: 'timeFromObj.equals(LocalTime.of(14,30,45))',                        v: String(timeFromObj.equals(LocalTime.of(14, 30, 45))),         c: '#a78bfa' },
+            { l: 'timeFromObj.isAfter(midnight)',                                      v: String(timeFromObj.isAfter(midnight)),                        c: '#8b5cf6' },
+            { l: 'midnight.isSameOrBefore(noon)',                                      v: String(midnight.isSameOrBefore(noon)),                        c: '#ec4899' },
+            { l: 'noon.isSameOrAfter(midnight)',                                       v: String(noon.isSameOrAfter(midnight)),                         c: '#f472b6' },
+            { l: 'nowTime.isAfter(midnight) && nowTime.isBefore(noon)',               v: String(nowTime.isAfter(midnight) && nowTime.isBefore(noon)),  c: '#fb923c' },
+          ] as { l: string; v: string; c: string }[]).map(({ l, v, c }) => (
+            <Chip key={l} label={l} value={v} color={c} />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── TZDATA Constants ─────────────────────────────────────────────────────────
+
+function TzdataInfoDemo() {
+  const linkEntries = Object.entries(TIMEZONE_LINKS).slice(0, 12)
+
+  return (
+    <div style={{ display: 'grid', gap: '1.25rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(240px,1fr))', gap: '0.75rem' }}>
+        <Chip label="TIMEZONE_COUNT"           value={String(TIMEZONE_COUNT)}                    color="#10b981" />
+        <Chip label="TZDATA_VERSION"           value={TZDATA_VERSION}                            color="#a78bfa" />
+        <Chip label="Timezone.listAll().length" value={String(Timezone.listAll().length)}         color="#06b6d4" />
+        <Chip label="Object.keys(TIMEZONE_LINKS).length" value={String(Object.keys(TIMEZONE_LINKS).length)} color="#f59e0b" />
+      </div>
+      <div>
+        <div style={{ color: '#64748b', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.6rem' }}>
+          TIMEZONE_LINKS sample — legacy alias → canonical IANA name
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(300px,1fr))', gap: '0.45rem' }}>
+          {linkEntries.map(([alias, canonical]) => (
+            <div key={alias} style={{ background: '#0a0f1e', border: '1px solid #1e293b', borderRadius: '8px', padding: '0.5rem 0.75rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+              <span style={{ color: '#ef4444', fontFamily: 'monospace', fontSize: '0.77rem', flexShrink: 0 }}>{alias}</span>
+              <span style={{ color: '#334155', fontSize: '0.75rem' }}>→</span>
+              <span style={{ color: '#10b981', fontFamily: 'monospace', fontSize: '0.77rem' }}>{canonical as string}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── Global Locale ────────────────────────────────────────────────────────────
+
+type LocaleKey = 'en' | 'es' | 'fr' | 'de' | 'ja' | 'zh' | 'ru' | 'ar' | 'ko' | 'pt' | 'it'
+
+function GlobalLocaleDemo() {
+  const [mounted, setMounted] = useState(false)
+  const [active, setActive]   = useState<LocaleKey>('en')
+
+  const LOCALE_MAP: Record<LocaleKey, Parameters<typeof setDefaultLocale>[0]> = {
+    en, es, fr, de, ja, zh, ru, ar, ko, pt, it,
+  }
+
+  useEffect(() => {
+    setMounted(true)
+    return () => { setDefaultLocale(en) }
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+    setDefaultLocale(LOCALE_MAP[active])
+  }, [active, mounted])
+
+  if (!mounted) return null
+
+  const now = DateTime.now('Europe/Paris')
+  const currentLocaleName = getDefaultLocale()?.name ?? 'en'
+
+  return (
+    <div>
+      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
+        {(Object.keys(LOCALE_MAP) as LocaleKey[]).map(key => (
+          <button key={key} onClick={() => setActive(key)} style={{
+            padding: '0.35rem 0.85rem', borderRadius: '8px', border: 'none', cursor: 'pointer',
+            fontWeight: 700, fontSize: '0.8rem',
+            background: active === key ? '#6366f1' : '#1e293b',
+            color: active === key ? 'white' : '#64748b',
+            transition: 'all 0.15s',
+          }}>{key.toUpperCase()}</button>
+        ))}
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(280px,1fr))', gap: '0.75rem' }}>
+        <Chip label="getDefaultLocale().name"              value={currentLocaleName}                               color="#a78bfa" />
+        <Chip label="now.format('MMMM')"                   value={now.format('MMMM')}                             color="#10b981" />
+        <Chip label="now.format('dddd')"                   value={now.format('dddd')}                             color="#06b6d4" />
+        <Chip label="now.format('dddd D MMMM YYYY')"      value={now.format('dddd D MMMM YYYY')}                color="#f59e0b" />
+        <Chip label="now.fromNow()"                        value={now.fromNow()}                                   color="#ec4899" />
+        <Chip label="now.subtract({ days:7 }).fromNow()"  value={now.subtract({ days: 7 }).fromNow()}            color="#fb923c" />
+        <Chip label="now.add({ months:3 }).fromNow()"     value={now.add({ months: 3 }).fromNow()}               color="#34d399" />
+      </div>
     </div>
   )
 }
@@ -861,7 +1209,7 @@ export default function ChronoTzPage() {
                 </p>
 
                 <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
-                  {['Zero Dependencies','Immutable API','568 IANA Zones','35+ Locales','<20KB Bundle','Node ≥ 18'].map(tag => (
+                  {['Zero Dependencies','Immutable API','568 IANA Zones','34 Locales','Duration Arithmetic','Relative Between','TZDATA Constants','Global Locale','<20KB Bundle'].map(tag => (
                     <span key={tag} style={{
                       padding: '0.3rem 0.7rem', background: 'rgba(99,102,241,0.12)',
                       border: '1px solid rgba(99,102,241,0.25)', borderRadius: '6px',
@@ -1062,8 +1410,8 @@ today.isBefore(today.add({ days: 1 }))       // true`} />
 
           <Card>
             <SectionHeader
-              emoji="🌐" title="35 Locales"
-              subtitle="Same instant in 10 languages — format() month/weekday names and fromNow() both use the locale"
+              emoji="🌐" title="All 34 Locales"
+              subtitle="Every shipped locale — format() month/weekday names and fromNow() both use the locale automatically"
               gradient="linear-gradient(135deg,#064e3b,#10b981)"
             />
             <MultiLocaleShowcase />
@@ -1113,6 +1461,180 @@ d.totalMinutes                 // 120
 // Static min/max
 DateTime.min(a, b, c)          // earliest
 DateTime.max(a, b, c)          // latest`} />
+            </div>
+          </Card>
+
+          <Card>
+            <SectionHeader
+              emoji="➗" title="Duration Arithmetic"
+              subtitle="Duration.add(), Duration.subtract(), Duration.abs(), Duration.totalDays — chain immutable duration ops"
+              gradient="linear-gradient(135deg,#134e4a,#14b8a6)"
+            />
+            <DurationArithmeticDemo />
+            <div style={{ marginTop: '1.5rem' }}>
+              <CodeBlock code={`import { Duration } from '@yedoma-labs/tuuru-chrono-tz';
+
+const a = Duration.fromObject({ hours: 3, minutes: 30 });
+const b = Duration.fromObject({ hours: 1, minutes: 45 });
+const c = Duration.fromObject({ days: 2, hours: 4 });
+
+a.add(b).humanize()       // "5 hours, 15 minutes"
+a.add(b).toISO()          // "PT5H15M"
+a.add(b).totalDays        // 0.21875
+c.subtract(b).humanize()  // "2 days, 2 hours, 15 minutes"
+a.add(b).add(c).humanize()  // "2 days, 7 hours, 15 minutes"
+
+// Negative durations
+const neg = Duration.fromISO('-PT2H30M');
+neg.isNegative()          // true
+neg.abs().humanize()      // "2 hours, 30 minutes"
+neg.abs().totalHours      // 2.5`} />
+            </div>
+          </Card>
+
+          <Card>
+            <SectionHeader
+              emoji="🔗" title="to() · toNow() — Relative Between Two Points"
+              subtitle="a.to(b) gives time from a to b. toNow() is the inverse of fromNow(). Pick two dates and compare."
+              gradient="linear-gradient(135deg,#1e1b4b,#4f46e5)"
+            />
+            <RelativeBetweenDemo />
+            <div style={{ marginTop: '1.5rem' }}>
+              <CodeBlock code={`const past   = DateTime.now().subtract({ days: 3 });
+const future = DateTime.now().add({ days: 7 });
+
+// fromNow() — time from THIS date to now
+past.fromNow()               // "3 days ago"
+future.fromNow()             // "in 7 days"
+
+// toNow() — time from now to THIS date (inverse direction)
+past.toNow()                 // "3 days"   ← no ago / in prefix
+future.toNow()               // "7 days"
+
+// to(other) — relative from THIS date to another DateTime
+past.to(future)              // "in 10 days"
+future.to(past)              // "10 days ago"
+past.to(future, { short: true })  // "in 10d"`} />
+            </div>
+          </Card>
+
+          <Card>
+            <SectionHeader
+              emoji="🔄" title="DateTime Conversions & Individual Setters"
+              subtitle="toDate(), toLocal(), valueOf(), locale getter — plus setYear(), setMonth(), setDay(), setTime()"
+              gradient="linear-gradient(135deg,#0c4a6e,#0284c7)"
+            />
+            <DateTimeConversionsDemo />
+            <div style={{ marginTop: '1.5rem' }}>
+              <CodeBlock code={`const dt = DateTime.fromObject({ year:2025, month:6, day:15, hour:14, minute:30 }, 'America/New_York');
+
+// Conversion
+dt.toUTC().toISO()           // "2025-06-15T18:30:00.000Z"
+dt.toLocal()                 // DateTime in machine's local timezone
+dt.toDate()                  // JS Date object
+dt.valueOf()                 // 1750007400000  (ms since epoch)
+dt.locale                    // current Locale object
+
+// Individual setters — all immutable, return new DateTime
+dt.setYear(2030).year        // 2030
+dt.setMonth(1).toISO()       // "2030-01-15T14:30:00..."  (Jan)
+dt.setDay(1).toISO()         // first of the month
+dt.setTime(9, 0)             // → 09:00 same date & tz
+
+// Chain setters
+dt.setYear(2000).setMonth(1).setDay(1).toISO()  // "2000-01-01T14:30:00..."`} />
+            </div>
+          </Card>
+
+          <Card>
+            <SectionHeader
+              emoji="📅" title="LocalDate & LocalTime — Complete API"
+              subtitle="fromObject(), fromDateTime(), min(), max(), millisecondOfDay, isSameOrBefore/After, isBetween"
+              gradient="linear-gradient(135deg,#4a1942,#a21caf)"
+            />
+            <LocalExtendedDemo />
+            <div style={{ marginTop: '1.5rem' }}>
+              <CodeBlock code={`import { LocalDate, LocalTime, DateTime } from '@yedoma-labs/tuuru-chrono-tz';
+
+// LocalDate factory methods
+LocalDate.fromObject({ year:2025, month:3, day:14 }).toISO()  // "2025-03-14"
+LocalDate.fromDateTime(DateTime.now('UTC')).toISO()            // today in UTC
+
+// Static min / max
+LocalDate.min(dateA, dateB, dateC)     // earliest LocalDate
+LocalDate.max(dateA, dateB, dateC)     // latest LocalDate
+
+// Extended comparisons
+dateA.isAfter(today)                   // true / false
+dateC.isSameOrAfter(today)             // true
+today.isBetween(dateA, dateC)          // true
+
+// toDateTime with time — attach a time to a LocalDate
+today.toDateTime('America/New_York', { hour: 9, minute: 30 })  // DateTime at 9:30am today
+
+// LocalTime extras
+LocalTime.fromObject({ hour:14, minute:30, second:45 })
+LocalTime.fromDateTime(DateTime.now())
+LocalTime.of(12, 0, 0).millisecondOfDay   // 43200000
+nowTime.isBetween(midnight, LocalTime.of(23,59,59))  // true`} />
+            </div>
+          </Card>
+
+          <Card>
+            <SectionHeader
+              emoji="🗄️" title="Timezone Database Constants"
+              subtitle="TIMEZONE_COUNT, TZDATA_VERSION, TIMEZONE_LINKS — raw tzdata metadata shipped with the package"
+              gradient="linear-gradient(135deg,#1c1917,#57534e)"
+            />
+            <TzdataInfoDemo />
+            <div style={{ marginTop: '1.5rem' }}>
+              <CodeBlock code={`import {
+  TIMEZONE_COUNT,   // total number of canonical zones
+  TZDATA_VERSION,   // tzdata release string, e.g. "2026b"
+  TIMEZONE_LINKS,   // Record<alias, canonical> — legacy → modern name
+  TIMEZONE_NAMES,   // string[]  — all canonical IANA zone names
+} from '@yedoma-labs/tuuru-chrono-tz';
+
+TIMEZONE_COUNT          // 449 (canonical zones)
+TZDATA_VERSION          // "2026b"
+TIMEZONE_LINKS['EST']   // "America/New_York"
+TIMEZONE_LINKS['Asia/Calcutta']  // "Asia/Kolkata"
+
+// Also available via Timezone class
+Timezone.listAll()      // string[]  (same as TIMEZONE_NAMES)
+Timezone.search('New')  // zones containing "New"`} />
+            </div>
+          </Card>
+
+          <Card>
+            <SectionHeader
+              emoji="🌍" title="Global Locale — setDefaultLocale · getDefaultLocale"
+              subtitle="Switch the active locale globally — all subsequent DateTime instances use it automatically"
+              gradient="linear-gradient(135deg,#0f4c35,#16a34a)"
+            />
+            <GlobalLocaleDemo />
+            <div style={{ marginTop: '1.5rem' }}>
+              <CodeBlock code={`import { DateTime, setDefaultLocale, getDefaultLocale, fr, ja, ar } from '@yedoma-labs/tuuru-chrono-tz';
+
+// Set global locale — all new DateTime instances inherit it
+setDefaultLocale(fr);
+DateTime.now().format('dddd D MMMM YYYY')  // "dimanche 15 juin 2025"
+DateTime.now().fromNow()                   // "il y a quelques secondes"
+
+setDefaultLocale(ja);
+DateTime.now().format('MMMM D日')          // "6月15日"
+
+setDefaultLocale(ar);
+DateTime.now().fromNow()                   // "منذ ثانية"
+
+// Read current default
+getDefaultLocale().name    // "fr" | "ja" | "ar" ...
+
+// Reset to English
+setDefaultLocale(undefined);
+
+// Per-instance override still works
+DateTime.now().setLocale(fr).format('MMMM')  // "juin"  (ignores global)`} />
             </div>
           </Card>
 
