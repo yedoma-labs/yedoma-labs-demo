@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+### Added - tuuru-chrono-tz v0.2.0 Integration
+
+- Upgraded `@yedoma-labs/tuuru-chrono-tz` from v0.1.0 to v0.2.0
+- Added 18 new locale imports via tree-shakeable `./locales/<code>` subpaths:
+  `ms`, `sw`, `he`, `ca`, `tl`, `fil`, `gu`, `mr`, `ta`, `kk`, `uz`, `ka`, `mn`, `af`, `zh_Hans`, `zh_Hant`, `yue`
+- Updated locale grid to show 52 of 87 available locales (up from 34)
+- Added new demo card **v0.2.0 — Convenience Methods** showcasing:
+  - `DateTime.compareTo()`, `isBetween()`, `clamp()`, `weeksInYear`
+  - `DateTime.isToday()`, `isTomorrow()`, `isYesterday()`, `isWeekend()`, `isWeekday()`
+  - `LocalDate.compareTo()`, `isToday(tz?)`, `isWeekend()`, `isWeekday()`
+  - `LocalTime.compareTo()`, `isBetween()`
+- Replaced `LocalTime` workaround (`isAfter && isBefore`) with direct `isBetween()` call
+- Added `LocalDate.compareTo/isToday/isWeekend/isWeekday` chips to existing extended demo
+- Added `LocalTime.compareTo` chips to existing extended demo
+- Updated version badge from v0.1.0 to v0.2.0 and feature chip from "34 Locales" to "87 Locales"
+
 ### Added - turar-config v0.2.0 Integration
 
 - Upgraded `@yedoma-labs/turar-config` from v0.1.0 to v0.2.0

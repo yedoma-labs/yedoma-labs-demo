@@ -18,6 +18,23 @@ import {
   hi, bn, id, tr, vi, pl, nl, th, fa, ur, uk,
   da, sv, nb, fi, is as isl, hu, ro, bg, el, cs, sk, hr, sr,
 } from '@yedoma-labs/tuuru-chrono-tz'
+import { ms }     from '@yedoma-labs/tuuru-chrono-tz/locales/ms'
+import { sw }     from '@yedoma-labs/tuuru-chrono-tz/locales/sw'
+import { he }     from '@yedoma-labs/tuuru-chrono-tz/locales/he'
+import { ca }     from '@yedoma-labs/tuuru-chrono-tz/locales/ca'
+import { fil }    from '@yedoma-labs/tuuru-chrono-tz/locales/fil'
+import { gu }     from '@yedoma-labs/tuuru-chrono-tz/locales/gu'
+import { mr }     from '@yedoma-labs/tuuru-chrono-tz/locales/mr'
+import { ta }     from '@yedoma-labs/tuuru-chrono-tz/locales/ta'
+import { kk }     from '@yedoma-labs/tuuru-chrono-tz/locales/kk'
+import { uz }     from '@yedoma-labs/tuuru-chrono-tz/locales/uz'
+import { ka }     from '@yedoma-labs/tuuru-chrono-tz/locales/ka'
+import { zh_Hans } from '@yedoma-labs/tuuru-chrono-tz/locales/zh_Hans'
+import { zh_Hant } from '@yedoma-labs/tuuru-chrono-tz/locales/zh_Hant'
+import { tl }     from '@yedoma-labs/tuuru-chrono-tz/locales/tl'
+import { yue }    from '@yedoma-labs/tuuru-chrono-tz/locales/yue'
+import { af }     from '@yedoma-labs/tuuru-chrono-tz/locales/af'
+import { mn }     from '@yedoma-labs/tuuru-chrono-tz/locales/mn'
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 
@@ -70,8 +87,27 @@ const ALL_LOCALES = [
   { locale: el,  name: 'Ελληνικά',   flag: '🇬🇷', code: 'el' },
   { locale: cs,  name: 'Čeština',    flag: '🇨🇿', code: 'cs' },
   { locale: sk,  name: 'Slovenčina', flag: '🇸🇰', code: 'sk' },
-  { locale: hr,  name: 'Hrvatski',   flag: '🇭🇷', code: 'hr' },
-  { locale: sr,  name: 'Српски',     flag: '🇷🇸', code: 'sr' },
+  { locale: hr,  name: 'Hrvatski',       flag: '🇭🇷', code: 'hr' },
+  { locale: sr,  name: 'Српски',         flag: '🇷🇸', code: 'sr' },
+  // ── v0.2.0 — hand-crafted ──────────────────────────────────────────────────
+  { locale: ms,  name: 'Bahasa Melayu', flag: '🇲🇾', code: 'ms' },
+  { locale: sw,  name: 'Kiswahili',     flag: '🇰🇪', code: 'sw' },
+  { locale: he,  name: 'עברית',         flag: '🇮🇱', code: 'he' },
+  { locale: ca,  name: 'Català',        flag: '🇦🇩', code: 'ca' },
+  { locale: tl,  name: 'Filipino',      flag: '🇵🇭', code: 'tl' },
+  { locale: fil, name: 'Tagalog',       flag: '🇵🇭', code: 'fil' },
+  { locale: gu,  name: 'ગુજરાતી',       flag: '🇮🇳', code: 'gu' },
+  { locale: mr,  name: 'मराठी',          flag: '🇮🇳', code: 'mr' },
+  { locale: ta,  name: 'தமிழ்',          flag: '🇱🇰', code: 'ta' },
+  // ── v0.2.0 — CLDR-generated ────────────────────────────────────────────────
+  { locale: kk,     name: 'Қазақша',       flag: '🇰🇿', code: 'kk' },
+  { locale: uz,     name: "O'zbekcha",     flag: '🇺🇿', code: 'uz' },
+  { locale: ka,     name: 'ქართული',       flag: '🇬🇪', code: 'ka' },
+  { locale: mn,     name: 'Монгол',        flag: '🇲🇳', code: 'mn' },
+  { locale: af,     name: 'Afrikaans',     flag: '🇿🇦', code: 'af' },
+  { locale: zh_Hans, name: '简体中文',     flag: '🇨🇳', code: 'zh_Hans' },
+  { locale: zh_Hant, name: '繁體中文',     flag: '🇹🇼', code: 'zh_Hant' },
+  { locale: yue,    name: '粵語',          flag: '🇭🇰', code: 'yue' },
 ]
 
 // ─── Utilities ────────────────────────────────────────────────────────────────
@@ -1019,6 +1055,12 @@ function LocalExtendedDemo() {
             { l: 'dateC.isSameOrAfter(today)',                                       v: String(dateC.isSameOrAfter(today)),           c: '#8b5cf6' },
             { l: 'today.isBetween(dateA, dateC)',                                    v: String(today.isBetween(dateA, dateC)),        c: '#ec4899' },
             { l: "today.toDateTime('UTC', { hour:9 }).format('YYYY-MM-DD HH:mm')",  v: today.toDateTime('UTC', { hour: 9 }).format('YYYY-MM-DD HH:mm'), c: '#06b6d4' },
+            { l: 'dateA.compareTo(dateB)',                                           v: String(dateA.compareTo(dateB)),               c: '#f59e0b' },
+            { l: 'dateC.compareTo(dateA)',                                           v: String(dateC.compareTo(dateA)),               c: '#fb923c' },
+            { l: 'today.isToday()',                                                  v: String(today.isToday()),                      c: '#10b981' },
+            { l: 'today.isToday("UTC")',                                             v: String(today.isToday('UTC')),                 c: '#34d399' },
+            { l: 'today.isWeekend()',                                                v: String(today.isWeekend()),                    c: '#f472b6' },
+            { l: 'today.isWeekday()',                                                v: String(today.isWeekday()),                    c: '#ec4899' },
           ] as { l: string; v: string; c: string }[]).map(({ l, v, c }) => (
             <Chip key={l} label={l} value={v} color={c} />
           ))}
@@ -1035,9 +1077,110 @@ function LocalExtendedDemo() {
             { l: 'LocalTime.now().millisecondOfDay',                                  v: String(nowTime.millisecondOfDay),                             c: '#06b6d4' },
             { l: 'timeFromObj.equals(LocalTime.of(14,30,45))',                        v: String(timeFromObj.equals(LocalTime.of(14, 30, 45))),         c: '#a78bfa' },
             { l: 'timeFromObj.isAfter(midnight)',                                      v: String(timeFromObj.isAfter(midnight)),                        c: '#8b5cf6' },
-            { l: 'midnight.isSameOrBefore(noon)',                                      v: String(midnight.isSameOrBefore(noon)),                        c: '#ec4899' },
-            { l: 'noon.isSameOrAfter(midnight)',                                       v: String(noon.isSameOrAfter(midnight)),                         c: '#f472b6' },
-            { l: 'nowTime.isAfter(midnight) && nowTime.isBefore(noon)',               v: String(nowTime.isAfter(midnight) && nowTime.isBefore(noon)),  c: '#fb923c' },
+            { l: 'midnight.isSameOrBefore(noon)',                                      v: String(midnight.isSameOrBefore(noon)),               c: '#ec4899' },
+            { l: 'noon.isSameOrAfter(midnight)',                                       v: String(noon.isSameOrAfter(midnight)),                c: '#f472b6' },
+            { l: 'nowTime.isBetween(midnight, noon)',                                  v: String(nowTime.isBetween(midnight, noon)),           c: '#fb923c' },
+            { l: 'nowTime.compareTo(midnight)',                                         v: String(nowTime.compareTo(midnight)),                 c: '#a78bfa' },
+            { l: 'midnight.compareTo(noon)',                                            v: String(midnight.compareTo(noon)),                    c: '#8b5cf6' },
+            { l: 'noon.compareTo(noon)',                                                v: String(noon.compareTo(noon)),                        c: '#6366f1' },
+          ] as { l: string; v: string; c: string }[]).map(({ l, v, c }) => (
+            <Chip key={l} label={l} value={v} color={c} />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── v0.2.0 — Convenience Methods ────────────────────────────────────────────
+
+function DateTimeConvenienceDemo() {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  if (!mounted) return null
+
+  const now       = DateTime.now('America/New_York')
+  const tomorrow  = now.add({ days: 1 })
+  const yesterday = now.subtract({ days: 1 })
+  const future    = DateTime.fromISO('2030-06-15T12:00:00Z', { timezone: 'UTC' })
+  const minDt     = DateTime.fromISO('2025-01-01T00:00:00Z', { timezone: 'UTC' })
+  const maxDt     = DateTime.fromISO('2027-12-31T23:59:59Z', { timezone: 'UTC' })
+  const clamped   = future.clamp(minDt, maxDt)
+
+  const todayLD    = LocalDate.today()
+  const tomorrowLD = todayLD.add({ days: 1 })
+  const pastLD     = LocalDate.of(todayLD.year - 1, 6, 15)
+
+  const nowTime  = LocalTime.now()
+  const morning  = LocalTime.of(9, 0)
+  const evening  = LocalTime.of(18, 0)
+
+  const subHead = (label: string) => (
+    <div style={{ color: '#94a3b8', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.65rem' }}>{label}</div>
+  )
+
+  return (
+    <div style={{ display: 'grid', gap: '1.75rem' }}>
+      <div>
+        {subHead('DateTime — compareTo · isBetween · clamp · weeksInYear')}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(290px,1fr))', gap: '0.65rem' }}>
+          {([
+            { l: 'now.compareTo(tomorrow)',              v: String(now.compareTo(tomorrow)),              c: '#f59e0b' },
+            { l: 'tomorrow.compareTo(now)',              v: String(tomorrow.compareTo(now)),              c: '#fb923c' },
+            { l: 'now.compareTo(now)',                   v: String(now.compareTo(DateTime.now('America/New_York'))), c: '#a78bfa' },
+            { l: 'now.isBetween(yesterday, tomorrow)',   v: String(now.isBetween(yesterday, tomorrow)),   c: '#10b981' },
+            { l: 'future.isBetween(yesterday, tomorrow)',v: String(future.isBetween(yesterday, tomorrow)),c: '#34d399' },
+            { l: 'future.clamp(minDt, maxDt) — year',   v: clamped.toISO().slice(0, 10),                 c: '#06b6d4' },
+            { l: 'now.weeksInYear',                      v: String(now.weeksInYear),                      c: '#60a5fa' },
+          ] as { l: string; v: string; c: string }[]).map(({ l, v, c }) => (
+            <Chip key={l} label={l} value={v} color={c} />
+          ))}
+        </div>
+      </div>
+      <div>
+        {subHead('DateTime — calendar predicates (evaluated in instance timezone)')}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(290px,1fr))', gap: '0.65rem' }}>
+          {([
+            { l: 'now.isToday()',          v: String(now.isToday()),          c: '#a78bfa' },
+            { l: 'now.isTomorrow()',       v: String(now.isTomorrow()),       c: '#8b5cf6' },
+            { l: 'now.isYesterday()',      v: String(now.isYesterday()),      c: '#7c3aed' },
+            { l: 'now.isWeekend()',        v: String(now.isWeekend()),        c: '#ec4899' },
+            { l: 'now.isWeekday()',        v: String(now.isWeekday()),        c: '#f472b6' },
+            { l: 'tomorrow.isToday()',     v: String(tomorrow.isToday()),     c: '#64748b' },
+            { l: 'tomorrow.isTomorrow()',  v: String(tomorrow.isTomorrow()),  c: '#10b981' },
+            { l: 'yesterday.isYesterday()',v: String(yesterday.isYesterday()),c: '#34d399' },
+          ] as { l: string; v: string; c: string }[]).map(({ l, v, c }) => (
+            <Chip key={l} label={l} value={v} color={c} />
+          ))}
+        </div>
+      </div>
+      <div>
+        {subHead('LocalDate — compareTo · isToday · isWeekend · isWeekday')}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(290px,1fr))', gap: '0.65rem' }}>
+          {([
+            { l: 'todayLD.compareTo(tomorrowLD)',  v: String(todayLD.compareTo(tomorrowLD)),  c: '#f59e0b' },
+            { l: 'tomorrowLD.compareTo(todayLD)', v: String(tomorrowLD.compareTo(todayLD)),   c: '#fb923c' },
+            { l: 'todayLD.compareTo(todayLD)',     v: String(todayLD.compareTo(todayLD)),      c: '#a78bfa' },
+            { l: 'todayLD.isToday()',              v: String(todayLD.isToday()),               c: '#10b981' },
+            { l: 'todayLD.isToday("UTC")',         v: String(todayLD.isToday('UTC')),          c: '#34d399' },
+            { l: 'pastLD.isToday()',               v: String(pastLD.isToday()),                c: '#64748b' },
+            { l: 'todayLD.isWeekend()',            v: String(todayLD.isWeekend()),             c: '#ec4899' },
+            { l: 'todayLD.isWeekday()',            v: String(todayLD.isWeekday()),             c: '#f472b6' },
+          ] as { l: string; v: string; c: string }[]).map(({ l, v, c }) => (
+            <Chip key={l} label={l} value={v} color={c} />
+          ))}
+        </div>
+      </div>
+      <div>
+        {subHead('LocalTime — compareTo · isBetween')}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(290px,1fr))', gap: '0.65rem' }}>
+          {([
+            { l: 'nowTime.compareTo(morning)',          v: String(nowTime.compareTo(morning)),          c: '#f59e0b' },
+            { l: 'nowTime.compareTo(evening)',          v: String(nowTime.compareTo(evening)),          c: '#fb923c' },
+            { l: 'morning.compareTo(morning)',          v: String(morning.compareTo(morning)),          c: '#a78bfa' },
+            { l: 'nowTime.isBetween(morning, evening)', v: String(nowTime.isBetween(morning, evening)), c: '#10b981' },
+            { l: 'morning.isBetween(morning, evening)', v: String(morning.isBetween(morning, evening)), c: '#34d399' },
+            { l: 'evening.isBetween(morning, evening)', v: String(evening.isBetween(morning, evening)), c: '#06b6d4' },
           ] as { l: string; v: string; c: string }[]).map(({ l, v, c }) => (
             <Chip key={l} label={l} value={v} color={c} />
           ))}
@@ -1191,7 +1334,7 @@ export default function ChronoTzPage() {
                   padding: '0.3rem 0.8rem', borderRadius: '2rem', marginBottom: '1rem',
                 }}>
                   <code style={{ color: '#a78bfa', fontSize: '0.75rem', fontWeight: 700 }}>@yedoma-labs/tuuru-chrono-tz</code>
-                  <span style={{ background: '#6366f1', color: 'white', padding: '0.1rem 0.45rem', borderRadius: '4px', fontSize: '0.65rem', fontWeight: 800 }}>v0.1.0</span>
+                  <span style={{ background: '#6366f1', color: 'white', padding: '0.1rem 0.45rem', borderRadius: '4px', fontSize: '0.65rem', fontWeight: 800 }}>v0.2.0</span>
                 </div>
 
                 <h1 style={{
@@ -1209,7 +1352,7 @@ export default function ChronoTzPage() {
                 </p>
 
                 <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
-                  {['Zero Dependencies','Immutable API','568 IANA Zones','34 Locales','Duration Arithmetic','Relative Between','TZDATA Constants','Global Locale','<20KB Bundle'].map(tag => (
+                  {['Zero Dependencies','Immutable API','568 IANA Zones','87 Locales','Duration Arithmetic','Relative Between','TZDATA Constants','Calendar Predicates','<20KB Bundle'].map(tag => (
                     <span key={tag} style={{
                       padding: '0.3rem 0.7rem', background: 'rgba(99,102,241,0.12)',
                       border: '1px solid rgba(99,102,241,0.25)', borderRadius: '6px',
@@ -1413,7 +1556,7 @@ today.isBefore(today.add({ days: 1 }))       // true`} />
 
           <Card>
             <SectionHeader
-              emoji="🌐" title="All 34 Locales"
+              emoji="🌐" title="87 Locales (showing 52 of 87)"
               subtitle="Every shipped locale — format() month/weekday names and fromNow() both use the locale automatically"
               gradient="linear-gradient(135deg,#064e3b,#10b981)"
             />
@@ -1552,7 +1695,7 @@ dt.setYear(2000).setMonth(1).setDay(1).toISO()  // "2000-01-01T14:30:00..."`} />
           <Card>
             <SectionHeader
               emoji="📅" title="LocalDate & LocalTime — Complete API"
-              subtitle="fromObject(), fromDateTime(), min(), max(), millisecondOfDay, isSameOrBefore/After, isBetween"
+              subtitle="fromObject(), fromDateTime(), min(), max(), compareTo(), isToday(), isWeekend(), isBetween(), millisecondOfDay"
               gradient="linear-gradient(135deg,#4a1942,#a21caf)"
             />
             <LocalExtendedDemo />
@@ -1579,7 +1722,9 @@ today.toDateTime('America/New_York', { hour: 9, minute: 30 })  // DateTime at 9:
 LocalTime.fromObject({ hour:14, minute:30, second:45 })
 LocalTime.fromDateTime(DateTime.now())
 LocalTime.of(12, 0, 0).millisecondOfDay   // 43200000
-nowTime.isBetween(midnight, LocalTime.of(23,59,59))  // true`} />
+nowTime.isBetween(midnight, LocalTime.of(23,59,59))  // true
+nowTime.compareTo(midnight)                // 1 (after midnight)
+midnight.compareTo(noon)                   // -1 (before noon)`} />
             </div>
           </Card>
 
@@ -1638,6 +1783,58 @@ setDefaultLocale(undefined);
 
 // Per-instance override still works
 DateTime.now().setLocale(fr).format('MMMM')  // "juin"  (ignores global)`} />
+            </div>
+          </Card>
+
+          <Card>
+            <SectionHeader
+              emoji="✨" title="v0.2.0 — Convenience Methods"
+              subtitle="compareTo(), isBetween(), isToday(), isTomorrow(), isYesterday(), isWeekend(), isWeekday(), clamp(), weeksInYear — new in 0.2.0"
+              gradient="linear-gradient(135deg,#1e1b4b,#3730a3)"
+            />
+            <DateTimeConvenienceDemo />
+            <div style={{ marginTop: '1.5rem' }}>
+              <CodeBlock code={`import { DateTime, LocalDate, LocalTime } from '@yedoma-labs/tuuru-chrono-tz';
+
+// ── DateTime comparisons ────────────────────────────────────────────────────
+const now      = DateTime.now('America/New_York');
+const tomorrow = now.add({ days: 1 });
+const past     = now.subtract({ days: 30 });
+
+now.compareTo(tomorrow)               // -1
+tomorrow.compareTo(now)               // +1
+now.compareTo(DateTime.now())         //  0
+
+now.isBetween(past, tomorrow)         // true
+tomorrow.isBetween(past, now)         // false
+
+// Clamp to valid range
+const future = DateTime.fromISO('2030-01-01T00:00:00Z');
+const min    = DateTime.fromISO('2025-01-01T00:00:00Z');
+const max    = DateTime.fromISO('2027-12-31T23:59:59Z');
+future.clamp(min, max).toISO()        // "2027-12-31T23:59:59.000Z"
+
+now.weeksInYear                       // 52 or 53 (ISO 8601)
+
+// ── Calendar predicates ─────────────────────────────────────────────────────
+now.isToday()      // true
+now.isTomorrow()   // false
+now.isYesterday()  // false
+now.isWeekend()    // true if Saturday or Sunday
+now.isWeekday()    // true if Monday–Friday
+
+// ── LocalDate ───────────────────────────────────────────────────────────────
+const today = LocalDate.today();
+today.compareTo(today.add({ days: 1 }))  // -1
+today.isToday()                          // true
+today.isToday('UTC')                     // true (check against UTC date)
+today.isWeekend()                        // true/false
+today.isWeekday()                        // true/false
+
+// ── LocalTime ───────────────────────────────────────────────────────────────
+const t = LocalTime.now();
+t.compareTo(LocalTime.of(9, 0))          // -1 | 0 | 1
+t.isBetween(LocalTime.of(9, 0), LocalTime.of(18, 0))  // true during business hours`} />
             </div>
           </Card>
 
