@@ -194,8 +194,12 @@ export default function ComparisonPage() {
             </div>
           </div>
 
-          <div style={{ marginBottom:'1.5rem' }}>
+          <div style={{ marginBottom:'1.5rem',display:'flex',alignItems:'center',gap:'1rem',flexWrap:'wrap' }}>
             <Link href="/" style={{ color:'#a78bfa',textDecoration:'none',fontSize:'0.85rem' }}>← All Demos</Link>
+            <span style={{ color:'#1e293b' }}>·</span>
+            <a href="https://www.npmjs.com/package/@yedoma-labs/sir-forms" target="_blank" rel="noopener noreferrer" style={{ color:'#8b5cf6',textDecoration:'none',fontSize:'0.85rem' }}>sir-forms npm ↗</a>
+            <span style={{ color:'#1e293b' }}>·</span>
+            <a href="https://www.npmjs.com/package/@yedoma-labs/suruy-form-actions" target="_blank" rel="noopener noreferrer" style={{ color:'#fb923c',textDecoration:'none',fontSize:'0.85rem' }}>suruy npm ↗</a>
           </div>
 
           {/* Comparison Table */}

@@ -1231,6 +1231,9 @@ export default function ChronoTzPage() {
             <span style={{ color: '#1e293b' }}>·</span>
             <a href="https://www.npmjs.com/package/@yedoma-labs/tuuru-chrono-tz" target="_blank" rel="noopener noreferrer"
               style={{ color: '#6366f1', textDecoration: 'none', fontSize: '0.85rem' }}>npm ↗</a>
+            <span style={{ color: '#1e293b' }}>·</span>
+            <a href="https://github.com/yedoma-labs/tuuru-chrono-tz" target="_blank" rel="noopener noreferrer"
+              style={{ color: '#64748b', textDecoration: 'none', fontSize: '0.85rem' }}>GitHub ↗</a>
           </div>
 
           {/* ── Sections ── */}

@@ -122,6 +122,10 @@ export default function ConfigPage() {
             <Link href="/" style={{ color:'#3b82f6',textDecoration:'none',fontSize:'0.85rem' }}>← All Demos</Link>
             <span style={{ color:'#1e293b' }}>·</span>
             <Link href="/config/hotreload" style={{ color:'#ef4444',textDecoration:'none',fontSize:'0.85rem',fontWeight:700 }}>🔥 Hot Reload Demo →</Link>
+            <span style={{ color:'#1e293b' }}>·</span>
+            <a href="https://www.npmjs.com/package/@yedoma-labs/turar-config" target="_blank" rel="noopener noreferrer" style={{ color:'#06b6d4',textDecoration:'none',fontSize:'0.85rem' }}>npm ↗</a>
+            <span style={{ color:'#1e293b' }}>·</span>
+            <a href="https://github.com/yedoma-labs/turar-config" target="_blank" rel="noopener noreferrer" style={{ color:'#64748b',textDecoration:'none',fontSize:'0.85rem' }}>GitHub ↗</a>
           </div>
 
           {/* Interactive Demos */}

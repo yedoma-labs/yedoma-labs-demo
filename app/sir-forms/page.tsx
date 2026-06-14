@@ -239,9 +239,13 @@ export default function SirFormsPage() {
         code { font-family: monospace; }
       `}</style>
 
-      <Link href="/" style={{ color: '#8b5cf6', textDecoration: 'none', fontSize: '0.875rem', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', marginBottom: '2rem' }}>
-        ← Back to Home
-      </Link>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+        <Link href="/" style={{ color: '#8b5cf6', textDecoration: 'none', fontSize: '0.875rem' }}>← All Demos</Link>
+        <span style={{ color: '#1e293b' }}>·</span>
+        <a href="https://www.npmjs.com/package/@yedoma-labs/sir-forms" target="_blank" rel="noopener noreferrer" style={{ color: '#a78bfa', textDecoration: 'none', fontSize: '0.875rem' }}>npm ↗</a>
+        <span style={{ color: '#1e293b' }}>·</span>
+        <a href="https://github.com/yedoma-labs/sir-forms" target="_blank" rel="noopener noreferrer" style={{ color: '#64748b', textDecoration: 'none', fontSize: '0.875rem' }}>GitHub ↗</a>
+      </div>
 
       {/* Hero */}
       <div style={{
