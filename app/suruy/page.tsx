@@ -18,7 +18,6 @@ function ContactFormWithSuruy() {
   const { state, action, pending, formRef } = useFormAction(suruySendContactMessage, {
     onSuccess: (data) => {
       formLogger.info('Contact form success', { data })
-      alert(`Message sent! ID: ${data.messageId}`)
     },
     onError: (errors) => {
       formLogger.error('Contact form errors', { errors })
@@ -74,9 +73,6 @@ function ContactFormWithSuruy() {
 // Example 2: Simple action without schema
 function QuickSubscribeForm() {
   const { state, action, pending, formRef } = useFormAction(suruyQuickSubscribe, {
-    onSuccess: () => {
-      alert('Thanks for subscribing!')
-    },
     resetOnSuccess: true,
   })
 
@@ -105,9 +101,7 @@ function FileUploadForm() {
   const [filePreview, setFilePreview] = useState<string | null>(null)
 
   const { state, action, pending, formRef } = useFormAction(suruyUploadFile, {
-    onSuccess: (data) => {
-      formLogger.info('File uploaded', { data })
-      alert(`File uploaded: ${data.fileName}`)
+    onSuccess: () => {
       setFilePreview(null)
     },
     resetOnSuccess: true,
@@ -167,7 +161,6 @@ function RegistrationForm() {
   const { state, action, pending, formRef } = useFormAction(suruyRegisterUser, {
     onSuccess: (data) => {
       formLogger.info('User registered', { data })
-      alert(`Welcome, ${data.username}!`)
     },
     resetOnSuccess: true,
   })
@@ -230,7 +223,6 @@ function TagsForm() {
   const { state, action, pending, formRef } = useFormAction(suruyAddTags, {
     onSuccess: (data) => {
       formLogger.info('Tags added', { data })
-      alert(`Added ${data.count} tag(s) to ${data.category}`)
       setTags([''])
     },
   })
@@ -302,9 +294,6 @@ function TagsForm() {
 // Example 6: Zod integration - Login form
 function ZodLoginExample() {
   const { state, action, pending, formRef } = useFormAction(suruyZodLogin, {
-    onSuccess: (data) => {
-      alert(`Logged in! Token: ${data.token}`)
-    },
     resetOnSuccess: true,
   })
 
@@ -345,9 +334,6 @@ function ZodLoginExample() {
 // Example 7: Advanced Zod with refinements
 function ZodProductExample() {
   const { state, action, pending, formRef } = useFormAction(suruyZodAddProduct, {
-    onSuccess: (data) => {
-      alert(`Product added! Final price: $${data.finalPrice.toFixed(2)}`)
-    },
     resetOnSuccess: true,
   })
 
@@ -507,6 +493,123 @@ export default function SuruyFormActionsDemo() {
 
       <ZodLoginExample />
       <ZodProductExample />
+
+      {/* Code Examples */}
+      <section style={{ marginBottom: '2rem', background: 'rgba(30,41,59,0.5)', borderRadius: '16px', padding: '2rem', border: '1px solid #1e293b' }}>
+        <div style={{ display:'inline-flex',alignItems:'center',gap:'0.6rem',background:'linear-gradient(135deg,#7c2d12,#f97316)',padding:'0.4rem 1.1rem',borderRadius:'2rem',marginBottom:'1.75rem' }}>
+          <span style={{ fontSize:'1.1rem' }}>📖</span>
+          <h2 style={{ color:'white',fontSize:'1.1rem',fontWeight:800,margin:0 }}>API Code Examples</h2>
+        </div>
+        {[
+          {
+            title: '1. Basic — useFormAction + server action',
+            code: `// Client component
+'use client'
+import { useFormAction } from '@yedoma-labs/suruy-form-actions'
+import { myAction } from './actions'
+
+function MyForm() {
+  const { state, action, pending, formRef } = useFormAction(myAction, {
+    onSuccess: (data) => console.log('Done!', data),
+    resetOnSuccess: true,   // resets form fields after success
+  })
+
+  return (
+    <form ref={formRef} action={action}>
+      <input name="email" type="email" disabled={pending} />
+      {state.errors?.email && <span>{state.errors.email[0]}</span>}
+      <button type="submit" disabled={pending}>
+        {pending ? 'Submitting…' : 'Submit'}
+      </button>
+      {state.success && <p>✅ {state.data?.message}</p>}
+    </form>
+  )
+}`,
+          },
+          {
+            title: '2. Server action — built-in zero-dep validator',
+            code: `// Server action
+'use server'
+import { createFormAction, v } from '@yedoma-labs/suruy-form-actions'
+
+export const myAction = createFormAction(
+  // Schema — v.* helpers are built-in, no extra install
+  {
+    email:   v.string().email(),
+    name:    v.string().min(2).max(50),
+    message: v.string().min(10).optional(),
+    role:    v.enum(['admin', 'user', 'guest']),
+  },
+  // Handler — only runs if validation passes
+  async (data) => {
+    await db.users.create(data)
+    return { message: \`Welcome, \${data.name}!\` }
+  },
+)`,
+          },
+          {
+            title: '3. File upload validation',
+            code: `'use server'
+import { createFormAction, v } from '@yedoma-labs/suruy-form-actions'
+
+export const uploadAction = createFormAction(
+  {
+    title: v.string().min(1),
+    file: v.file()
+      .maxSize(5 * 1024 * 1024)   // 5 MB
+      .accept(['image/jpeg', 'image/png', 'image/webp']),
+  },
+  async ({ title, file }) => {
+    const bytes = await file.arrayBuffer()
+    // write to disk / upload to S3 / etc.
+    return { fileName: file.name, fileSize: file.size }
+  },
+)`,
+          },
+          {
+            title: '4. Zod integration — plug in your own schema',
+            code: `'use server'
+import { createFormAction } from '@yedoma-labs/suruy-form-actions'
+import { z } from 'zod'
+
+const loginSchema = z.object({
+  email:    z.string().email(),
+  password: z.string().min(8),
+  rememberMe: z.boolean().optional(),
+})
+
+// Pass your Zod schema — suruy handles parsing + error formatting
+export const zodLoginAction = createFormAction(loginSchema, async (data) => {
+  const user = await auth.verifyCredentials(data.email, data.password)
+  return { token: user.sessionToken }
+})`,
+          },
+          {
+            title: '5. createSimpleAction — no schema needed',
+            code: `'use server'
+import { createSimpleAction } from '@yedoma-labs/suruy-form-actions'
+
+// For quick one-off actions where you handle validation yourself
+export const subscribeAction = createSimpleAction(async (formData) => {
+  const email = formData.get('email') as string
+
+  if (!email?.includes('@')) {
+    return { errors: { email: ['Invalid email address'] } }
+  }
+
+  await newsletter.subscribe(email)
+  return { data: { email, message: 'Subscribed!' } }
+})`,
+          },
+        ].map(({ title, code }) => (
+          <div key={title} style={{ marginBottom:'1.5rem' }}>
+            <h3 style={{ color:'#94a3b8',fontSize:'0.8rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.06em',marginBottom:'0.75rem' }}>{title}</h3>
+            <pre style={{ background:'#020817',color:'#e2e8f0',padding:'1.25rem',borderRadius:'10px',fontSize:'0.775rem',overflowX:'auto',fontFamily:"'Fira Code','Cascadia Code','Consolas',monospace",lineHeight:1.7,border:'1px solid #1e293b',margin:0 }}>
+              <code>{code}</code>
+            </pre>
+          </div>
+        ))}
+      </section>
 
       {/* Library comparison link */}
       <div style={{

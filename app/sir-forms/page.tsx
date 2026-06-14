@@ -291,6 +291,142 @@ export default function SirFormsPage() {
 
       <SubmissionTracker />
 
+      {/* Code Examples */}
+      <section style={{ marginBottom: '2rem', background: 'rgba(30,41,59,0.5)', borderRadius: '16px', padding: '2rem', border: '1px solid #1e293b' }}>
+        <div style={{ display:'inline-flex',alignItems:'center',gap:'0.6rem',background:'linear-gradient(135deg,#1e0a3c,#4c1d95)',padding:'0.4rem 1.1rem',borderRadius:'2rem',marginBottom:'1.75rem' }}>
+          <span style={{ fontSize:'1.1rem' }}>📖</span>
+          <h2 style={{ color:'white',fontSize:'1.1rem',fontWeight:800,margin:0 }}>API Code Examples</h2>
+        </div>
+
+        {[
+          {
+            title: '1. Setup — wrap your page with FormProvider',
+            code: `import { FormProvider } from '@yedoma-labs/sir-forms'
+
+// FormProvider holds all field state for children
+// initialValues defines field names + starting values
+export default function MyPage() {
+  return (
+    <FormProvider initialValues={{ name: '', email: '', message: '' }}>
+      <MyForm />
+    </FormProvider>
+  )
+}`,
+          },
+          {
+            title: '2. useForm + useField — field-level hooks',
+            code: `import { useForm, useField } from '@yedoma-labs/sir-forms'
+
+function MyForm() {
+  const form       = useForm()       // form.isSubmitting, form.errors
+  const nameField  = useField('name')  // name, value, onChange, error
+  const emailField = useField('email')
+
+  return (
+    <form onSubmit={/* see below */}>
+      <input
+        name={nameField.name}
+        value={(nameField.value as string) ?? ''}
+        onChange={nameField.onChange}
+        disabled={form.isSubmitting}
+      />
+      {nameField.error && <div role="alert">{nameField.error}</div>}
+
+      <input
+        name={emailField.name}
+        value={(emailField.value as string) ?? ''}
+        onChange={emailField.onChange}
+        disabled={form.isSubmitting}
+      />
+      {emailField.error && <div role="alert">{emailField.error}</div>}
+
+      <button type="submit" disabled={form.isSubmitting}>
+        {form.isSubmitting ? 'Submitting…' : 'Submit'}
+      </button>
+    </form>
+  )
+}`,
+          },
+          {
+            title: '3. useFormSubmit — connect to a Server Action',
+            code: `import { useFormSubmit } from '@yedoma-labs/sir-forms'
+import { myServerAction } from './actions'
+
+function MyForm() {
+  const form = useForm()
+  const nameField = useField('name')
+
+  const handleSubmit = useFormSubmit(myServerAction, {
+    onSuccess: (data) => {
+      console.log('Submitted!', data)
+      // data is whatever your server action returns
+    },
+    onError: (errors) => {
+      // errors: Record<string, string> — one message per field
+      console.error('Validation failed', errors)
+    },
+  })
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* fields here */}
+    </form>
+  )
+}`,
+          },
+          {
+            title: '4. Server Action — validate + return errors or data',
+            code: `'use server'
+
+export async function myServerAction(prevState: unknown, formData: FormData) {
+  const name  = formData.get('name') as string
+  const email = formData.get('email') as string
+
+  // Return errors — sir-forms maps them to the matching field hooks
+  if (!name?.trim())        return { errors: { name: 'Name is required' } }
+  if (!email?.includes('@')) return { errors: { email: 'Invalid email format' } }
+
+  // Do your work (DB call, API call, etc.)
+  const result = await db.users.create({ name, email })
+
+  // Return data — onSuccess receives this
+  return { data: { id: result.id, name } }
+}`,
+          },
+          {
+            title: '5. useServerAction — wrap any server action with loading state',
+            code: `import { useServerAction } from '@yedoma-labs/sir-forms'
+import { incrementLikes } from './actions'
+
+function LikeButton() {
+  const [likes, setLikes] = useState(0)
+  const executeAction = useServerAction(incrementLikes)
+
+  const handleClick = async () => {
+    const result = await executeAction({ count: likes })
+    if (result.success && result.data) setLikes(result.data.count)
+    if (result.error) console.error(result.error)
+  }
+
+  return <button onClick={handleClick}>👍 {likes}</button>
+}
+
+// The server action (not a form action, just a plain async function)
+'use server'
+export async function incrementLikes({ count }: { count: number }) {
+  return { count: count + 1 }
+}`,
+          },
+        ].map(({ title, code }) => (
+          <div key={title} style={{ marginBottom:'1.5rem' }}>
+            <h3 style={{ color:'#94a3b8',fontSize:'0.8rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.06em',marginBottom:'0.75rem' }}>{title}</h3>
+            <pre style={{ background:'#020817',color:'#e2e8f0',padding:'1.25rem',borderRadius:'10px',fontSize:'0.775rem',overflowX:'auto',fontFamily:"'Fira Code','Cascadia Code','Consolas',monospace",lineHeight:1.7,border:'1px solid #1e293b',margin:0 }}>
+              <code>{code}</code>
+            </pre>
+          </div>
+        ))}
+      </section>
+
       {/* Links to related demos */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem', marginTop: '2rem' }}>
         {[

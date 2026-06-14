@@ -126,21 +126,28 @@ function ComputedStats() {
 
 function TimeTravelDebugger() {
   const [snapshotList, setSnapshotList] = useState<any[]>([])
+  const [notice, setNotice] = useState<{ text: string; ok: boolean } | null>(null)
+
+  const notify = (text: string, ok = true) => {
+    setNotice({ text, ok })
+    setTimeout(() => setNotice(null), 3000)
+  }
 
   const createSnapshot = () => {
     const id = `snapshot-${Date.now()}`
     snapshots.create(id, `Manual snapshot at ${new Date().toLocaleTimeString()}`)
     setSnapshotList(snapshots.list())
+    notify('Snapshot created')
   }
 
   const restore = (id: string) => {
-    if (snapshots.restore(id)) alert(`Restored to snapshot: ${id}`)
+    if (snapshots.restore(id)) notify(`Restored to: ${id.replace('snapshot-', '')}`)
   }
 
   const showDiff = (id: string) => {
     const diff = snapshots.diff(id)
     storeLogger.info('Snapshot diff', { diff })
-    alert(`Check console for diff from snapshot ${id}`)
+    notify('Diff logged to console', true)
   }
 
   return (
@@ -155,10 +162,17 @@ function TimeTravelDebugger() {
       <button
         type="button"
         onClick={createSnapshot}
-        style={{ background:'linear-gradient(135deg,#78350f,#f59e0b)',color:'white',border:'none',borderRadius:'8px',padding:'0.55rem 1.1rem',fontSize:'0.8rem',fontWeight:700,cursor:'pointer',marginBottom:'1rem' }}
+        style={{ background:'linear-gradient(135deg,#78350f,#f59e0b)',color:'white',border:'none',borderRadius:'8px',padding:'0.55rem 1.1rem',fontSize:'0.8rem',fontWeight:700,cursor:'pointer',marginBottom:'0.75rem' }}
       >
         📸 Create Snapshot
       </button>
+      {notice && (
+        <div style={{ padding:'0.4rem 0.75rem',borderRadius:'6px',fontSize:'0.75rem',fontWeight:600,marginBottom:'0.5rem',
+          background: notice.ok ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)',
+          color: notice.ok ? '#10b981' : '#ef4444',
+          border: `1px solid ${notice.ok ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.3)'}`,
+        }}>{notice.text}</div>
+      )}
       <div style={{ maxHeight:'200px',overflowY:'auto',display:'flex',flexDirection:'column',gap:'0.4rem' }}>
         {snapshotList.length === 0 ? (
           <p style={{ color:'#334155',fontSize:'0.78rem' }}>No snapshots yet. Create one above!</p>
@@ -183,6 +197,7 @@ function OptimisticTodoList() {
   const [todos, setTodos] = useState<string[]>([])
   const [newTodo, setNewTodo] = useState('')
   const [pending, setPending] = useState<Set<string>>(new Set())
+  const [rollbackMsg, setRollbackMsg] = useState<string | null>(null)
 
   const addTodo = async () => {
     if (!newTodo.trim()) return
@@ -205,7 +220,8 @@ function OptimisticTodoList() {
     } catch {
       setTodos(prev => prev.filter(t => t !== todoText))
       setPending(prev => { const n = new Set(prev); n.delete(id); return n })
-      alert('Failed to add todo — rolled back')
+      setRollbackMsg('Rolled back — server rejected the todo')
+      setTimeout(() => setRollbackMsg(null), 3000)
     }
   }
 
@@ -229,6 +245,11 @@ function OptimisticTodoList() {
         />
         <button type="button" onClick={addTodo} style={{ padding:'0.55rem 1rem',background:'linear-gradient(135deg,#4c1d95,#8b5cf6)',color:'white',border:'none',borderRadius:'7px',cursor:'pointer',fontSize:'0.85rem',fontWeight:700,flexShrink:0 }}>Add</button>
       </div>
+      {rollbackMsg && (
+        <div style={{ padding:'0.4rem 0.75rem',borderRadius:'6px',fontSize:'0.75rem',fontWeight:600,marginBottom:'0.5rem',
+          background:'rgba(239,68,68,0.15)',color:'#ef4444',border:'1px solid rgba(239,68,68,0.3)',
+        }}>{rollbackMsg}</div>
+      )}
       <div style={{ display:'flex',flexDirection:'column',gap:'0.4rem',maxHeight:180,overflowY:'auto' }}>
         {todos.length === 0 ? (
           <p style={{ color:'#334155',fontSize:'0.78rem' }}>No todos yet. Add one above!</p>
@@ -598,6 +619,146 @@ export default function FeaturesPage() {
                 Current submission count: <strong style={{ color:'#c4b5fd' }}>{formState.submissionCount}</strong>
               </p>
             )}
+          </div>
+
+          {/* Code Examples */}
+          <div style={{ background:'#1e293b',borderRadius:'16px',padding:'2rem',marginBottom:'1.5rem',border:'1px solid #334155' }}>
+            <div style={{ display:'inline-flex',alignItems:'center',gap:'0.6rem',background:'linear-gradient(135deg,#1e1b4b,#6366f1)',padding:'0.4rem 1.1rem',borderRadius:'2rem',marginBottom:'1.75rem' }}>
+              <span style={{ fontSize:'1.1rem' }}>📖</span>
+              <h2 style={{ color:'white',fontSize:'1.1rem',fontWeight:800,margin:0 }}>API Code Examples</h2>
+            </div>
+            {[
+              {
+                title: '1. createStore — minimal reactive state',
+                code: `import { createStore } from '@yedoma-labs/ichchi-state'
+
+const store = createStore({ count: 0, user: null })
+
+// Read state
+store.getState()           // { count: 0, user: null }
+
+// Update state
+store.setState({ count: 1 })
+store.setState(s => ({ ...s, count: s.count + 1 }))
+
+// Subscribe to changes
+const unsub = store.subscribe((state) => {
+  console.log('New state:', state)
+})
+unsub()  // cleanup`,
+              },
+              {
+                title: '2. computed() — auto-updating derived values',
+                code: `import { createStore, computed } from '@yedoma-labs/ichchi-state'
+
+const store = createStore({ items: [], filter: 'all' })
+
+const filtered = computed(store, (state) => ({
+  visible: state.filter === 'all'
+    ? state.items
+    : state.items.filter(i => i.status === state.filter),
+  count: state.items.length,
+}))
+
+// In a React component:
+const [stats, setStats] = useState(filtered.get())
+useEffect(() => {
+  return filtered.subscribe(setStats)  // auto-updates
+}, [])`,
+              },
+              {
+                title: '3. createSnapshots() — time-travel debugging',
+                code: `import { createStore, createSnapshots } from '@yedoma-labs/ichchi-state'
+
+const store = createStore({ count: 0 })
+const snapshots = createSnapshots(store)
+
+// Save current state
+snapshots.create('before-update', 'Before the big change')
+store.setState({ count: 42 })
+
+// See what's saved
+snapshots.list()   // [{ id, label, timestamp, state }]
+
+// Go back in time
+snapshots.restore('before-update')  // count → 0
+
+// See what changed
+snapshots.diff('before-update')     // { count: { from: 0, to: 42 } }`,
+              },
+              {
+                title: '4. createHistoryBranching() — git-like state history',
+                code: `import { createStore, createHistoryBranching } from '@yedoma-labs/ichchi-state'
+
+const store = createStore({ count: 0 })
+const branching = createHistoryBranching(store)
+
+store.setState(s => ({ ...s, count: s.count + 1 }))
+
+// Create and switch branches
+branching.createBranch('experiment')
+branching.checkout('experiment')
+
+store.setState({ count: 100 })  // only on 'experiment' branch
+
+branching.checkout('main')      // count back to 1
+branching.back()                // undo one step
+branching.forward()             // redo
+branching.visualize()           // ASCII tree of history`,
+              },
+              {
+                title: '5. createBatcher() + subscribeToField() — fine-grained control',
+                code: `import { createStore, createBatcher, subscribeToField } from '@yedoma-labs/ichchi-state'
+
+const store = createStore({ x: 0, y: 0, z: 0 })
+const batcher = createBatcher(store)
+
+// Without batching: 3 setState = 3 notifications
+store.setState(s => ({ ...s, x: 1 }))
+store.setState(s => ({ ...s, y: 1 }))
+store.setState(s => ({ ...s, z: 1 }))   // 3 subscriber calls
+
+// With batching: 3 setState = 1 notification
+batcher.batch(() => {
+  batcher.setState(s => ({ ...s, x: 1 }))
+  batcher.setState(s => ({ ...s, y: 1 }))
+  batcher.setState(s => ({ ...s, z: 1 }))  // only 1 subscriber call
+})
+
+// Per-field subscriptions — only fires when that field changes
+subscribeToField(store, 'x', (value) => console.log('x changed to', value))`,
+              },
+              {
+                title: '6. createOptimisticUpdates() — instant UI with rollback',
+                code: `import { createStore, createOptimisticUpdates } from '@yedoma-labs/ichchi-state'
+
+const store = createStore({ items: [] })
+const optimistic = createOptimisticUpdates(store)
+
+async function addItem(text: string) {
+  const id = crypto.randomUUID()
+
+  await optimistic.optimistic(
+    id,
+    // Optimistic update — applied immediately
+    (state) => ({ ...state, items: [...state.items, { id, text, pending: true }] }),
+    // Async operation — must succeed or state rolls back
+    async () => {
+      const result = await api.addItem(text)
+      if (!result.ok) throw new Error('Server rejected')
+      return result
+    },
+  )
+}`,
+              },
+            ].map(({ title, code }) => (
+              <div key={title} style={{ marginBottom:'1.5rem' }}>
+                <h3 style={{ color:'#94a3b8',fontSize:'0.8rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.06em',marginBottom:'0.75rem' }}>{title}</h3>
+                <pre style={{ background:'#020817',color:'#e2e8f0',padding:'1.25rem',borderRadius:'10px',fontSize:'0.775rem',overflowX:'auto',fontFamily:"'Fira Code','Cascadia Code','Consolas',monospace",lineHeight:1.7,border:'1px solid #1e293b',margin:0 }}>
+                  <code>{code}</code>
+                </pre>
+              </div>
+            ))}
           </div>
 
           {/* Footer */}
