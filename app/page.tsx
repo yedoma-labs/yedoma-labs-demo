@@ -11,6 +11,7 @@ const PKG = {
   'suruk-logger':       '0.2.0',
   'suruy-form-actions': '0.1.0',
   'tuuru-chrono-tz':    '0.3.1',
+  'tierde-mail':        '0.1.0',
 } as const
 
 const npm = (pkg: string) => `https://www.npmjs.com/package/@yedoma-labs/${pkg}`
@@ -113,6 +114,18 @@ const DEMOS = [
     btnGrad: 'linear-gradient(135deg, #6366f1, #a78bfa)',
     pkg: 'tuuru-chrono-tz',
   },
+  {
+    href: '/tierde-mail',
+    icon: '📬',
+    title: 'tierde-mail',
+    tag: `v${PKG['tierde-mail']}`,
+    desc: 'JSX email templates, 5 providers (resend/SMTP/SES/SendGrid/Postmark), failover, i18n, CSS inlining',
+    gradient: 'linear-gradient(135deg, #1a0505, #2d0a0a, #1a0a1a)',
+    accent: '#ef4444',
+    border: 'rgba(239,68,68,0.3)',
+    btnGrad: 'linear-gradient(135deg, #ef4444, #f97316)',
+    pkg: 'tierde-mail',
+  },
 ]
 
 const LIBRARIES = [
@@ -123,6 +136,7 @@ const LIBRARIES = [
   { name: 'suruk-logger',       version: PKG['suruk-logger'],       desc: 'Winston-compatible Pino wrapper (5-10× faster)',             color: '#10b981' },
   { name: 'turar-config',       version: PKG['turar-config'],       desc: 'Hot-reload config — YAML, TOML, JSON, Vault integration',   color: '#38bdf8' },
   { name: 'tuuru-chrono-tz',    version: PKG['tuuru-chrono-tz'],    desc: 'TypeScript-first date/time — 568 IANA zones, 86 locales',   color: '#6366f1' },
+  { name: 'tierde-mail',        version: PKG['tierde-mail'],        desc: 'JSX email templates, 5 providers, failover, i18n, CSS inline',  color: '#ef4444' },
 ]
 
 // Sakha/Yakut etymology for each library name
@@ -161,6 +175,11 @@ const LEXICON = [
     name: 'tuuru',      lib: 'tuuru-chrono-tz',     sakha: 'туур',  meaning: 'pole · pillar · sacred post',
     lore: 'The Sakha serge — a ritual tethering post. Time anchored to a pillar you can trust.',
     color: '#6366f1',
+  },
+  {
+    name: 'tierde',     lib: 'tierde-mail',          sakha: 'тиэрдэ', meaning: 'to deliver · to convey · to transmit',
+    lore: 'The act of delivering — carrying a message across the taiga to its destination.',
+    color: '#ef4444',
   },
 ]
 

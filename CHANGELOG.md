@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Added - tierde-mail v0.1.0 Integration
+
+- Added `@yedoma-labs/tierde-mail` v0.1.0 showcase at `/tierde-mail`
+- Added tierde-mail card to hub page demo grid and library footer
+- Added `tierde` entry to hub page Yakut Lexicon section (тиэрдэ — "to deliver · to convey")
+- Showcase covers: `defineEmail`, `createMailer`, 5 providers (resend/SMTP/SES/SendGrid/Postmark), 7 built-in templates, failover/round-robin multi-provider strategies, `captureEmails` testing helper, `createTheme` customization, i18n/string overrides, CSS inlining, `tierde eject` CLI, and yedoma-labs ecosystem integration
+- Interactive: live email preview with template selector + theme color pickers (primary, accentBar, borderRadius)
+- Visual email mockups for all 7 template types including Invoice table and TwoFactorAuth code display
+
 ### Fixed - tuuru-chrono-tz v0.3.1 Integration
 
 - Upgraded `@yedoma-labs/tuuru-chrono-tz` from v0.3.0 to v0.3.1
