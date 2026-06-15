@@ -30,8 +30,8 @@ importers:
         specifier: 0.3.0
         version: 0.3.0(@yedoma-labs/bylyt-env-guard@0.3.5)
       '@yedoma-labs/tuuru-chrono-tz':
-        specifier: 0.2.0
-        version: 0.2.0
+        specifier: 0.3.0
+        version: 0.3.0
       next:
         specifier: 16.2.9
         version: 16.2.9(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -499,8 +499,8 @@ packages:
     peerDependencies:
       '@yedoma-labs/bylyt-env-guard': ^0.3.5
 
-  '@yedoma-labs/tuuru-chrono-tz@0.2.0':
-    resolution: {integrity: sha512-3n9fRx6VrQCrxCPkoK5J2BgwLvfB4StIHFdTLTSPv+Eg/K8FvUlaBQs+o82FmeCnuRghRf5y3ZuNhXvrPzHATg==}
+  '@yedoma-labs/tuuru-chrono-tz@0.3.0':
+    resolution: {integrity: sha512-FHg0/Pi36OAXygco30n1vkPvIpf9srSV4+CB1FpzDBqEp7gw13iHeLVtwuJ25nv/TqoJTG2UHfuAdomD+JOtWQ==}
     engines: {node: '>=18.0.0'}
 
   agent-base@6.0.2:
@@ -1399,7 +1399,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@yedoma-labs/tuuru-chrono-tz@0.2.0': {}
+  '@yedoma-labs/tuuru-chrono-tz@0.3.0': {}
 
   agent-base@6.0.2:
     dependencies:
