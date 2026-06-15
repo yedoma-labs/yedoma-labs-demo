@@ -35,6 +35,40 @@ import { tl }     from '@yedoma-labs/tuuru-chrono-tz/locales/tl'
 import { yue }    from '@yedoma-labs/tuuru-chrono-tz/locales/yue'
 import { af }     from '@yedoma-labs/tuuru-chrono-tz/locales/af'
 import { mn }     from '@yedoma-labs/tuuru-chrono-tz/locales/mn'
+import { am }     from '@yedoma-labs/tuuru-chrono-tz/locales/am'
+import { as as assamese } from '@yedoma-labs/tuuru-chrono-tz/locales/as'
+import { az }     from '@yedoma-labs/tuuru-chrono-tz/locales/az'
+import { be }     from '@yedoma-labs/tuuru-chrono-tz/locales/be'
+import { bs }     from '@yedoma-labs/tuuru-chrono-tz/locales/bs'
+import { cy }     from '@yedoma-labs/tuuru-chrono-tz/locales/cy'
+import { et }     from '@yedoma-labs/tuuru-chrono-tz/locales/et'
+import { eu }     from '@yedoma-labs/tuuru-chrono-tz/locales/eu'
+import { ga }     from '@yedoma-labs/tuuru-chrono-tz/locales/ga'
+import { gl }     from '@yedoma-labs/tuuru-chrono-tz/locales/gl'
+import { hy }     from '@yedoma-labs/tuuru-chrono-tz/locales/hy'
+import { jv }     from '@yedoma-labs/tuuru-chrono-tz/locales/jv'
+import { km }     from '@yedoma-labs/tuuru-chrono-tz/locales/km'
+import { kn }     from '@yedoma-labs/tuuru-chrono-tz/locales/kn'
+import { ky }     from '@yedoma-labs/tuuru-chrono-tz/locales/ky'
+import { lo }     from '@yedoma-labs/tuuru-chrono-tz/locales/lo'
+import { lt }     from '@yedoma-labs/tuuru-chrono-tz/locales/lt'
+import { lv }     from '@yedoma-labs/tuuru-chrono-tz/locales/lv'
+import { mk }     from '@yedoma-labs/tuuru-chrono-tz/locales/mk'
+import { ml }     from '@yedoma-labs/tuuru-chrono-tz/locales/ml'
+import { my }     from '@yedoma-labs/tuuru-chrono-tz/locales/my'
+import { ne }     from '@yedoma-labs/tuuru-chrono-tz/locales/ne'
+import { or }     from '@yedoma-labs/tuuru-chrono-tz/locales/or'
+import { pa }     from '@yedoma-labs/tuuru-chrono-tz/locales/pa'
+import { ps }     from '@yedoma-labs/tuuru-chrono-tz/locales/ps'
+import { sd }     from '@yedoma-labs/tuuru-chrono-tz/locales/sd'
+import { si }     from '@yedoma-labs/tuuru-chrono-tz/locales/si'
+import { sl }     from '@yedoma-labs/tuuru-chrono-tz/locales/sl'
+import { so }     from '@yedoma-labs/tuuru-chrono-tz/locales/so'
+import { sq }     from '@yedoma-labs/tuuru-chrono-tz/locales/sq'
+import { sr_Latn } from '@yedoma-labs/tuuru-chrono-tz/locales/sr_Latn'
+import { te }     from '@yedoma-labs/tuuru-chrono-tz/locales/te'
+import { tk }     from '@yedoma-labs/tuuru-chrono-tz/locales/tk'
+import { zu }     from '@yedoma-labs/tuuru-chrono-tz/locales/zu'
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 
@@ -105,9 +139,44 @@ const ALL_LOCALES = [
   { locale: ka,     name: 'ქართული',       flag: '🇬🇪', code: 'ka' },
   { locale: mn,     name: 'Монгол',        flag: '🇲🇳', code: 'mn' },
   { locale: af,     name: 'Afrikaans',     flag: '🇿🇦', code: 'af' },
-  { locale: zh_Hans, name: '简体中文',     flag: '🇨🇳', code: 'zh_Hans' },
-  { locale: zh_Hant, name: '繁體中文',     flag: '🇹🇼', code: 'zh_Hant' },
-  { locale: yue,    name: '粵語',          flag: '🇭🇰', code: 'yue' },
+  { locale: zh_Hans,  name: '简体中文',          flag: '🇨🇳', code: 'zh_Hans' },
+  { locale: zh_Hant,  name: '繁體中文',          flag: '🇹🇼', code: 'zh_Hant' },
+  { locale: yue,      name: '粵語',              flag: '🇭🇰', code: 'yue' },
+  // ── v0.2.0 — extended ──────────────────────────────────────────────────────
+  { locale: am,       name: 'አማርኛ',             flag: '🇪🇹', code: 'am' },
+  { locale: assamese, name: 'অসমীয়া',           flag: '🇮🇳', code: 'as' },
+  { locale: az,       name: 'Azərbaycanca',     flag: '🇦🇿', code: 'az' },
+  { locale: be,       name: 'Беларуская',       flag: '🇧🇾', code: 'be' },
+  { locale: bs,       name: 'Bosanski',         flag: '🇧🇦', code: 'bs' },
+  { locale: cy,       name: 'Cymraeg',          flag: '🏴󠁧󠁢󠁷󠁬󠁳󠁿', code: 'cy' },
+  { locale: et,       name: 'Eesti',            flag: '🇪🇪', code: 'et' },
+  { locale: eu,       name: 'Euskara',          flag: '🇪🇸', code: 'eu' },
+  { locale: ga,       name: 'Gaeilge',          flag: '🇮🇪', code: 'ga' },
+  { locale: gl,       name: 'Galego',           flag: '🇪🇸', code: 'gl' },
+  { locale: hy,       name: 'Հայերեն',          flag: '🇦🇲', code: 'hy' },
+  { locale: jv,       name: 'Basa Jawa',        flag: '🇮🇩', code: 'jv' },
+  { locale: km,       name: 'ខ្មែរ',              flag: '🇰🇭', code: 'km' },
+  { locale: kn,       name: 'ಕನ್ನಡ',             flag: '🇮🇳', code: 'kn' },
+  { locale: ky,       name: 'Кыргызча',         flag: '🇰🇬', code: 'ky' },
+  { locale: lo,       name: 'ລາວ',              flag: '🇱🇦', code: 'lo' },
+  { locale: lt,       name: 'Lietuvių',         flag: '🇱🇹', code: 'lt' },
+  { locale: lv,       name: 'Latviešu',         flag: '🇱🇻', code: 'lv' },
+  { locale: mk,       name: 'Македонски',       flag: '🇲🇰', code: 'mk' },
+  { locale: ml,       name: 'മലയാളം',           flag: '🇮🇳', code: 'ml' },
+  { locale: my,       name: 'မြန်မာ',            flag: '🇲🇲', code: 'my' },
+  { locale: ne,       name: 'नेपाली',            flag: '🇳🇵', code: 'ne' },
+  { locale: or,       name: 'ଓଡ଼ିଆ',             flag: '🇮🇳', code: 'or' },
+  { locale: pa,       name: 'ਪੰਜਾਬੀ',           flag: '🇮🇳', code: 'pa' },
+  { locale: ps,       name: 'پښتو',             flag: '🇦🇫', code: 'ps' },
+  { locale: sd,       name: 'سنڌي',             flag: '🇵🇰', code: 'sd' },
+  { locale: si,       name: 'සිංහල',            flag: '🇱🇰', code: 'si' },
+  { locale: sl,       name: 'Slovenščina',      flag: '🇸🇮', code: 'sl' },
+  { locale: so,       name: 'Soomaali',         flag: '🇸🇴', code: 'so' },
+  { locale: sq,       name: 'Shqip',            flag: '🇦🇱', code: 'sq' },
+  { locale: sr_Latn,  name: 'Srpski (Lat)',     flag: '🇷🇸', code: 'sr_Latn' },
+  { locale: te,       name: 'తెలుగు',           flag: '🇮🇳', code: 'te' },
+  { locale: tk,       name: 'Türkmençe',        flag: '🇹🇲', code: 'tk' },
+  { locale: zu,       name: 'IsiZulu',          flag: '🇿🇦', code: 'zu' },
 ]
 
 // ─── Utilities ────────────────────────────────────────────────────────────────
@@ -1556,7 +1625,7 @@ today.isBefore(today.add({ days: 1 }))       // true`} />
 
           <Card>
             <SectionHeader
-              emoji="🌐" title="87 Locales (showing 52 of 87)"
+              emoji="🌐" title={`All ${ALL_LOCALES.length} Locales`}
               subtitle="Every shipped locale — format() month/weekday names and fromNow() both use the locale automatically"
               gradient="linear-gradient(135deg,#064e3b,#10b981)"
             />
