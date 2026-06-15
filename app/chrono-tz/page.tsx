@@ -848,10 +848,10 @@ function MultiLocaleShowcase() {
               </div>
             </div>
             <div style={{ color: ACCENT_COLORS[i % ACCENT_COLORS.length], fontSize: '0.8rem', fontFamily: 'monospace', marginBottom: '0.2rem' }}>
-              {dt.format('D MMMM YYYY')}
+              {dt.toLocaleDateString()}
             </div>
             <div style={{ color: '#64748b', fontSize: '0.73rem', fontFamily: 'monospace', marginBottom: '0.15rem' }}>
-              {dt.format('dddd')}
+              {dt.toLocaleString({ weekday: 'long' })}
             </div>
             <div style={{ color: '#475569', fontSize: '0.7rem' }}>
               {dt.subtract({ days: 3 }).fromNow()}
@@ -1161,7 +1161,7 @@ function LocalExtendedDemo() {
   )
 }
 
-// ─── v0.2.0 — Convenience Methods ────────────────────────────────────────────
+// ─── v0.3.0 — Convenience Methods + Locale-Aware Formatting ─────────────────
 
 function DateTimeConvenienceDemo() {
   const [mounted, setMounted] = useState(false)
@@ -1183,6 +1183,13 @@ function DateTimeConvenienceDemo() {
   const nowTime  = LocalTime.now()
   const morning  = LocalTime.of(9, 0)
   const evening  = LocalTime.of(18, 0)
+
+  const dtDe   = now.setLocale(de)
+  const dtJa   = now.setLocale(ja)
+  const dtAr   = now.setLocale(ar)
+  const dtFr   = now.setLocale(fr)
+  const dtHi   = now.setLocale(hi)
+  const dtZhHans = now.setLocale(zh_Hans)
 
   const subHead = (label: string) => (
     <div style={{ color: '#94a3b8', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.65rem' }}>{label}</div>
@@ -1250,6 +1257,26 @@ function DateTimeConvenienceDemo() {
             { l: 'nowTime.isBetween(morning, evening)', v: String(nowTime.isBetween(morning, evening)), c: '#10b981' },
             { l: 'morning.isBetween(morning, evening)', v: String(morning.isBetween(morning, evening)), c: '#34d399' },
             { l: 'evening.isBetween(morning, evening)', v: String(evening.isBetween(morning, evening)), c: '#06b6d4' },
+          ] as { l: string; v: string; c: string }[]).map(({ l, v, c }) => (
+            <Chip key={l} label={l} value={v} color={c} />
+          ))}
+        </div>
+      </div>
+      <div>
+        {subHead('v0.3.0 — toLocaleDateString · toLocaleString · formatLocalized')}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(310px,1fr))', gap: '0.65rem' }}>
+          {([
+            { l: 'dt.setLocale(de).toLocaleDateString()',               v: dtDe.toLocaleDateString(),                        c: '#a78bfa' },
+            { l: "dt.setLocale(de).toLocaleDateString({ dateStyle: 'full' })", v: dtDe.toLocaleDateString({ dateStyle: 'full' }),  c: '#8b5cf6' },
+            { l: 'dt.setLocale(ja).toLocaleDateString()',               v: dtJa.toLocaleDateString(),                        c: '#06b6d4' },
+            { l: 'dt.setLocale(ar).toLocaleDateString()',               v: dtAr.toLocaleDateString(),                        c: '#10b981' },
+            { l: "dt.setLocale(fr).toLocaleDateString({ dateStyle: 'full' })", v: dtFr.toLocaleDateString({ dateStyle: 'full' }),  c: '#34d399' },
+            { l: 'dt.setLocale(hi).toLocaleDateString()',               v: dtHi.toLocaleDateString(),                        c: '#f59e0b' },
+            { l: 'dt.setLocale(zh_Hans).toLocaleDateString()',          v: dtZhHans.toLocaleDateString(),                    c: '#fb923c' },
+            { l: "dt.setLocale(ar).toLocaleString({ timeStyle: 'short' })", v: dtAr.toLocaleString({ timeStyle: 'short' }), c: '#ec4899' },
+            { l: "dt.setLocale(de).toLocaleTimeString()",               v: dtDe.toLocaleTimeString(),                        c: '#f472b6' },
+            { l: "dt.setLocale(de).formatLocalized('long')",            v: dtDe.formatLocalized('long'),                     c: '#60a5fa' },
+            { l: "dt.setLocale(ja).formatLocalized('full')",            v: dtJa.formatLocalized('full'),                     c: '#38bdf8' },
           ] as { l: string; v: string; c: string }[]).map(({ l, v, c }) => (
             <Chip key={l} label={l} value={v} color={c} />
           ))}
@@ -1332,9 +1359,11 @@ function GlobalLocaleDemo() {
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(280px,1fr))', gap: '0.75rem' }}>
         <Chip label="getDefaultLocale().name"              value={currentLocaleName}                               color="#a78bfa" />
+        <Chip label="now.toLocaleDateString()"               value={now.toLocaleDateString()}                       color="#a78bfa" />
+        <Chip label="now.toLocaleDateString({ dateStyle: 'full' })" value={now.toLocaleDateString({ dateStyle: 'full' })} color="#8b5cf6" />
+        <Chip label="now.formatLocalized('long')"          value={now.formatLocalized('long')}                    color="#6366f1" />
         <Chip label="now.format('MMMM')"                   value={now.format('MMMM')}                             color="#10b981" />
         <Chip label="now.format('dddd')"                   value={now.format('dddd')}                             color="#06b6d4" />
-        <Chip label="now.format('dddd D MMMM YYYY')"      value={now.format('dddd D MMMM YYYY')}                color="#f59e0b" />
         <Chip label="now.fromNow()"                        value={now.fromNow()}                                   color="#ec4899" />
         <Chip label="now.subtract({ days:7 }).fromNow()"  value={now.subtract({ days: 7 }).fromNow()}            color="#fb923c" />
         <Chip label="now.add({ months:3 }).fromNow()"     value={now.add({ months: 3 }).fromNow()}               color="#34d399" />
@@ -1403,7 +1432,7 @@ export default function ChronoTzPage() {
                   padding: '0.3rem 0.8rem', borderRadius: '2rem', marginBottom: '1rem',
                 }}>
                   <code style={{ color: '#a78bfa', fontSize: '0.75rem', fontWeight: 700 }}>@yedoma-labs/tuuru-chrono-tz</code>
-                  <span style={{ background: '#6366f1', color: 'white', padding: '0.1rem 0.45rem', borderRadius: '4px', fontSize: '0.65rem', fontWeight: 800 }}>v0.2.0</span>
+                  <span style={{ background: '#6366f1', color: 'white', padding: '0.1rem 0.45rem', borderRadius: '4px', fontSize: '0.65rem', fontWeight: 800 }}>v0.3.0</span>
                 </div>
 
                 <h1 style={{
@@ -1600,23 +1629,33 @@ a.to(b, { short: true }) // "in 3d"`} />
             />
             <LocalTypes />
             <div style={{ marginTop: '1.5rem' }}>
-              <CodeBlock code={`import { LocalDate, LocalTime } from '@yedoma-labs/tuuru-chrono-tz';
+              <CodeBlock code={`import { LocalDate, LocalTime, de, ja, ar } from '@yedoma-labs/tuuru-chrono-tz';
 
 // LocalDate — date without time or timezone
 const today = LocalDate.today();
-today.format('dddd, MMMM D, YYYY')                        // locale-aware
+
+// Locale-aware formatting (Intl — correct punctuation)
+today.toLocaleString({ dateStyle: 'long' }, de)   // "15. Juni 2026"
+today.toLocaleString({ dateStyle: 'full' }, de)   // "Montag, 15. Juni 2026"
+today.toLocaleString({ dateStyle: 'long' }, ja)   // "2026年6月15日"
+today.toLocaleString({ dateStyle: 'long' }, ar)   // "١٥ يونيو ٢٠٢٦"
+today.toLocaleString()                             // system locale
+
+// Explicit pattern (month/day names translate, structure is yours)
+today.format('dddd, MMMM D, YYYY')
+
 today.add({ months: 1 })                                  // Jan 31 + 1 month = Feb 28/29
-LocalDate.of(today.year, today.month, 1).toISO()          // "2025-06-01"  (month start)
+LocalDate.of(today.year, today.month, 1).toISO()          // "2026-06-01"  (month start)
 LocalDate.of(today.year, today.month, today.daysInMonth)  // month end
 today.until(today.add({ days: 30 }))                      // 30 (days between)
 today.toDateTime('America/New_York', { hour: 9 })         // → DateTime at 9am today in NYC
 
 // LocalTime — time without date or timezone
 const now = LocalTime.now();
-now.format('h:mm:ss A')                      // "2:30:45 PM"
-now.add({ hours: 6 })                        // wraps past midnight
-LocalTime.of(9, 30)                          // 09:30:00
-LocalTime.fromISO('23:59:59')
+now.toLocaleString({ timeStyle: 'short' }, de)   // "14:30"
+now.toLocaleString({ timeStyle: 'short' }, ar)   // "٢:٣٠ م"
+now.format('h:mm:ss A')                          // "2:30:45 PM"
+now.add({ hours: 6 })                            // wraps past midnight
 
 // Both support isBefore / isAfter / isBetween / isSame
 today.isBefore(today.add({ days: 1 }))       // true`} />
@@ -1626,7 +1665,7 @@ today.isBefore(today.add({ days: 1 }))       // true`} />
           <Card>
             <SectionHeader
               emoji="🌐" title={`All ${ALL_LOCALES.length} Locales`}
-              subtitle="Every shipped locale — format() month/weekday names and fromNow() both use the locale automatically"
+              subtitle="Every shipped locale — toLocaleDateString() uses Intl for locale-correct punctuation; format() for explicit patterns; fromNow() for relative time"
               gradient="linear-gradient(135deg,#064e3b,#10b981)"
             />
             <MultiLocaleShowcase />
@@ -1635,18 +1674,33 @@ today.isBefore(today.add({ days: 1 }))       // true`} />
 
 const dt = DateTime.now('Europe/Paris');
 
-// Per-instance locale (immutable chain)
+// ── Locale-aware formatting (Intl — correct punctuation per locale) ──────────
+dt.setLocale(de).toLocaleDateString()                      // "15. Juni 2026"
+dt.setLocale(de).toLocaleDateString({ dateStyle: 'full' }) // "Montag, 15. Juni 2026"
+dt.setLocale(ja).toLocaleDateString()                      // "2026年6月15日"
+dt.setLocale(ar).toLocaleDateString()                      // "١٥ يونيو ٢٠٢٦"
+dt.setLocale(fr).toLocaleDateString({ dateStyle: 'full' }) // "lundi 15 juin 2026"
+
+// formatLocalized — uses locale.dateFormats if defined, else Intl fallback
+dt.setLocale(de).formatLocalized('long')  // "15. Juni 2026"
+dt.setLocale(de).formatLocalized('full')  // "Montag, 15. Juni 2026"
+
+// toLocaleString — full control via Intl.DateTimeFormatOptions
+dt.setLocale(ar).toLocaleString({ timeStyle: 'short' })    // "١٠:٣٠ ص"
+dt.setLocale(de).toLocaleString({ month: 'long', year: 'numeric' }) // "Juni 2026"
+
+// ── Explicit pattern formatting (names are locale-aware, structure is yours) ──
 dt.setLocale(fr).format('dddd D MMMM YYYY')  // "jeudi 12 juin 2025"
 dt.setLocale(ja).format('MMMM D日')           // "6月12日"
-dt.setLocale(ar).fromNow()                    // "منذ دقائق"
-dt.setLocale(zh).format('MMMM')              // "六月"
 dt.setLocale(de).format('dddd')              // "Donnerstag"
+dt.setLocale(ar).fromNow()                   // "منذ دقائق"
 
 // Global default (affects all instances)
 DateTime.setDefaultLocale(fr);
-DateTime.now().format('MMMM')                // "juin"
+DateTime.now().toLocaleDateString()          // "15 juin 2026"
+DateTime.now().format('MMMM')               // "juin"
 
-// Shipped: en zh hi es bn pt ru id ja de fr ko tr vi pl nl th it ar fa ur uk ...`} />
+// Shipped: 85 locales — en zh hi es bn pt ru id ja de fr ko tr vi pl nl th it ar fa ur uk ...`} />
             </div>
           </Card>
 
@@ -1835,14 +1889,18 @@ Timezone.search('New')  // zones containing "New"`} />
 
 // Set global locale — all new DateTime instances inherit it
 setDefaultLocale(fr);
-DateTime.now().format('dddd D MMMM YYYY')  // "dimanche 15 juin 2025"
-DateTime.now().fromNow()                   // "il y a quelques secondes"
+DateTime.now().toLocaleDateString()                       // "15 juin 2026"
+DateTime.now().toLocaleDateString({ dateStyle: 'full' })  // "lundi 15 juin 2026"
+DateTime.now().fromNow()                                  // "il y a quelques secondes"
+DateTime.now().format('MMMM')                             // "juin"
 
 setDefaultLocale(ja);
-DateTime.now().format('MMMM D日')          // "6月15日"
+DateTime.now().toLocaleDateString()          // "2026年6月15日"
+DateTime.now().format('MMMM D日')           // "6月15日"
 
 setDefaultLocale(ar);
-DateTime.now().fromNow()                   // "منذ ثانية"
+DateTime.now().toLocaleDateString()          // "١٥ يونيو ٢٠٢٦"
+DateTime.now().fromNow()                     // "منذ ثانية"
 
 // Read current default
 getDefaultLocale().name    // "fr" | "ja" | "ar" ...
@@ -1851,59 +1909,63 @@ getDefaultLocale().name    // "fr" | "ja" | "ar" ...
 setDefaultLocale(undefined);
 
 // Per-instance override still works
-DateTime.now().setLocale(fr).format('MMMM')  // "juin"  (ignores global)`} />
+DateTime.now().setLocale(fr).toLocaleDateString()  // "15 juin 2026"  (ignores global)
+DateTime.now().setLocale(fr).formatLocalized('full')  // "lundi 15 juin 2026"`} />
             </div>
           </Card>
 
           <Card>
             <SectionHeader
-              emoji="✨" title="v0.2.0 — Convenience Methods"
-              subtitle="compareTo(), isBetween(), isToday(), isTomorrow(), isYesterday(), isWeekend(), isWeekday(), clamp(), weeksInYear — new in 0.2.0"
+              emoji="✨" title="v0.2.0 / v0.3.0 — Convenience Methods & Locale Formatting"
+              subtitle="compareTo, isBetween, isToday/Tomorrow/Yesterday, isWeekend/isWeekday, clamp, weeksInYear (v0.2.0) · toLocaleDateString, toLocaleString, toLocaleTimeString, formatLocalized (v0.3.0)"
               gradient="linear-gradient(135deg,#1e1b4b,#3730a3)"
             />
             <DateTimeConvenienceDemo />
             <div style={{ marginTop: '1.5rem' }}>
-              <CodeBlock code={`import { DateTime, LocalDate, LocalTime } from '@yedoma-labs/tuuru-chrono-tz';
+              <CodeBlock code={`import { DateTime, LocalDate, LocalTime, de, ja, ar, fr } from '@yedoma-labs/tuuru-chrono-tz';
 
-// ── DateTime comparisons ────────────────────────────────────────────────────
-const now      = DateTime.now('America/New_York');
+// ── v0.3.0 — Locale-aware formatting (Intl — correct structure per locale) ──
+const now = DateTime.now('America/New_York');
+
+now.setLocale(de).toLocaleDateString()                       // "15. Juni 2026"
+now.setLocale(de).toLocaleDateString({ dateStyle: 'full' })  // "Montag, 15. Juni 2026"
+now.setLocale(ja).toLocaleDateString()                       // "2026年6月15日"
+now.setLocale(ar).toLocaleDateString()                       // "١٥ يونيو ٢٠٢٦"
+now.setLocale(fr).toLocaleDateString({ dateStyle: 'full' })  // "lundi 15 juin 2026"
+
+now.setLocale(de).toLocaleTimeString()                       // "10:30:45"
+now.setLocale(ar).toLocaleString({ timeStyle: 'short' })     // "١٠:٣٠ ص"
+now.setLocale(de).toLocaleString({ month: 'long', year: 'numeric' }) // "Juni 2026"
+
+// formatLocalized — uses locale.dateFormats if defined, else Intl fallback
+now.setLocale(de).formatLocalized('long')   // "15. Juni 2026"
+now.setLocale(de).formatLocalized('full')   // "Montag, 15. Juni 2026"
+now.setLocale(ja).formatLocalized('full')   // "2026年6月15日月曜日"
+
+// LocalDate.toLocaleString(options, locale)
+LocalDate.today().toLocaleString({ dateStyle: 'long' }, de)  // "15. Juni 2026"
+LocalDate.today().toLocaleString({ dateStyle: 'full' }, ja)  // "2026年6月15日月曜日"
+
+// LocalTime.toLocaleString(options, locale)
+LocalTime.of(14, 30).toLocaleString({ timeStyle: 'short' }, de)  // "14:30"
+LocalTime.of(14, 30).toLocaleString({ timeStyle: 'short' }, ar)  // "٢:٣٠ م"
+
+// ── v0.2.0 — DateTime comparisons ──────────────────────────────────────────
 const tomorrow = now.add({ days: 1 });
-const past     = now.subtract({ days: 30 });
-
 now.compareTo(tomorrow)               // -1
-tomorrow.compareTo(now)               // +1
-now.compareTo(DateTime.now())         //  0
-
-now.isBetween(past, tomorrow)         // true
-tomorrow.isBetween(past, now)         // false
-
-// Clamp to valid range
-const future = DateTime.fromISO('2030-01-01T00:00:00Z');
-const min    = DateTime.fromISO('2025-01-01T00:00:00Z');
-const max    = DateTime.fromISO('2027-12-31T23:59:59Z');
-future.clamp(min, max).toISO()        // "2027-12-31T23:59:59.000Z"
-
+now.isBetween(now.subtract({ days: 30 }), tomorrow)  // true
+now.clamp(DateTime.fromISO('2025-01-01T00:00:00Z'), DateTime.fromISO('2027-12-31T23:59:59Z'))
 now.weeksInYear                       // 52 or 53 (ISO 8601)
 
-// ── Calendar predicates ─────────────────────────────────────────────────────
-now.isToday()      // true
-now.isTomorrow()   // false
-now.isYesterday()  // false
-now.isWeekend()    // true if Saturday or Sunday
-now.isWeekday()    // true if Monday–Friday
+// ── v0.2.0 — Calendar predicates ───────────────────────────────────────────
+now.isToday() / now.isTomorrow() / now.isYesterday()
+now.isWeekend() / now.isWeekday()
 
-// ── LocalDate ───────────────────────────────────────────────────────────────
-const today = LocalDate.today();
-today.compareTo(today.add({ days: 1 }))  // -1
-today.isToday()                          // true
-today.isToday('UTC')                     // true (check against UTC date)
-today.isWeekend()                        // true/false
-today.isWeekday()                        // true/false
-
-// ── LocalTime ───────────────────────────────────────────────────────────────
-const t = LocalTime.now();
-t.compareTo(LocalTime.of(9, 0))          // -1 | 0 | 1
-t.isBetween(LocalTime.of(9, 0), LocalTime.of(18, 0))  // true during business hours`} />
+// ── v0.2.0 — LocalDate / LocalTime ─────────────────────────────────────────
+LocalDate.today().compareTo(LocalDate.today().add({ days: 1 }))  // -1
+LocalDate.today().isToday() / isWeekend() / isWeekday()
+LocalTime.now().compareTo(LocalTime.of(9, 0))                    // -1 | 0 | 1
+LocalTime.now().isBetween(LocalTime.of(9, 0), LocalTime.of(18, 0))`} />
             </div>
           </Card>
 
