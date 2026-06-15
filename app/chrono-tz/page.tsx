@@ -89,6 +89,7 @@ const ACCENT_COLORS = [
 ]
 
 const ALL_LOCALES = [
+  { locale: en,  name: 'English',    flag: '🇬🇧', code: 'en' },
   { locale: es,  name: 'Español',    flag: '🇪🇸', code: 'es' },
   { locale: fr,  name: 'Français',   flag: '🇫🇷', code: 'fr' },
   { locale: de,  name: 'Deutsch',    flag: '🇩🇪', code: 'de' },
@@ -1445,7 +1446,7 @@ export default function ChronoTzPage() {
                 </p>
 
                 <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
-                  {['Zero Dependencies','Immutable API','568 IANA Zones','87 Locales','Duration Arithmetic','Relative Between','TZDATA Constants','Calendar Predicates','<20KB Bundle'].map(tag => (
+                  {['Zero Dependencies','Immutable API','568 IANA Zones',`${ALL_LOCALES.length} Locales`,'Duration Arithmetic','Relative Between','TZDATA Constants','Calendar Predicates','<20KB Bundle'].map(tag => (
                     <span key={tag} style={{
                       padding: '0.3rem 0.7rem', background: 'rgba(99,102,241,0.12)',
                       border: '1px solid rgba(99,102,241,0.25)', borderRadius: '6px',
