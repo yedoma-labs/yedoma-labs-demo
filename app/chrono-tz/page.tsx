@@ -834,11 +834,7 @@ function MultiLocaleShowcase() {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(195px,1fr))', gap: '0.75rem' }}>
       {ALL_LOCALES.map(({ locale, name, flag, code }, i) => {
-        const dt  = ref.setLocale(locale)
-        const tag = code.replace(/_/g, '-')
-        const intlOk = Intl.DateTimeFormat.supportedLocalesOf([tag]).length > 0
-        const dateStr    = intlOk ? dt.toLocaleDateString()                    : dt.format('D MMMM YYYY')
-        const weekdayStr = intlOk ? dt.toLocaleString({ weekday: 'long' })     : dt.format('dddd')
+        const dt = ref.setLocale(locale)
         return (
           <div key={code} style={{
             background: '#0a0f1e', borderRadius: '10px', padding: '0.9rem',
@@ -846,19 +842,16 @@ function MultiLocaleShowcase() {
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
               <span style={{ fontSize: '1.1rem' }}>{flag}</span>
-              <div style={{ minWidth: 0, flex: 1 }}>
+              <div style={{ minWidth: 0 }}>
                 <div style={{ color: '#e2e8f0', fontWeight: 700, fontSize: '0.82rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                  <code style={{ color: '#334155', fontSize: '0.62rem' }}>{locale.name}</code>
-                  {!intlOk && <span style={{ color: '#475569', fontSize: '0.55rem', background: '#1e293b', padding: '0.05rem 0.3rem', borderRadius: '3px' }}>lib</span>}
-                </div>
+                <code style={{ color: '#334155', fontSize: '0.62rem' }}>{locale.name}</code>
               </div>
             </div>
             <div style={{ color: ACCENT_COLORS[i % ACCENT_COLORS.length], fontSize: '0.8rem', fontFamily: 'monospace', marginBottom: '0.2rem' }}>
-              {dateStr}
+              {dt.formatLocalized('long')}
             </div>
             <div style={{ color: '#64748b', fontSize: '0.73rem', fontFamily: 'monospace', marginBottom: '0.15rem' }}>
-              {weekdayStr}
+              {dt.format('dddd')}
             </div>
             <div style={{ color: '#475569', fontSize: '0.7rem' }}>
               {dt.subtract({ days: 3 }).fromNow()}
@@ -1439,7 +1432,7 @@ export default function ChronoTzPage() {
                   padding: '0.3rem 0.8rem', borderRadius: '2rem', marginBottom: '1rem',
                 }}>
                   <code style={{ color: '#a78bfa', fontSize: '0.75rem', fontWeight: 700 }}>@yedoma-labs/tuuru-chrono-tz</code>
-                  <span style={{ background: '#6366f1', color: 'white', padding: '0.1rem 0.45rem', borderRadius: '4px', fontSize: '0.65rem', fontWeight: 800 }}>v0.3.0</span>
+                  <span style={{ background: '#6366f1', color: 'white', padding: '0.1rem 0.45rem', borderRadius: '4px', fontSize: '0.65rem', fontWeight: 800 }}>v0.3.1</span>
                 </div>
 
                 <h1 style={{
@@ -1672,42 +1665,37 @@ today.isBefore(today.add({ days: 1 }))       // true`} />
           <Card>
             <SectionHeader
               emoji="🌐" title={`All ${ALL_LOCALES.length} Locales`}
-              subtitle="Every shipped locale — toLocaleDateString() uses Intl for locale-correct punctuation; format() for explicit patterns; fromNow() for relative time"
+              subtitle="Every shipped locale — formatLocalized() uses locale's own dateFormats patterns for correct punctuation without Intl; format() for explicit patterns; fromNow() for relative time"
               gradient="linear-gradient(135deg,#064e3b,#10b981)"
             />
             <MultiLocaleShowcase />
             <div style={{ marginTop: '1.5rem' }}>
               <CodeBlock code={`import { DateTime, fr, ja, ar, zh, de } from '@yedoma-labs/tuuru-chrono-tz';
+import { tk } from '@yedoma-labs/tuuru-chrono-tz/locales/tk';
 
 const dt = DateTime.now('Europe/Paris');
 
-// ── Locale-aware formatting (Intl — correct punctuation per locale) ──────────
-dt.setLocale(de).toLocaleDateString()                      // "15. Juni 2026"
-dt.setLocale(de).toLocaleDateString({ dateStyle: 'full' }) // "Montag, 15. Juni 2026"
-dt.setLocale(ja).toLocaleDateString()                      // "2026年6月15日"
-dt.setLocale(ar).toLocaleDateString()                      // "١٥ يونيو ٢٠٢٦"
-dt.setLocale(fr).toLocaleDateString({ dateStyle: 'full' }) // "lundi 15 juin 2026"
+// ── formatLocalized — uses locale's own dateFormats (works for ALL locales) ──
+dt.setLocale(de).formatLocalized('long')   // "15. Juni 2026"
+dt.setLocale(de).formatLocalized('full')   // "Sonntag, 15. Juni 2026"
+dt.setLocale(ja).formatLocalized('long')   // "2026年6月15日"
+dt.setLocale(ja).formatLocalized('full')   // "2026年6月15日(日)"
+dt.setLocale(ar).formatLocalized('long')   // "15 يونيو 2026"
+dt.setLocale(fr).formatLocalized('full')   // "dimanche 15 juin 2026"
+dt.setLocale(tk).formatLocalized('long')   // "15 iýun 2026"  ✓ no Intl fallback needed
+dt.setLocale(tk).formatLocalized('full')   // "15 iýun 2026, ýekşenbe"
 
-// formatLocalized — uses locale.dateFormats if defined, else Intl fallback
-dt.setLocale(de).formatLocalized('long')  // "15. Juni 2026"
-dt.setLocale(de).formatLocalized('full')  // "Montag, 15. Juni 2026"
+// ── toLocaleDateString — Intl-backed (best for widely supported locales) ──────
+dt.setLocale(de).toLocaleDateString()                       // "15. Juni 2026"
+dt.setLocale(de).toLocaleDateString({ dateStyle: 'full' })  // "Montag, 15. Juni 2026"
+dt.setLocale(ar).toLocaleString({ timeStyle: 'short' })     // "١٠:٣٠ ص"
 
-// toLocaleString — full control via Intl.DateTimeFormatOptions
-dt.setLocale(ar).toLocaleString({ timeStyle: 'short' })    // "١٠:٣٠ ص"
-dt.setLocale(de).toLocaleString({ month: 'long', year: 'numeric' }) // "Juni 2026"
-
-// ── Explicit pattern formatting (names are locale-aware, structure is yours) ──
+// ── Explicit pattern (names translate, structure is yours) ────────────────────
 dt.setLocale(fr).format('dddd D MMMM YYYY')  // "jeudi 12 juin 2025"
 dt.setLocale(ja).format('MMMM D日')           // "6月12日"
-dt.setLocale(de).format('dddd')              // "Donnerstag"
 dt.setLocale(ar).fromNow()                   // "منذ دقائق"
 
-// Global default (affects all instances)
-DateTime.setDefaultLocale(fr);
-DateTime.now().toLocaleDateString()          // "15 juin 2026"
-DateTime.now().format('MMMM')               // "juin"
-
-// Shipped: 85 locales — en zh hi es bn pt ru id ja de fr ko tr vi pl nl th it ar fa ur uk ...`} />
+// Shipped: 85 locales — en zh hi es bn pt ru id ja de fr ko tr vi pl nl th it ar ...`} />
             </div>
           </Card>
 

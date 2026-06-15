@@ -19,7 +19,7 @@
     "@yedoma-labs/suruk-logger": "0.2.0",
     "@yedoma-labs/suruy-form-actions": "0.1.0",
     "@yedoma-labs/turar-config": "0.3.0",
-    "@yedoma-labs/tuuru-chrono-tz": "0.3.0",
+    "@yedoma-labs/tuuru-chrono-tz": "0.3.1",
     "next": "16.2.9",
     "pino": "10.3.1",
     "pino-pretty": "13.1.3",

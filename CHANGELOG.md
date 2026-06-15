@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+### Fixed - tuuru-chrono-tz v0.3.1 Integration
+
+- Upgraded `@yedoma-labs/tuuru-chrono-tz` from v0.3.0 to v0.3.1
+- All 85 locale objects now ship `dateFormats` (`short`, `medium`, `long`, `full`) — date structure is locale-correct without relying on `Intl`
+- Locale grid now uses `dt.formatLocalized('long')` + `dt.format('dddd')` unconditionally — no `Intl.DateTimeFormat.supportedLocalesOf()` guard needed
+- Removed `lib` badge (fallback indicator) from locale cards — all locales now render correctly
+- Updated locale grid subtitle and code example to show `formatLocalized` as the primary API
+- Updated version badge to v0.3.1
+
+### Added - tuuru-chrono-tz v0.3.0 Integration
+
+- Upgraded `@yedoma-labs/tuuru-chrono-tz` from v0.2.0 to v0.3.0
+- Added `DateTime.toLocaleString(options?)`, `toLocaleDateString(options?)`, `toLocaleTimeString(options?)` — thin `Intl.DateTimeFormat` wrappers using the instance's locale tag
+- Added `DateTime.formatLocalized(style)` — uses `locale.dateFormats[style]` if present, else `Intl` fallback
+- Added `LocalDate.toLocaleString(options?, locale?)` and `LocalTime.toLocaleString(options?, locale?)`
+- Locale grid updated from `dt.format('D MMMM YYYY')` to `dt.toLocaleDateString()` / `toLocaleString({ weekday: 'long' })` for Intl-supported locales
+- Added `toLocaleDateString` and `formatLocalized('long')` chips to **GlobalLocaleDemo** — update live on locale switch
+- Added new **v0.3.0 subsection** in DateTimeConvenienceDemo with 11 live output chips across de/ja/ar/fr/hi/zh_Hans
+- Updated all code example blocks to feature new locale-formatting API
+- Updated `LocalDate & LocalTime` code block with `toLocaleString` examples
+
 ### Added - tuuru-chrono-tz v0.2.0 Integration
 
 - Upgraded `@yedoma-labs/tuuru-chrono-tz` from v0.1.0 to v0.2.0

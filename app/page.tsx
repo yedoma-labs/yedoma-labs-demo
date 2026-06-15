@@ -10,7 +10,7 @@ const PKG = {
   'bylyt-env-guard':    '0.3.5',
   'suruk-logger':       '0.2.0',
   'suruy-form-actions': '0.1.0',
-  'tuuru-chrono-tz':    '0.3.0',
+  'tuuru-chrono-tz':    '0.3.1',
 } as const
 
 const npm = (pkg: string) => `https://www.npmjs.com/package/@yedoma-labs/${pkg}`
