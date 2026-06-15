@@ -106,7 +106,7 @@ const DEMOS = [
     icon: '⏰',
     title: 'tuuru-chrono-tz',
     tag: `v${PKG['tuuru-chrono-tz']}`,
-    desc: 'TypeScript-first date/time — 568 IANA zones, 34 locales, immutable API, zero deps, <20KB',
+    desc: 'TypeScript-first date/time — 568 IANA zones, 86 locales, immutable API, zero deps, <20KB',
     gradient: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)',
     accent: '#6366f1',
     border: 'rgba(99,102,241,0.3)',
@@ -122,7 +122,7 @@ const LIBRARIES = [
   { name: 'bylyt-env-guard',    version: PKG['bylyt-env-guard'],    desc: 'Environment variable validation with type safety',            color: '#06b6d4' },
   { name: 'suruk-logger',       version: PKG['suruk-logger'],       desc: 'Winston-compatible Pino wrapper (5-10× faster)',             color: '#10b981' },
   { name: 'turar-config',       version: PKG['turar-config'],       desc: 'Hot-reload config — YAML, TOML, JSON, Vault integration',   color: '#38bdf8' },
-  { name: 'tuuru-chrono-tz',    version: PKG['tuuru-chrono-tz'],    desc: 'TypeScript-first date/time — 568 IANA zones, 34 locales',   color: '#6366f1' },
+  { name: 'tuuru-chrono-tz',    version: PKG['tuuru-chrono-tz'],    desc: 'TypeScript-first date/time — 568 IANA zones, 86 locales',   color: '#6366f1' },
 ]
 
 // Sakha/Yakut etymology for each library name
