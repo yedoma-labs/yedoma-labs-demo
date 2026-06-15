@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import YakutianNight from './components/YakutianNight'
 
 export const metadata: Metadata = {
   title: 'Yedoma Labs Demo',
@@ -13,7 +14,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <YakutianNight />
+        {children}
+      </body>
     </html>
   )
 }
