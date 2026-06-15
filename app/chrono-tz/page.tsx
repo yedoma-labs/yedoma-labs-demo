@@ -1334,11 +1334,6 @@ function GlobalLocaleDemo() {
     return () => { setDefaultLocale(en) }
   }, [])
 
-  useEffect(() => {
-    if (!mounted) return
-    setDefaultLocale(LOCALE_MAP[active])
-  }, [active, mounted])
-
   if (!mounted) return null
 
   const now = DateTime.now('Europe/Paris')
@@ -1348,7 +1343,7 @@ function GlobalLocaleDemo() {
     <div>
       <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
         {(Object.keys(LOCALE_MAP) as LocaleKey[]).map(key => (
-          <button key={key} onClick={() => setActive(key)} style={{
+          <button key={key} onClick={() => { setDefaultLocale(LOCALE_MAP[key]); setActive(key) }} style={{
             padding: '0.35rem 0.85rem', borderRadius: '8px', border: 'none', cursor: 'pointer',
             fontWeight: 700, fontSize: '0.8rem',
             background: active === key ? '#6366f1' : '#1e293b',
