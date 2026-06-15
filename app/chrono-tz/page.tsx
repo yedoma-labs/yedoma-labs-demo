@@ -834,7 +834,11 @@ function MultiLocaleShowcase() {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(195px,1fr))', gap: '0.75rem' }}>
       {ALL_LOCALES.map(({ locale, name, flag, code }, i) => {
-        const dt = ref.setLocale(locale)
+        const dt  = ref.setLocale(locale)
+        const tag = code.replace(/_/g, '-')
+        const intlOk = Intl.DateTimeFormat.supportedLocalesOf([tag]).length > 0
+        const dateStr    = intlOk ? dt.toLocaleDateString()                    : dt.format('D MMMM YYYY')
+        const weekdayStr = intlOk ? dt.toLocaleString({ weekday: 'long' })     : dt.format('dddd')
         return (
           <div key={code} style={{
             background: '#0a0f1e', borderRadius: '10px', padding: '0.9rem',
@@ -842,16 +846,19 @@ function MultiLocaleShowcase() {
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
               <span style={{ fontSize: '1.1rem' }}>{flag}</span>
-              <div style={{ minWidth: 0 }}>
+              <div style={{ minWidth: 0, flex: 1 }}>
                 <div style={{ color: '#e2e8f0', fontWeight: 700, fontSize: '0.82rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</div>
-                <code style={{ color: '#334155', fontSize: '0.62rem' }}>{locale.name}</code>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                  <code style={{ color: '#334155', fontSize: '0.62rem' }}>{locale.name}</code>
+                  {!intlOk && <span style={{ color: '#475569', fontSize: '0.55rem', background: '#1e293b', padding: '0.05rem 0.3rem', borderRadius: '3px' }}>lib</span>}
+                </div>
               </div>
             </div>
             <div style={{ color: ACCENT_COLORS[i % ACCENT_COLORS.length], fontSize: '0.8rem', fontFamily: 'monospace', marginBottom: '0.2rem' }}>
-              {dt.toLocaleDateString()}
+              {dateStr}
             </div>
             <div style={{ color: '#64748b', fontSize: '0.73rem', fontFamily: 'monospace', marginBottom: '0.15rem' }}>
-              {dt.toLocaleString({ weekday: 'long' })}
+              {weekdayStr}
             </div>
             <div style={{ color: '#475569', fontSize: '0.7rem' }}>
               {dt.subtract({ days: 3 }).fromNow()}
