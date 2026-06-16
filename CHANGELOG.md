@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+### Added - tierde-mail v0.2.0 Integration
+
+- Upgraded `@yedoma-labs/tierde-mail` from v0.1.0 to v0.2.0
+- Showcase fully rewritten to cover 41 templates across 7 categories (Auth, Account Management, Security, Commerce, Engagement, Productivity, Billing)
+- Interactive preview expanded from 7 → 12 templates; new mockups: SecurityAlert (AlertBox danger + KeyValueTable), WeeklyDigest (stats grid + highlights), OnboardingProgress (step badges), AbandonedCart (cart table), ShippingUpdate
+- Added full template catalog section with category filter — all 41 templates shown with props
+- Added AlertBox (4 variants: danger/warning/success/info) visual section + code
+- Added KeyValueTable auto-filter demo + code
+- Added BaseTemplateProps + SecurityDetails/ChangeRecord/LoginEvent shared types section
+- Added createMailerFromEnv() section (zero-config env-based mailer via bylyt-env-guard)
+- Added Security section documenting v0.2.0 fixes (null byte bypass, empty recipient, Link XSS, KeyValueTable false values)
+- Updated theme customizer to expose `buttonBorderRadius` (separate from card radius)
+- Architecture section updated: juice → @css-inline/css-inline (Rust/NAPI) + dark mode @media preservation
+- Updated version badge, hub card desc, and library footer to v0.2.0
+
 ### Added - tierde-mail v0.1.0 Integration
 
 - Added `@yedoma-labs/tierde-mail` v0.1.0 showcase at `/tierde-mail`

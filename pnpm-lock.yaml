@@ -27,8 +27,8 @@ importers:
         specifier: 0.1.0
         version: 0.1.0(react@19.2.7)
       '@yedoma-labs/tierde-mail':
-        specifier: ^0.1.0
-        version: 0.1.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: ^0.2.0
+        version: 0.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@yedoma-labs/turar-config':
         specifier: 0.3.0
         version: 0.3.0(@yedoma-labs/bylyt-env-guard@0.3.5)
@@ -571,8 +571,8 @@ packages:
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
 
-  '@yedoma-labs/tierde-mail@0.1.0':
-    resolution: {integrity: sha512-RP7pRlhHHW1BRIbJjg3H9sI6/7YToj8bnWt6V6wXJYQiepn5U1v++rrWPl+3njugmC/3u65CJ951++rBHr5Kag==}
+  '@yedoma-labs/tierde-mail@0.2.0':
+    resolution: {integrity: sha512-YE5wWUCE/VIo+VwC8LV9Dn9eyhixMVEdPE5a58QA2F+8Ayk7eTEahu/ALTpLc5dDJGUhT3wExs3xuusLPJyppA==}
     engines: {node: '>=20.0.0'}
     hasBin: true
     peerDependencies:
@@ -1574,7 +1574,7 @@ snapshots:
     dependencies:
       react: 19.2.7
 
-  '@yedoma-labs/tierde-mail@0.1.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@yedoma-labs/tierde-mail@0.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       '@css-inline/css-inline': 0.20.2
       '@yedoma-labs/bylyt-env-guard': 0.3.5
