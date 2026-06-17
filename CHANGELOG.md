@@ -2,6 +2,26 @@
 
 ## [Unreleased]
 
+### Added - tierde-mail v0.4.0 Integration
+
+- Upgraded `@yedoma-labs/tierde-mail` from v0.2.0 to v0.4.0
+- Showcase page fully rewritten with 18 sections covering all v0.4.0 features
+- Added `sendBatch` section — chunk-based fan-out with `concurrency`, `delayMs`, `maxPerSecond` token-bucket rate limiter; interactive `BatchDemo` component with per-item status animation (pending → sending → sent/failed)
+- Added webhooks section — Resend (`createResendWebhookHandler`, Svix HMAC) + Postmark (`createPostmarkWebhookHandler`, HMAC-SHA256) with tabbed demo; normalized `WebhookEvent { type, provider, email, raw }`
+- Added mailpit section — zero-config `mailpit()` provider for localhost:1025 SMTP dev capture; added as 6th provider tab
+- Added `unsubscribeHeaders` section — RFC 8058 List-Unsubscribe header generation with `url`, `email?`, `oneClick?` options
+- Added `createMailerFromEnv` section — bylyt-env-guard integration for zero-config env-based mailer bootstrap
+- Added React integration section — `<EmailPreview html>` component + `renderEmailHtml(template, props)`
+- Template preview expanded to 12 mockups with full-catalog filter (41 templates, 7 categories)
+- Theme Customizer section with live `createTheme()` demo (18-token Theme interface)
+- Updated hub card desc and LIBRARIES footer to 6 providers + sendBatch + webhooks
+
+### Added - tierde-mail v0.3.0 Integration
+
+- Upgraded `@yedoma-labs/tierde-mail` from v0.2.0 to v0.3.0
+- Added CLI section — `tierde dev`, `tierde send`, `tierde render`, `tierde eject --list`, `tierde eject --all`
+- Added `mailpit()` provider (zero-config localhost dev email capture)
+
 ### Added - tierde-mail v0.2.0 Integration
 
 - Upgraded `@yedoma-labs/tierde-mail` from v0.1.0 to v0.2.0
