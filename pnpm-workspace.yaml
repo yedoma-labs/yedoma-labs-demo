@@ -3,6 +3,7 @@ overrides:
 
 allowBuilds:
   sharp: false
+  simple-git-hooks: true
 minimumReleaseAgeExclude:
   - '@css-inline/css-inline-android-arm-eabi@0.21.0'
   - '@css-inline/css-inline-android-arm64@0.21.0'
