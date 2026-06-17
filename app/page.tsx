@@ -1,18 +1,21 @@
 import Link from 'next/link'
 import CyberBg from './components/CyberBg'
 import MatrixNeo from './components/MatrixNeo'
+import pkg from '../package.json'
 
-// ─── Pinned package versions (from lockfile) ──────────────────────────────────
+const deps = pkg.dependencies as Record<string, string>
+const v = (name: string) => deps[`@yedoma-labs/${name}`] ?? '?'
+
 const PKG = {
-  'sir-forms':          '0.2.0',
-  'ichchi-state':       '0.1.0',
-  'turar-config':       '0.3.0',
-  'bylyt-env-guard':    '0.3.5',
-  'suruk-logger':       '0.2.0',
-  'suruy-form-actions': '0.1.0',
-  'tuuru-chrono-tz':    '0.3.1',
-  'tierde-mail':        '0.4.0',
-} as const
+  'sir-forms':          v('sir-forms'),
+  'ichchi-state':       v('ichchi-state'),
+  'turar-config':       v('turar-config'),
+  'bylyt-env-guard':    v('bylyt-env-guard'),
+  'suruk-logger':       v('suruk-logger'),
+  'suruy-form-actions': v('suruy-form-actions'),
+  'tuuru-chrono-tz':    v('tuuru-chrono-tz'),
+  'tierde-mail':        v('tierde-mail'),
+}
 
 const npm = (pkg: string) => `https://www.npmjs.com/package/@yedoma-labs/${pkg}`
 const gh  = (pkg: string) => `https://github.com/yedoma-labs/${pkg}`
