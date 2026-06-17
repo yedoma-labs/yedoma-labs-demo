@@ -11,7 +11,7 @@
     "lint:fix": "next lint --fix",
     "typecheck": "tsc --noEmit"
   },
-  "packageManager": "pnpm@9.12.0",
+  "packageManager": "pnpm@11.7.0",
   "dependencies": {
     "@yedoma-labs/bylyt-env-guard": "0.3.5",
     "@yedoma-labs/ichchi-state": "0.1.0",

@@ -323,6 +323,19 @@ export default function Home() {
           }} />
 
           <div style={{ position: 'relative' }}>
+            {/* Background Hero Image */}
+              <img
+                src="https://raw.githubusercontent.com/yedoma-labs/assets/main/resized/banner-resized.png"
+                alt="Yedoma Labs Hero"
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                  borderRadius: '16px',
+                  marginBottom: '2rem',
+                }}
+              />
+
             {/* System tag */}
             <div style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
@@ -363,7 +376,7 @@ export default function Home() {
 
             {/* Tech tags */}
             <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '1.75rem' }}>
-              {['Next.js 16', 'React 19', 'TypeScript 6', 'Server Actions', 'pnpm 9.12'].map(tag => (
+              {['Next.js 16', 'React 19', 'TypeScript 6', 'Server Actions', 'pnpm 11.7'].map(tag => (
                 <span key={tag} style={{
                   background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
                   borderRadius: '100px', padding: '0.3rem 0.85rem', fontSize: '0.78rem', color: '#94a3b8',

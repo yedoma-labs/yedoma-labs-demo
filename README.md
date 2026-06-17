@@ -261,7 +261,7 @@ const handleSubmit = useFormSubmit(
 - **Framework:** Next.js 16 (App Router)
 - **React:** 19.2
 - **TypeScript:** 5.9
-- **Package Manager:** pnpm 9.12
+- **Package Manager:** pnpm 11.7
 - **Linting:** Biome
 
 ## 🌟 Key Features Demonstrated
