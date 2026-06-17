@@ -11,7 +11,7 @@ const PKG = {
   'suruk-logger':       '0.2.0',
   'suruy-form-actions': '0.1.0',
   'tuuru-chrono-tz':    '0.3.1',
-  'tierde-mail':        '0.2.0',
+  'tierde-mail':        '0.4.0',
 } as const
 
 const npm = (pkg: string) => `https://www.npmjs.com/package/@yedoma-labs/${pkg}`
