@@ -2,6 +2,9 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import pkg from '../../package.json'
+
+const CONFIG_VERSION = (pkg.dependencies as Record<string, string>)['@yedoma-labs/turar-config']
 import { loadConfig, checkEnvHealth, generateSchemaDocs } from './actions'
 
 type ConfigData = Awaited<ReturnType<typeof loadConfig>>
@@ -98,7 +101,7 @@ export default function ConfigPage() {
               <div>
                 <div style={{ display:'inline-flex',alignItems:'center',gap:'0.5rem',background:'rgba(59,130,246,0.12)',border:'1px solid rgba(59,130,246,0.3)',padding:'0.3rem 0.8rem',borderRadius:'2rem',marginBottom:'1rem' }}>
                   <code style={{ color:'#93c5fd',fontSize:'0.75rem',fontWeight:700 }}>@yedoma-labs/turar-config</code>
-                  <span style={{ background:'#3b82f6',color:'white',padding:'0.1rem 0.45rem',borderRadius:'4px',fontSize:'0.65rem',fontWeight:800 }}>v0.2.0</span>
+                  <span style={{ background:'#3b82f6',color:'white',padding:'0.1rem 0.45rem',borderRadius:'4px',fontSize:'0.65rem',fontWeight:800 }}>v{CONFIG_VERSION}</span>
                   <code style={{ color:'#4ade80',fontSize:'0.75rem',fontWeight:700,marginLeft:'0.4rem' }}>+ bylyt-env-guard</code>
                 </div>
                 <h1 style={{ fontSize:'clamp(1.75rem,4vw,3rem)',fontWeight:900,margin:'0 0 0.5rem',background:'linear-gradient(135deg,#e2e8f0,#93c5fd,#4ade80)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',lineHeight:1.05 }}>

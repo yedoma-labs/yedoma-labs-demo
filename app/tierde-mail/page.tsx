@@ -2,6 +2,9 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
+import pkg from '../../package.json'
+
+const TIERDE_VERSION = (pkg.dependencies as Record<string, string>)['@yedoma-labs/tierde-mail']
 
 type TemplateKey =
   | 'Welcome' | 'PasswordReset' | 'EmailVerification' | 'TwoFactorAuth'
@@ -388,7 +391,7 @@ export default function TierdeMailPage() {
             <div style={{ fontSize: '3rem', marginBottom: '1rem', animation: 'float-slow 5s ease-in-out infinite' }}>📬</div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: '#fca5a5', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)', borderRadius: '100px', padding: '0.3rem 1rem', marginBottom: '1.5rem', fontFamily: 'monospace' }}>
               <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: '#ef4444', boxShadow: '0 0 8px #ef4444', animation: 'blink-cursor 1.5s ease-in-out infinite' }} />
-              @yedoma-labs/tierde-mail — v0.4.0
+              @yedoma-labs/tierde-mail — v{TIERDE_VERSION}
             </div>
             <h1 style={{ fontSize: 'clamp(2rem,5vw,3.2rem)', fontWeight: 900, lineHeight: 1.1, margin: '0 0 1rem', background: 'linear-gradient(135deg,#fecaca 0%,#fb923c 50%,#fbbf24 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>tierde-mail</h1>
             <p style={{ color: '#94a3b8', fontSize: '1.05rem', maxWidth: '520px', margin: '0 auto 0.5rem', lineHeight: 1.65 }}>JSX email templates · multi-provider · TypeScript-first</p>
@@ -1042,7 +1045,7 @@ await mailer.send(SecurityAlert, {
         </Card>
 
         <footer style={{ borderTop: '1px solid #1e293b', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-          <div style={{ color: '#475569', fontSize: '0.8rem', fontFamily: 'monospace' }}>@yedoma-labs/tierde-mail — v0.4.0</div>
+          <div style={{ color: '#475569', fontSize: '0.8rem', fontFamily: 'monospace' }}>@yedoma-labs/tierde-mail — v{TIERDE_VERSION}</div>
           <div style={{ display: 'flex', gap: '0.75rem' }}>
             <a href="https://www.npmjs.com/package/@yedoma-labs/tierde-mail" target="_blank" rel="noopener noreferrer" style={{ color: '#fca5a5', fontSize: '0.8rem', fontFamily: 'monospace' }}>npm ↗</a>
             <a href="https://github.com/yedoma-labs/tierde-mail" target="_blank" rel="noopener noreferrer" style={{ color: '#64748b', fontSize: '0.8rem', fontFamily: 'monospace' }}>GitHub ↗</a>

@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import pkg from '../../package.json'
+
+const CHRONO_VERSION = (pkg.dependencies as Record<string, string>)['@yedoma-labs/tuuru-chrono-tz']
 import {
   DateTime,
   Duration,
@@ -1428,7 +1431,7 @@ export default function ChronoTzPage() {
                   padding: '0.3rem 0.8rem', borderRadius: '2rem', marginBottom: '1rem',
                 }}>
                   <code style={{ color: '#a78bfa', fontSize: '0.75rem', fontWeight: 700 }}>@yedoma-labs/tuuru-chrono-tz</code>
-                  <span style={{ background: '#6366f1', color: 'white', padding: '0.1rem 0.45rem', borderRadius: '4px', fontSize: '0.65rem', fontWeight: 800 }}>v0.3.1</span>
+                  <span style={{ background: '#6366f1', color: 'white', padding: '0.1rem 0.45rem', borderRadius: '4px', fontSize: '0.65rem', fontWeight: 800 }}>v{CHRONO_VERSION}</span>
                 </div>
 
                 <h1 style={{

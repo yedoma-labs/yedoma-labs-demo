@@ -2,6 +2,9 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import pkg from '../../package.json'
+
+const LOGGER_VERSION = (pkg.dependencies as Record<string, string>)['@yedoma-labs/suruk-logger']
 import {
   testLogLevels,
   testStructuredLogging,
@@ -82,7 +85,7 @@ export default function LoggingPage() {
               <div>
                 <div style={{ display:'inline-flex',alignItems:'center',gap:'0.5rem', background:'rgba(16,185,129,0.12)',border:'1px solid rgba(16,185,129,0.3)', padding:'0.3rem 0.8rem',borderRadius:'2rem',marginBottom:'1rem' }}>
                   <code style={{ color:'#34d399',fontSize:'0.75rem',fontWeight:700 }}>@yedoma-labs/suruk-logger</code>
-                  <span style={{ background:'#10b981',color:'white',padding:'0.1rem 0.45rem',borderRadius:'4px',fontSize:'0.65rem',fontWeight:800 }}>v0.2.0</span>
+                  <span style={{ background:'#10b981',color:'white',padding:'0.1rem 0.45rem',borderRadius:'4px',fontSize:'0.65rem',fontWeight:800 }}>v{LOGGER_VERSION}</span>
                 </div>
                 <h1 style={{ fontSize:'clamp(1.75rem,4vw,3rem)',fontWeight:900,margin:'0 0 0.5rem', background:'linear-gradient(135deg,#e2e8f0,#34d399,#06b6d4)', WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',lineHeight:1.05 }}>
                   suruk-logger

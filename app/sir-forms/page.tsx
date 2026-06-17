@@ -2,6 +2,9 @@
 
 import { FormProvider, useForm, useField, useFormSubmit } from '@yedoma-labs/sir-forms'
 import { submitContactForm, subscribeNewsletter } from '@/app/actions'
+import pkg from '../../package.json'
+
+const SIRFORMS_VERSION = (pkg.dependencies as Record<string, string>)['@yedoma-labs/sir-forms']
 import { useFormState, recordSubmission, resetFormState } from '@/lib/formStore'
 import { formLogger } from '@/lib/clientLogger'
 import { useState, useEffect } from 'react'
@@ -45,7 +48,7 @@ function ContactForm() {
       <p style={{ color: '#94a3b8', fontSize: '0.875rem', marginBottom: '1.5rem' }}>
         Using <code style={{ color: '#a78bfa', background: 'rgba(167,139,250,0.1)', padding: '0.1rem 0.4rem', borderRadius: '4px' }}>FormProvider</code>,{' '}
         <code style={{ color: '#a78bfa', background: 'rgba(167,139,250,0.1)', padding: '0.1rem 0.4rem', borderRadius: '4px' }}>useField</code>, and{' '}
-        <code style={{ color: '#a78bfa', background: 'rgba(167,139,250,0.1)', padding: '0.1rem 0.4rem', borderRadius: '4px' }}>useFormSubmit</code> from sir-forms v0.2.0
+        <code style={{ color: '#a78bfa', background: 'rgba(167,139,250,0.1)', padding: '0.1rem 0.4rem', borderRadius: '4px' }}>useFormSubmit</code> from sir-forms v{SIRFORMS_VERSION}
       </p>
       <form onSubmit={handleSubmit}>
         <div>
