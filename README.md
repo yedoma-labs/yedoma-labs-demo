@@ -13,9 +13,9 @@ Comprehensive demo showcasing Yedoma Labs' TypeScript ecosystem for building typ
 
 ## 🎯 What's Inside
 
-This demo showcases **six** Yedoma Labs packages working together:
+This demo showcases **seven** Yedoma Labs packages working together:
 
-**✨ Updated: turar-config v0.2.0** - Now with hot reload, YAML/TOML support, and enhanced Vault integration!
+**✨ Updated: tierde-mail v0.5.0** - 4 new templates (AppointmentReminder, EventInvitation, ApiKeyCreated, GiftCard), 14 new design tokens, WCAG AA enforcement!
 
 1. **[@yedoma-labs/sir-forms](https://www.npmjs.com/package/@yedoma-labs/sir-forms)** v0.2.0
    - Type-safe React Server Actions form library
@@ -50,6 +50,14 @@ This demo showcases **six** Yedoma Labs packages working together:
    - 5-10x faster than Winston
    - Request context binding
    - Structured logging with TypeScript
+
+7. **[@yedoma-labs/tierde-mail](https://www.npmjs.com/package/@yedoma-labs/tierde-mail)** v0.5.0
+   - 45 JSX email templates across 9 categories
+   - 6 providers: Resend, SMTP, SES, SendGrid, Postmark, Mailpit
+   - sendBatch with rate limiting, Resend/Postmark webhooks
+   - WCAG AA enforcement (52 variant tests)
+   - 32 design tokens + PALETTE, dark mode support
+   - CLI: `tierde dev`, `tierde send`, `tierde render`, `tierde eject`
 
 ## 🚀 Quick Start
 
@@ -163,7 +171,19 @@ yedoma-labs-demo/
 - Async logging examples
 - Client-side logging wrapper
 
-### 7. Library Comparison (`/comparison`)
+### 7. tierde-mail (`/tierde-mail`)
+- **tierde-mail v0.5.0 showcase**
+- Interactive template catalog (45 templates, 9 categories)
+- Live mock-email preview with custom theming
+- sendBatch animated demo
+- Provider setup (Resend, SMTP, SES, SendGrid, Postmark, Mailpit)
+- Webhook handler code (Resend + Postmark)
+- defineEmail custom template API
+- i18n / RTL / string override examples
+- captureEmails testing utility
+- What's New in v0.5.0 section
+
+### 8. Library Comparison (`/comparison`)
 - Side-by-side code examples
 - Feature matrix
 - Bundle size comparison
@@ -445,6 +465,7 @@ export async function submitForm(data) {
 - [turar-config on npm](https://www.npmjs.com/package/@yedoma-labs/turar-config)
 - [bylyt-env-guard on npm](https://www.npmjs.com/package/@yedoma-labs/bylyt-env-guard)
 - [suruk-logger on npm](https://www.npmjs.com/package/@yedoma-labs/suruk-logger)
+- [tierde-mail on npm](https://www.npmjs.com/package/@yedoma-labs/tierde-mail)
 
 ## 📄 License
 

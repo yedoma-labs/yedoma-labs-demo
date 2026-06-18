@@ -10,6 +10,15 @@ type TemplateKey =
   | 'Welcome' | 'PasswordReset' | 'EmailVerification' | 'TwoFactorAuth'
   | 'MagicLink' | 'Invoice' | 'Notification' | 'SecurityAlert'
   | 'WeeklyDigest' | 'OnboardingProgress' | 'AbandonedCart' | 'ShippingUpdate'
+  | 'AppointmentReminder' | 'EventInvitation' | 'ApiKeyCreated' | 'GiftCard'
+  | 'PasswordlessOtp' | 'PhoneVerification'
+  | 'RegistrationConfirmation' | 'ProfileUpdated' | 'PasswordChangedConfirmation'
+  | 'EmailChangeVerification' | 'AccountDeactivated' | 'AccountLocked'
+  | 'AccountUnlocked' | 'AccountDeletionConfirmation' | 'LoginActivity' | 'DataExportRequest'
+  | 'OrderConfirmation' | 'RefundConfirmation' | 'PaymentFailed' | 'BackInStock'
+  | 'NewsletterConfirmation' | 'WinBack' | 'Referral' | 'FeatureAnnouncement' | 'ReviewRequest'
+  | 'SupportTicket' | 'TeamInvite' | 'CommentMention' | 'UsageAlert' | 'ExportReady'
+  | 'MaintenanceNotification' | 'Subscription' | 'PolicyUpdate'
 
 type ProviderKey = 'resend' | 'smtp' | 'ses' | 'sendgrid' | 'postmark' | 'mailpit'
 
@@ -40,6 +49,7 @@ const TEMPLATE_CATALOG = [
     { name: 'RefundConfirmation', props: 'customerName, amount, currency?, refundId, orderId?' },
     { name: 'PaymentFailed', props: 'customerName, amount?, currency?, reason?, updateUrl' },
     { name: 'BackInStock', props: 'name, productName, productUrl, imageUrl?' },
+    { name: 'GiftCard', props: 'recipientName, amount, currency?, code, message?, expiresAt?' },
   ]},
   { category: 'Engagement', color: '#f59e0b', templates: [
     { name: 'NewsletterConfirmation', props: 'name, confirmUrl, unsubscribeUrl?' },
@@ -63,21 +73,70 @@ const TEMPLATE_CATALOG = [
     { name: 'Subscription', props: 'name, event (7 types), plan, ctaUrl?' },
     { name: 'PolicyUpdate', props: 'name, policyType, changes[], effectiveDate, ctaUrl?' },
   ]},
+  { category: 'Scheduling', color: '#14b8a6', templates: [
+    { name: 'AppointmentReminder', props: 'name, date, time, provider, location?, rescheduleUrl?, cancelUrl?' },
+    { name: 'EventInvitation', props: 'name, eventName, date, time, location?, registerUrl, calendarUrl?' },
+  ]},
+  { category: 'Developer', color: '#84cc16', templates: [
+    { name: 'ApiKeyCreated', props: 'name, keyName, keyPrefix, event (created|revoked|expiring), expiresAt?' },
+  ]},
 ]
 
 const DEMO_TEMPLATES: { key: TemplateKey; icon: string; label: string; cat: string }[] = [
-  { key: 'Welcome',            icon: '👋', label: 'Welcome',         cat: 'Auth'     },
-  { key: 'TwoFactorAuth',      icon: '🛡️', label: '2FA Code',        cat: 'Auth'     },
-  { key: 'MagicLink',          icon: '✨', label: 'Magic Link',      cat: 'Auth'     },
-  { key: 'SecurityAlert',      icon: '🚨', label: 'Security Alert',  cat: 'Security' },
-  { key: 'Invoice',            icon: '🧾', label: 'Invoice',         cat: 'Commerce' },
-  { key: 'AbandonedCart',      icon: '🛒', label: 'Abandoned Cart',  cat: 'Commerce' },
-  { key: 'ShippingUpdate',     icon: '📦', label: 'Shipping',        cat: 'Commerce' },
-  { key: 'WeeklyDigest',       icon: '📊', label: 'Weekly Digest',   cat: 'Engage'   },
-  { key: 'OnboardingProgress', icon: '🎯', label: 'Onboarding',      cat: 'Product'  },
-  { key: 'PasswordReset',      icon: '🔑', label: 'Pwd Reset',       cat: 'Auth'     },
-  { key: 'EmailVerification',  icon: '✉️', label: 'Verify Email',    cat: 'Auth'     },
-  { key: 'Notification',       icon: '🔔', label: 'Notification',    cat: 'Product'  },
+  // Auth
+  { key: 'Welcome',                    icon: '👋', label: 'Welcome',           cat: 'Auth'     },
+  { key: 'TwoFactorAuth',              icon: '🛡️', label: '2FA Code',          cat: 'Auth'     },
+  { key: 'MagicLink',                  icon: '✨', label: 'Magic Link',        cat: 'Auth'     },
+  { key: 'PasswordReset',              icon: '🔑', label: 'Pwd Reset',         cat: 'Auth'     },
+  { key: 'EmailVerification',          icon: '✉️', label: 'Verify Email',      cat: 'Auth'     },
+  { key: 'PasswordlessOtp',            icon: '🔓', label: 'Passwordless OTP',  cat: 'Auth'     },
+  { key: 'PhoneVerification',          icon: '📱', label: 'Phone Verify',      cat: 'Auth'     },
+  // Security
+  { key: 'SecurityAlert',              icon: '🚨', label: 'Security Alert',    cat: 'Security' },
+  // Account
+  { key: 'RegistrationConfirmation',   icon: '🎉', label: 'Reg Confirm',       cat: 'Account'  },
+  { key: 'ProfileUpdated',             icon: '👤', label: 'Profile Updated',   cat: 'Account'  },
+  { key: 'PasswordChangedConfirmation',icon: '🔒', label: 'Pwd Changed',       cat: 'Account'  },
+  { key: 'EmailChangeVerification',    icon: '📧', label: 'Email Change',      cat: 'Account'  },
+  { key: 'AccountDeactivated',         icon: '⏸️', label: 'Deactivated',       cat: 'Account'  },
+  { key: 'AccountLocked',              icon: '🔐', label: 'Acct Locked',       cat: 'Account'  },
+  { key: 'AccountUnlocked',            icon: '🔓', label: 'Acct Unlocked',     cat: 'Account'  },
+  { key: 'AccountDeletionConfirmation',icon: '🗑️', label: 'Deletion',          cat: 'Account'  },
+  { key: 'LoginActivity',              icon: '📋', label: 'Login Activity',    cat: 'Account'  },
+  { key: 'DataExportRequest',          icon: '📤', label: 'Data Export',       cat: 'Account'  },
+  // Commerce
+  { key: 'Invoice',                    icon: '🧾', label: 'Invoice',           cat: 'Commerce' },
+  { key: 'OrderConfirmation',          icon: '✅', label: 'Order Confirm',     cat: 'Commerce' },
+  { key: 'ShippingUpdate',             icon: '📦', label: 'Shipping',          cat: 'Commerce' },
+  { key: 'AbandonedCart',              icon: '🛒', label: 'Abandoned Cart',    cat: 'Commerce' },
+  { key: 'RefundConfirmation',         icon: '💰', label: 'Refund',            cat: 'Commerce' },
+  { key: 'PaymentFailed',              icon: '❌', label: 'Payment Failed',    cat: 'Commerce' },
+  { key: 'BackInStock',                icon: '🛍️', label: 'Back In Stock',     cat: 'Commerce' },
+  { key: 'GiftCard',                   icon: '🎁', label: 'Gift Card',         cat: 'Commerce' },
+  // Engagement
+  { key: 'NewsletterConfirmation',     icon: '📰', label: 'Newsletter',        cat: 'Engage'   },
+  { key: 'WeeklyDigest',               icon: '📊', label: 'Weekly Digest',     cat: 'Engage'   },
+  { key: 'WinBack',                    icon: '💝', label: 'Win Back',          cat: 'Engage'   },
+  { key: 'Referral',                   icon: '🤝', label: 'Referral',          cat: 'Engage'   },
+  { key: 'FeatureAnnouncement',        icon: '🚀', label: 'Feature Announce',  cat: 'Engage'   },
+  { key: 'ReviewRequest',              icon: '⭐', label: 'Review Request',    cat: 'Engage'   },
+  // Productivity
+  { key: 'OnboardingProgress',         icon: '🎯', label: 'Onboarding',        cat: 'Product'  },
+  { key: 'SupportTicket',              icon: '🎫', label: 'Support Ticket',    cat: 'Product'  },
+  { key: 'TeamInvite',                 icon: '👥', label: 'Team Invite',       cat: 'Product'  },
+  { key: 'CommentMention',             icon: '💬', label: 'Mention',           cat: 'Product'  },
+  { key: 'UsageAlert',                 icon: '📈', label: 'Usage Alert',       cat: 'Product'  },
+  { key: 'ExportReady',                icon: '⬇️', label: 'Export Ready',      cat: 'Product'  },
+  { key: 'MaintenanceNotification',    icon: '🔧', label: 'Maintenance',       cat: 'Product'  },
+  { key: 'Notification',               icon: '🔔', label: 'Notification',      cat: 'Product'  },
+  // Billing
+  { key: 'Subscription',               icon: '💳', label: 'Subscription',      cat: 'Billing'  },
+  { key: 'PolicyUpdate',               icon: '📜', label: 'Policy Update',     cat: 'Billing'  },
+  // Scheduling
+  { key: 'AppointmentReminder',        icon: '📅', label: 'Appt Reminder',     cat: 'Schedule' },
+  { key: 'EventInvitation',            icon: '🎟️', label: 'Event Invite',      cat: 'Schedule' },
+  // Developer
+  { key: 'ApiKeyCreated',              icon: '🔑', label: 'API Key',           cat: 'Dev'      },
 ]
 
 // ── MockEmail ─────────────────────────────────────────────────────────────────
@@ -202,6 +261,450 @@ function MockEmail({ template, theme }: { template: TemplateKey; theme: Theme })
       </tbody></table>
       <a href="#" style={btn} onClick={e => e.preventDefault()}>Track Shipment</a>
     </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'GiftCard') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: 'linear-gradient(90deg,#f59e0b,#ef4444,#ec4899)' }} /><div style={body}>
+      <div style={{ textAlign: 'center' as const, marginBottom: '0.85rem' }}>
+        <div style={{ fontSize: '2rem', marginBottom: '0.35rem' }}>🎁</div>
+        <h1 style={{ ...h1, textAlign: 'center' as const }}>You received a gift card!</h1>
+        <p style={{ ...p, textAlign: 'center' as const }}><strong>Bob</strong> sent you a gift card to Acme Shop.</p>
+      </div>
+      <div style={{ background: 'linear-gradient(135deg,#fef3c7,#fde68a)', border: '1px solid #fbbf24', borderRadius: '10px', padding: '1rem', textAlign: 'center' as const, marginBottom: '0.85rem' }}>
+        <div style={{ fontSize: '1.6rem', fontWeight: 900, color: '#92400e', marginBottom: '0.25rem' }}>$50.00</div>
+        <div style={{ fontFamily: 'monospace', fontSize: '1rem', fontWeight: 700, letterSpacing: '0.2em', color: '#78350f', background: 'rgba(255,255,255,0.6)', borderRadius: '6px', padding: '0.3rem 0.75rem', display: 'inline-block' }}>GIFT-A1B2-C3D4</div>
+        <div style={{ color: '#92400e', fontSize: '0.67rem', marginTop: '0.4rem' }}>Expires Dec 31, 2026</div>
+      </div>
+      <div style={{ background: '#f8fafc', borderRadius: '8px', padding: '0.6rem 0.8rem', marginBottom: '0.75rem', fontStyle: 'italic', color: '#475569', fontSize: '0.76rem', lineHeight: 1.5 }}>"Happy birthday! Enjoy shopping! 🎉"</div>
+      <a href="#" style={{ ...btn, background: '#f59e0b', display: 'block', textAlign: 'center' as const }} onClick={e => e.preventDefault()}>Redeem Gift Card →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Shop</div></div></div>
+  )
+
+  if (template === 'AppointmentReminder') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#14b8a6' }} /><div style={body}>
+      <h1 style={h1}>Appointment reminder</h1><p style={p}>Hi Alice, your appointment is coming up soon.</p>
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '0.75rem' }}><tbody>
+        {kv('Date', 'Friday, Jun 20, 2026')}{kv('Time', '10:00 AM – 10:30 AM')}{kv('Provider', 'Dr. Sarah Chen')}{kv('Location', '42 Medical Plaza, Suite 3')}
+      </tbody></table>
+      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
+        <a href="#" style={{ ...btn, marginBottom: 0, flex: 1, textAlign: 'center' as const, background: '#14b8a6' }} onClick={e => e.preventDefault()}>Reschedule</a>
+        <a href="#" style={{ ...btn, marginBottom: 0, flex: 1, textAlign: 'center' as const, background: 'transparent', border: '1px solid #e2e8f0', color: '#64748b' }} onClick={e => e.preventDefault()}>Cancel</a>
+      </div>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Health</div></div></div>
+  )
+
+  if (template === 'ApiKeyCreated') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#84cc16' }} /><div style={body}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+        <span style={{ fontSize: '1.2rem' }}>🔑</span>
+        <h1 style={{ ...h1, margin: 0 }}>New API key created</h1>
+      </div>
+      <p style={p}>Hi Alice, a new API key was created on your account.</p>
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '0.75rem' }}><tbody>
+        {kv('Key name', 'production-app')}{kv('Prefix', 'sk_live_a1b2c3...', true)}{kv('Created', 'Jun 18, 2026 — 09:14 UTC')}{kv('Expires', 'Jun 18, 2027')}
+      </tbody></table>
+      <div style={{ background: '#f7fee7', border: '1px solid #bef264', borderRadius: '8px', padding: '8px 12px', marginBottom: '0.75rem' }}>
+        <p style={{ color: '#365314', fontSize: '0.74rem', margin: 0, lineHeight: 1.5 }}>Store your key securely — it will not be shown again.</p>
+      </div>
+      <a href="#" style={{ ...btn, background: '#84cc16' }} onClick={e => e.preventDefault()}>Manage API Keys →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'PasswordlessOtp') return (
+    <div style={outer}><div style={card}><div style={bar} /><div style={body}>
+      <h1 style={h1}>Your sign-in code</h1><p style={p}>Use this code to sign in — no password needed.</p>
+      <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '1rem', textAlign: 'center' as const, marginBottom: '0.85rem' }}>
+        <span style={{ fontFamily: 'monospace', fontSize: '1.8rem', fontWeight: 800, letterSpacing: '0.28em', color: primary }}>593 847</span>
+        <div style={{ color: '#94a3b8', fontSize: '0.67rem', marginTop: '3px' }}>Expires in 15 minutes · single use</div>
+      </div>
+      <p style={{ ...p, fontSize: '0.72rem', color: '#94a3b8', marginBottom: 0 }}>Didn't request this? Ignore — your account is safe.</p>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'PhoneVerification') return (
+    <div style={outer}><div style={card}><div style={bar} /><div style={body}>
+      <h1 style={h1}>Verify your phone number</h1>
+      <p style={p}>Enter this code to verify <strong>+1 (555) 012-3456</strong></p>
+      <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '1rem', textAlign: 'center' as const, marginBottom: '0.85rem' }}>
+        <span style={{ fontFamily: 'monospace', fontSize: '2rem', fontWeight: 900, letterSpacing: '0.32em', color: primary }}>7 4 2 1</span>
+        <div style={{ color: '#94a3b8', fontSize: '0.67rem', marginTop: '3px' }}>Expires in 10 minutes</div>
+      </div>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'RegistrationConfirmation') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#10b981' }} /><div style={body}>
+      <div style={{ textAlign: 'center' as const, marginBottom: '1rem' }}>
+        <div style={{ fontSize: '2rem', marginBottom: '0.35rem' }}>🎉</div>
+        <h1 style={{ ...h1, textAlign: 'center' as const }}>Account created!</h1>
+        <p style={{ ...p, textAlign: 'center' as const }}>Welcome Alice — your Acme account is ready.</p>
+      </div>
+      <a href="#" style={{ ...btn, display: 'block', textAlign: 'center' as const, background: '#10b981' }} onClick={e => e.preventDefault()}>Go to Dashboard →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'ProfileUpdated') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#0891b2' }} /><div style={body}>
+      <h1 style={h1}>Your profile was updated</h1><p style={p}>Hi Alice, the following changes were saved.</p>
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.71rem', marginBottom: '0.75rem' }}>
+        <thead><tr style={{ borderBottom: '1px solid #e2e8f0' }}>
+          <th style={{ textAlign: 'left' as const, padding: '3px 0', color: '#94a3b8', fontWeight: 600, width: '33%' }}>Field</th>
+          <th style={{ textAlign: 'left' as const, padding: '3px 0', color: '#94a3b8', fontWeight: 600, width: '33%' }}>Before</th>
+          <th style={{ textAlign: 'left' as const, padding: '3px 0', color: '#94a3b8', fontWeight: 600 }}>After</th>
+        </tr></thead>
+        <tbody>
+          {[['Display name', 'alice', 'Alice Johnson'], ['Timezone', 'UTC', 'America/Chicago'], ['Language', 'en', 'en-US']].map(([f, o, n]) => (
+            <tr key={f} style={{ borderBottom: '1px solid #f1f5f9' }}>
+              <td style={{ padding: '4px 0', color: '#64748b' }}>{f}</td>
+              <td style={{ padding: '4px 0', color: '#94a3b8', textDecoration: 'line-through' }}>{o}</td>
+              <td style={{ padding: '4px 0', color: '#0f172a', fontWeight: 600 }}>{n}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'PasswordChangedConfirmation') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#10b981' }} /><div style={body}>
+      <h1 style={h1}>Password changed</h1>
+      <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '8px', padding: '10px 12px', marginBottom: '0.75rem' }}>
+        <div style={{ color: '#166534', fontWeight: 700, fontSize: '0.76rem' }}>✓ Password successfully updated</div>
+        <div style={{ color: '#14532d', fontSize: '0.7rem', marginTop: '1px' }}>Jun 18, 2026 — 09:14 UTC</div>
+      </div>
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '0.75rem' }}><tbody>
+        {kv('Device', 'Chrome on macOS 14')}{kv('Location', 'San Francisco, CA')}{kv('IP', '198.51.100.42', true)}
+      </tbody></table>
+      <p style={{ ...p, fontSize: '0.72rem', color: '#94a3b8', marginBottom: 0 }}>If you didn't make this change, contact support immediately.</p>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'EmailChangeVerification') return (
+    <div style={outer}><div style={card}><div style={bar} /><div style={body}>
+      <h1 style={h1}>Confirm your new email</h1><p style={p}>Click below to confirm your email change.</p>
+      <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '0.65rem 0.85rem', marginBottom: '0.75rem' }}>
+        <div style={{ color: '#94a3b8', fontSize: '0.67rem', marginBottom: '2px' }}>New address</div>
+        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: primary, fontFamily: 'monospace' }}>alice.new@example.com</div>
+      </div>
+      <a href="#" style={btn} onClick={e => e.preventDefault()}>Confirm New Email →</a>
+      <p style={{ ...p, fontSize: '0.72rem', color: '#94a3b8', marginBottom: 0 }}>Link expires in 24 hours.</p>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'AccountDeactivated') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#f59e0b' }} /><div style={body}>
+      <h1 style={h1}>Your account has been deactivated</h1>
+      <div style={{ background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '8px', padding: '10px 12px', marginBottom: '0.75rem' }}>
+        <p style={{ color: '#78350f', fontSize: '0.76rem', margin: 0, lineHeight: 1.5 }}>Your account is deactivated. Data preserved — reactivate any time to restore access.</p>
+      </div>
+      <a href="#" style={{ ...btn, background: '#f59e0b' }} onClick={e => e.preventDefault()}>Reactivate Account →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'AccountLocked') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#ef4444' }} /><div style={body}>
+      <h1 style={h1}>Account temporarily locked</h1>
+      <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', padding: '10px 12px', marginBottom: '0.75rem' }}>
+        <p style={{ color: '#7f1d1d', fontSize: '0.76rem', margin: 0, lineHeight: 1.5 }}><strong>Reason:</strong> Too many failed sign-in attempts. Locked for 30 minutes.</p>
+      </div>
+      <p style={{ ...p, fontSize: '0.73rem' }}>Need immediate access? Contact <strong style={{ color: primary }}>support@acme.com</strong></p>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'AccountUnlocked') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#10b981' }} /><div style={body}>
+      <div style={{ textAlign: 'center' as const, marginBottom: '0.85rem' }}>
+        <div style={{ fontSize: '2rem', marginBottom: '0.35rem' }}>🔓</div>
+        <h1 style={{ ...h1, textAlign: 'center' as const }}>Account restored</h1>
+        <p style={{ ...p, textAlign: 'center' as const }}>Your account has been unlocked. You can sign in again.</p>
+      </div>
+      <a href="#" style={{ ...btn, display: 'block', textAlign: 'center' as const, background: '#10b981' }} onClick={e => e.preventDefault()}>Sign In →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'AccountDeletionConfirmation') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#ef4444' }} /><div style={body}>
+      <h1 style={h1}>Account deletion scheduled</h1>
+      <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', padding: '10px 12px', marginBottom: '0.75rem' }}>
+        <p style={{ color: '#7f1d1d', fontSize: '0.76rem', margin: 0, lineHeight: 1.5 }}>Account and all data permanently deleted on <strong>Jun 25, 2026</strong>. This cannot be undone.</p>
+      </div>
+      <a href="#" style={{ ...btn, background: '#64748b' }} onClick={e => e.preventDefault()}>Cancel Deletion →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'LoginActivity') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#0891b2' }} /><div style={body}>
+      <h1 style={h1}>Recent login activity</h1><p style={p}>Hi Alice, here's a summary of recent sign-ins.</p>
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.68rem', marginBottom: '0.75rem' }}>
+        <thead><tr style={{ borderBottom: '1px solid #e2e8f0' }}>
+          <th style={{ textAlign: 'left' as const, padding: '3px 0', color: '#94a3b8', fontWeight: 600 }}>Time</th>
+          <th style={{ textAlign: 'left' as const, padding: '3px 0', color: '#94a3b8', fontWeight: 600 }}>Device</th>
+          <th style={{ textAlign: 'right' as const, padding: '3px 0', color: '#94a3b8', fontWeight: 600 }}>Status</th>
+        </tr></thead>
+        <tbody>
+          {[['Jun 18, 09:14', 'Chrome · macOS', 'success'], ['Jun 17, 22:03', 'Safari · iPhone', 'success'], ['Jun 17, 14:55', 'Unknown · Linux', 'failed']].map(([t, d, s]) => (
+            <tr key={t} style={{ borderBottom: '1px solid #f1f5f9' }}>
+              <td style={{ padding: '4px 0', color: '#334155' }}>{t}</td>
+              <td style={{ padding: '4px 0', color: '#64748b' }}>{d}</td>
+              <td style={{ padding: '4px 0', textAlign: 'right' as const }}>
+                <span style={{ display: 'inline-block', padding: '1px 7px', borderRadius: '10px', fontSize: '0.62rem', fontWeight: 700, background: s === 'success' ? '#dcfce7' : '#fef2f2', color: s === 'success' ? '#166534' : '#991b1b' }}>{s}</span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'DataExportRequest') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#0891b2' }} /><div style={body}>
+      <h1 style={h1}>Your data export is ready</h1><p style={p}>Hi Alice, your requested export has been prepared.</p>
+      <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '10px', padding: '0.85rem', marginBottom: '0.75rem', textAlign: 'center' as const }}>
+        <div style={{ fontSize: '1.5rem', marginBottom: '0.3rem' }}>📦</div>
+        <div style={{ fontWeight: 700, color: '#1e3a8a', fontSize: '0.82rem' }}>acme-export-alice-2026-06.zip</div>
+        <div style={{ color: '#3b82f6', fontSize: '0.68rem', marginTop: '2px' }}>4.2 MB · Expires Jun 25, 2026</div>
+      </div>
+      <a href="#" style={{ ...btn, background: '#2563eb', display: 'block', textAlign: 'center' as const }} onClick={e => e.preventDefault()}>Download Export →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'OrderConfirmation') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#10b981' }} /><div style={body}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
+        <div><h1 style={{ ...h1, marginBottom: '0.1rem' }}>Order confirmed!</h1><div style={{ color: '#94a3b8', fontSize: '0.67rem', fontFamily: 'monospace' }}>#ORD-2026-0892</div></div>
+        <span style={{ background: '#dcfce7', color: '#166534', fontWeight: 700, fontSize: '0.62rem', padding: '2px 8px', borderRadius: '10px' }}>Paid</span>
+      </div>
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.73rem', marginBottom: '0.5rem' }}><tbody>
+        {[['Wireless Headphones Pro', '$129.00'], ['USB-C Hub 7-in-1', '$49.00']].map(([n, pv]) => (
+          <tr key={n} style={{ borderBottom: '1px solid #f1f5f9' }}><td style={{ padding: '4px 0', color: '#1e293b' }}>{n}</td><td style={{ padding: '4px 0', textAlign: 'right' as const, fontWeight: 600, color: '#10b981' }}>{pv}</td></tr>
+        ))}
+        <tr><td style={{ padding: '5px 0', fontWeight: 700, color: '#0f172a' }}>Total</td><td style={{ padding: '5px 0', textAlign: 'right' as const, fontWeight: 800, color: '#10b981', fontSize: '0.9rem' }}>$178.00</td></tr>
+      </tbody></table>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Shop</div></div></div>
+  )
+
+  if (template === 'RefundConfirmation') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#10b981' }} /><div style={body}>
+      <div style={{ textAlign: 'center' as const, marginBottom: '0.85rem' }}>
+        <div style={{ fontSize: '1.5rem', marginBottom: '0.3rem' }}>💚</div>
+        <h1 style={{ ...h1, textAlign: 'center' as const }}>Refund issued</h1>
+        <div style={{ fontSize: '1.6rem', fontWeight: 900, color: '#10b981' }}>$49.00</div>
+      </div>
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '0.75rem' }}><tbody>
+        {kv('Refund ID', 'rfnd_a1b2c3d4', true)}{kv('Order', 'ORD-2026-0892', true)}{kv('Method', 'Visa ···· 4242')}{kv('Estimated', '3–5 business days')}
+      </tbody></table>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Shop</div></div></div>
+  )
+
+  if (template === 'PaymentFailed') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#ef4444' }} /><div style={body}>
+      <h1 style={h1}>Payment failed</h1>
+      <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', padding: '10px 12px', marginBottom: '0.75rem' }}>
+        <div style={{ color: '#991b1b', fontWeight: 700, fontSize: '0.76rem' }}>$29.00 — Pro Plan renewal</div>
+        <div style={{ color: '#7f1d1d', fontSize: '0.7rem', marginTop: '2px' }}>Reason: Insufficient funds</div>
+      </div>
+      <p style={{ ...p, fontSize: '0.73rem' }}>Update your payment method to keep your subscription active.</p>
+      <a href="#" style={{ ...btn, background: '#ef4444' }} onClick={e => e.preventDefault()}>Update Payment →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Shop</div></div></div>
+  )
+
+  if (template === 'BackInStock') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#10b981' }} /><div style={body}>
+      <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '8px', padding: '8px 10px', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <span style={{ fontSize: '1.1rem' }}>✅</span>
+        <span style={{ color: '#166534', fontWeight: 700, fontSize: '0.76rem' }}>Back in stock!</span>
+      </div>
+      <h1 style={h1}>Wireless Headphones Pro</h1>
+      <p style={p}>The item you were watching is available again. Grab it before it sells out.</p>
+      <a href="#" style={{ ...btn, background: '#10b981' }} onClick={e => e.preventDefault()}>Shop Now →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Shop</div></div></div>
+  )
+
+  if (template === 'NewsletterConfirmation') return (
+    <div style={outer}><div style={card}><div style={bar} /><div style={body}>
+      <h1 style={h1}>Confirm your subscription</h1>
+      <p style={p}>You signed up for <strong>Acme Weekly</strong>. Click below to confirm.</p>
+      <a href="#" style={{ ...btn, display: 'block', textAlign: 'center' as const }} onClick={e => e.preventDefault()}>Confirm Subscription →</a>
+      <p style={{ ...p, fontSize: '0.72rem', color: '#94a3b8', textAlign: 'center' as const, marginBottom: 0 }}>Didn't sign up? Safely ignore this.</p>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp · <span style={{ color: '#94a3b8' }}>Unsubscribe</span></div></div></div>
+  )
+
+  if (template === 'WinBack') return (
+    <div style={outer}><div style={card}><div style={bar} /><div style={body}>
+      <div style={{ textAlign: 'center' as const, marginBottom: '0.85rem' }}>
+        <h1 style={{ ...h1, textAlign: 'center' as const }}>We miss you, Alice 💝</h1>
+        <p style={{ ...p, textAlign: 'center' as const }}>It's been a while. Here's a special offer to welcome you back.</p>
+        <div style={{ display: 'inline-block', background: 'linear-gradient(135deg,#fef3c7,#fde68a)', border: '2px dashed #f59e0b', borderRadius: '10px', padding: '0.65rem 1.5rem', marginBottom: '0.75rem' }}>
+          <div style={{ fontWeight: 900, fontSize: '1.3rem', color: '#92400e' }}>30% OFF</div>
+          <div style={{ fontFamily: 'monospace', color: '#78350f', fontSize: '0.75rem', letterSpacing: '0.1em' }}>COMEBACK30</div>
+        </div>
+      </div>
+      <a href="#" style={{ ...btn, display: 'block', textAlign: 'center' as const }} onClick={e => e.preventDefault()}>Claim Your Offer →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'Referral') return (
+    <div style={outer}><div style={card}><div style={bar} /><div style={body}>
+      <h1 style={h1}>Your referral reward 🤝</h1>
+      <p style={p}><strong>Bob</strong> joined Acme using your link. You've earned a reward!</p>
+      <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '8px', padding: '0.75rem', marginBottom: '0.75rem', textAlign: 'center' as const }}>
+        <div style={{ color: '#14532d', fontSize: '0.68rem', fontWeight: 600, marginBottom: '4px' }}>YOUR REFERRAL LINK</div>
+        <div style={{ fontFamily: 'monospace', color: '#166534', fontSize: '0.75rem', fontWeight: 700 }}>acme.com/ref/alice-j7k2</div>
+      </div>
+      <p style={{ ...p, fontSize: '0.73rem' }}>Reward: <strong>$10 account credit</strong> applied to next invoice.</p>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'FeatureAnnouncement') return (
+    <div style={outer}><div style={card}><div style={bar} /><div style={body}>
+      <div style={{ display: 'inline-block', background: `rgba(99,102,241,0.1)`, border: `1px solid rgba(99,102,241,0.3)`, borderRadius: '100px', padding: '0.2rem 0.65rem', fontSize: '0.63rem', fontWeight: 700, color: primary, fontFamily: 'monospace', marginBottom: '0.5rem', letterSpacing: '0.08em' }}>NEW FEATURE</div>
+      <h1 style={h1}>AI-powered search is here 🚀</h1>
+      <p style={p}>Search your entire workspace with natural language. Available now on all plans.</p>
+      {[['✦', 'Ask questions in plain English — get instant answers'], ['✦', 'Works across documents, conversations, and data'], ['✦', 'Privacy-first: data never used for training']].map(([icon, text]) => (
+        <div key={text} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.4rem', fontSize: '0.73rem', color: '#334155' }}>
+          <span style={{ color: primary, flexShrink: 0 }}>{icon}</span><span>{text}</span>
+        </div>
+      ))}
+      <a href="#" style={{ ...btn, marginTop: '0.75rem' }} onClick={e => e.preventDefault()}>Try It Now →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'ReviewRequest') return (
+    <div style={outer}><div style={card}><div style={bar} /><div style={body}>
+      <h1 style={h1}>How was your experience?</h1>
+      <p style={p}>You recently purchased <strong>Wireless Headphones Pro</strong>. We'd love your feedback.</p>
+      <div style={{ textAlign: 'center' as const, marginBottom: '0.75rem' }}>
+        <div style={{ fontSize: '1.6rem', letterSpacing: '0.15em', color: '#f59e0b', marginBottom: '0.3rem' }}>★ ★ ★ ★ ★</div>
+        <div style={{ color: '#94a3b8', fontSize: '0.68rem' }}>Click a star to rate</div>
+      </div>
+      <a href="#" style={{ ...btn, display: 'block', textAlign: 'center' as const }} onClick={e => e.preventDefault()}>Write a Review →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Shop</div></div></div>
+  )
+
+  if (template === 'SupportTicket') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#8b5cf6' }} /><div style={body}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+        <h1 style={{ ...h1, margin: 0 }}>Ticket opened</h1>
+        <span style={{ background: '#ddd6fe', color: '#4c1d95', fontWeight: 700, fontSize: '0.62rem', padding: '2px 8px', borderRadius: '10px', fontFamily: 'monospace' }}>#4892</span>
+      </div>
+      <p style={p}><strong>Subject:</strong> API rate limit errors in production</p>
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '0.75rem' }}><tbody>
+        {kv('Status', 'Open')}{kv('Priority', 'High')}{kv('Created', 'Jun 18, 2026 — 10:30 AM')}
+      </tbody></table>
+      <a href="#" style={{ ...btn, background: '#8b5cf6' }} onClick={e => e.preventDefault()}>View Ticket →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Support</div></div></div>
+  )
+
+  if (template === 'TeamInvite') return (
+    <div style={outer}><div style={card}><div style={bar} /><div style={body}>
+      <div style={{ textAlign: 'center' as const, marginBottom: '0.85rem' }}>
+        <div style={{ fontSize: '2rem', marginBottom: '0.3rem' }}>👥</div>
+        <h1 style={{ ...h1, textAlign: 'center' as const }}>You've been invited!</h1>
+        <p style={{ ...p, textAlign: 'center' as const }}><strong>Bob Smith</strong> invited you to join <strong>Acme Engineering</strong>.</p>
+      </div>
+      <a href="#" style={{ ...btn, display: 'block', textAlign: 'center' as const }} onClick={e => e.preventDefault()}>Accept Invitation →</a>
+      <p style={{ ...p, fontSize: '0.72rem', color: '#94a3b8', textAlign: 'center' as const, marginBottom: 0 }}>Invitation expires in 7 days.</p>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'CommentMention') return (
+    <div style={outer}><div style={card}><div style={bar} /><div style={body}>
+      <h1 style={h1}>Bob mentioned you in a comment</h1>
+      <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderLeft: `3px solid ${primary}`, borderRadius: '0 8px 8px 0', padding: '0.65rem 0.85rem', marginBottom: '0.75rem' }}>
+        <div style={{ color: '#94a3b8', fontSize: '0.67rem', marginBottom: '4px' }}>Bob Smith · Dashboard Redesign · 2m ago</div>
+        <div style={{ fontSize: '0.78rem', color: '#1e293b', lineHeight: 1.5 }}>Hey <strong style={{ color: primary }}>@alice</strong>, can you review the new layout? I think the metrics section needs your input.</div>
+      </div>
+      <a href="#" style={btn} onClick={e => e.preventDefault()}>View Comment →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'UsageAlert') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#ef4444' }} /><div style={body}>
+      <h1 style={h1}>Storage limit at 90%</h1>
+      <p style={p}>Your workspace is using <strong>18 GB</strong> of your <strong>20 GB</strong> limit.</p>
+      <div style={{ marginBottom: '0.75rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: '#64748b', marginBottom: '4px' }}>
+          <span>18 GB used</span><span>20 GB total</span>
+        </div>
+        <div style={{ background: '#f1f5f9', borderRadius: '100px', height: '8px', overflow: 'hidden' }}>
+          <div style={{ width: '90%', height: '100%', background: 'linear-gradient(90deg,#f59e0b,#ef4444)', borderRadius: '100px' }} />
+        </div>
+        <div style={{ textAlign: 'right' as const, fontSize: '0.65rem', color: '#ef4444', fontWeight: 700, marginTop: '2px' }}>90% — critical</div>
+      </div>
+      <a href="#" style={{ ...btn, background: '#ef4444' }} onClick={e => e.preventDefault()}>Upgrade Storage →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'ExportReady') return (
+    <div style={outer}><div style={card}><div style={bar} /><div style={body}>
+      <h1 style={h1}>Your export is ready ⬇️</h1>
+      <p style={p}>The CSV export you requested is ready to download.</p>
+      <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '0.85rem', marginBottom: '0.75rem', display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+        <span style={{ fontSize: '1.5rem', flexShrink: 0 }}>📄</span>
+        <div>
+          <div style={{ fontWeight: 700, color: '#0f172a', fontSize: '0.8rem' }}>users-export-2026-06-18.csv</div>
+          <div style={{ color: '#64748b', fontSize: '0.68rem', marginTop: '2px' }}>1,247 rows · 842 KB · Expires in 72h</div>
+        </div>
+      </div>
+      <a href="#" style={btn} onClick={e => e.preventDefault()}>Download CSV →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'MaintenanceNotification') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#f59e0b' }} /><div style={body}>
+      <h1 style={h1}>Scheduled maintenance</h1>
+      <div style={{ background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '8px', padding: '10px 12px', marginBottom: '0.75rem' }}>
+        <div style={{ color: '#78350f', fontWeight: 700, fontSize: '0.76rem' }}>🔧 Planned downtime</div>
+        <div style={{ color: '#92400e', fontSize: '0.7rem', marginTop: '2px' }}>Jun 22, 2026 · 2:00 AM – 4:00 AM UTC</div>
+      </div>
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '0.6rem' }}><tbody>
+        {kv('Duration', '~2 hours')}{kv('Affected', 'API, Dashboard, Webhooks')}
+      </tbody></table>
+      <p style={{ ...p, fontSize: '0.72rem', color: '#94a3b8', marginBottom: 0 }}>No action required. Systems restore automatically.</p>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'Subscription') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#fb923c' }} /><div style={body}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
+        <h1 style={{ ...h1, margin: 0 }}>Subscription activated</h1>
+        <span style={{ background: '#dcfce7', color: '#166534', fontWeight: 700, fontSize: '0.62rem', padding: '2px 8px', borderRadius: '10px' }}>Active</span>
+      </div>
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '0.75rem' }}><tbody>
+        {kv('Plan', 'Pro Annual')}{kv('Billing', '$299.00 / year')}{kv('Next renewal', 'Jun 18, 2027')}{kv('Seats', '5 included')}
+      </tbody></table>
+      <a href="#" style={{ ...btn, background: '#fb923c' }} onClick={e => e.preventDefault()}>Manage Subscription →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'PolicyUpdate') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#fb923c' }} /><div style={body}>
+      <h1 style={h1}>Terms of Service updated</h1>
+      <p style={p}>These changes take effect on <strong>Jul 1, 2026</strong>.</p>
+      <div style={{ marginBottom: '0.75rem' }}>
+        {['Data retention extended from 1 to 2 years', 'Clearer language on third-party integrations', 'New opt-out options for analytics'].map(change => (
+          <div key={change} style={{ display: 'flex', gap: '0.5rem', padding: '5px 0', borderBottom: '1px solid #f1f5f9', fontSize: '0.73rem', color: '#334155' }}>
+            <span style={{ color: '#f59e0b', flexShrink: 0 }}>→</span><span>{change}</span>
+          </div>
+        ))}
+      </div>
+      <a href="#" style={{ ...btn, background: '#fb923c' }} onClick={e => e.preventDefault()}>Review Full Changes →</a>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Corp</div></div></div>
+  )
+
+  if (template === 'EventInvitation') return (
+    <div style={outer}><div style={card}><div style={{ height: '4px', background: '#14b8a6' }} /><div style={body}>
+      <div style={{ background: 'linear-gradient(135deg,#0d9488,#0891b2)', borderRadius: '8px', padding: '1rem', marginBottom: '0.85rem', textAlign: 'center' as const }}>
+        <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.65rem', fontWeight: 600, letterSpacing: '0.1em', marginBottom: '4px' }}>YOU'RE INVITED</div>
+        <div style={{ color: '#fff', fontWeight: 900, fontSize: '1rem', lineHeight: 1.2, marginBottom: '4px' }}>TypeScript Summit 2026</div>
+        <div style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.72rem' }}>Tue, Sep 15 · 9:00 AM – 5:00 PM UTC</div>
+        <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.68rem', marginTop: '2px' }}>Online — Zoom</div>
+      </div>
+      <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <a href="#" style={{ ...btn, marginBottom: 0, flex: 1, textAlign: 'center' as const, background: '#14b8a6' }} onClick={e => e.preventDefault()}>Register Now →</a>
+        <a href="#" style={{ ...btn, marginBottom: 0, flex: 1, textAlign: 'center' as const, background: 'transparent', border: '1px solid #e2e8f0', color: '#64748b', fontSize: '0.72rem' }} onClick={e => e.preventDefault()}>Add to Calendar</a>
+      </div>
+    </div><div style={div_} /><div style={foot}>© 2026 Acme Events</div></div></div>
   )
 
   const CONTENT: Record<string, { h: string; b: string; cta: string }> = {
@@ -354,6 +857,39 @@ const TEMPLATE_CODE: Record<TemplateKey, string> = {
   OnboardingProgress:`await mailer.send(OnboardingProgress, { to: 'alice@example.com', props: {\n  name: 'Alice', dashboardUrl: 'https://app.acme.com/onboarding',\n  steps: [\n    { title: 'Create account', completed: true },\n    { title: 'Verify email', completed: true },\n    { title: 'Invite team', completed: false, url: 'https://app.acme.com/team' },\n  ],\n} })`,
   AbandonedCart:     `await mailer.send(AbandonedCart, { to: 'alice@example.com', props: {\n  name: 'Alice', cartUrl: 'https://shop.acme.com/cart/tok_123', currency: 'USD',\n  items: [{ name: 'Wireless Headphones Pro', price: 12900 }, { name: 'USB-C Hub 7-in-1', price: 4900 }],\n} })`,
   ShippingUpdate:    `await mailer.send(ShippingUpdate, { to: 'alice@example.com', props: {\n  customerName: 'Alice Johnson', orderNumber: 'ORD-2026-0892',\n  status: 'shipped', trackingUrl: 'https://track.dhl.com/1Z999AA1012345678',\n} })`,
+  GiftCard:          `await mailer.send(GiftCard, { to: 'alice@example.com', props: {\n  recipientName: 'Alice', amount: 5000, currency: 'USD',\n  code: 'GIFT-A1B2-C3D4', message: 'Happy birthday! Enjoy shopping! 🎉',\n  expiresAt: new Date('2026-12-31'), appName: 'Acme Shop',\n} })`,
+  AppointmentReminder:`await mailer.send(AppointmentReminder, { to: 'alice@example.com', props: {\n  name: 'Alice', date: 'Friday, Jun 20, 2026', time: '10:00 AM – 10:30 AM',\n  provider: 'Dr. Sarah Chen', location: '42 Medical Plaza, Suite 3',\n  rescheduleUrl: 'https://app.acme.com/reschedule/apt_123',\n  cancelUrl: 'https://app.acme.com/cancel/apt_123', appName: 'Acme Health',\n} })`,
+  EventInvitation:   `await mailer.send(EventInvitation, { to: 'alice@example.com', props: {\n  name: 'Alice', eventName: 'TypeScript Summit 2026',\n  date: 'Tuesday, Sep 15, 2026', time: '9:00 AM – 5:00 PM UTC',\n  location: 'Online — Zoom', registerUrl: 'https://events.acme.com/ts-summit/register',\n  calendarUrl: 'https://events.acme.com/ts-summit/calendar.ics', appName: 'Acme Events',\n} })`,
+  ApiKeyCreated:     `await mailer.send(ApiKeyCreated, { to: 'alice@example.com', props: {\n  name: 'Alice', keyName: 'production-app', keyPrefix: 'sk_live_a1b2c3',\n  event: 'created', expiresAt: new Date('2027-06-18'), appName: 'Acme',\n} })\n\n// event: 'revoked' — uses danger AlertBox\n// event: 'expiring' — uses warning AlertBox with daysLeft in subject`,
+  PasswordlessOtp:   `await mailer.send(PasswordlessOtp, { to: 'alice@example.com', props: { username: 'alice.j', code: '593 847', appName: 'Acme' } })`,
+  PhoneVerification: `await mailer.send(PhoneVerification, { to: 'alice@example.com', props: { phoneNumber: '+1 (555) 012-3456', code: '7421', appName: 'Acme' } })`,
+  RegistrationConfirmation: `await mailer.send(RegistrationConfirmation, { to: 'alice@example.com', props: { name: 'Alice', dashboardUrl: 'https://app.acme.com/dashboard', appName: 'Acme' } })`,
+  ProfileUpdated:    `await mailer.send(ProfileUpdated, { to: 'alice@example.com', props: {\n  name: 'Alice', appName: 'Acme',\n  changes: [\n    { field: 'Display name', oldValue: 'alice', newValue: 'Alice Johnson' },\n    { field: 'Timezone', oldValue: 'UTC', newValue: 'America/Chicago' },\n  ],\n} })`,
+  PasswordChangedConfirmation: `await mailer.send(PasswordChangedConfirmation, { to: 'alice@example.com', props: {\n  name: 'Alice', appName: 'Acme',\n  ipAddress: '198.51.100.42', device: 'Chrome on macOS 14', location: 'San Francisco, CA',\n  timestamp: 'Jun 18, 2026 — 09:14 UTC',\n} })`,
+  EmailChangeVerification: `await mailer.send(EmailChangeVerification, { to: 'alice@example.com', props: {\n  name: 'Alice', newEmail: 'alice.new@example.com',\n  verifyUrl: 'https://app.acme.com/verify-email/tok_xyz', appName: 'Acme',\n} })`,
+  AccountDeactivated:`await mailer.send(AccountDeactivated, { to: 'alice@example.com', props: { name: 'Alice', reactivateUrl: 'https://app.acme.com/reactivate', appName: 'Acme' } })`,
+  AccountLocked:     `await mailer.send(AccountLocked, { to: 'alice@example.com', props: {\n  name: 'Alice', reason: 'too_many_attempts', supportEmail: 'support@acme.com', appName: 'Acme',\n} })`,
+  AccountUnlocked:   `await mailer.send(AccountUnlocked, { to: 'alice@example.com', props: { name: 'Alice', loginUrl: 'https://app.acme.com/login', appName: 'Acme' } })`,
+  AccountDeletionConfirmation: `await mailer.send(AccountDeletionConfirmation, { to: 'alice@example.com', props: {\n  name: 'Alice', event: 'scheduled', appName: 'Acme',\n  cancelUrl: 'https://app.acme.com/cancel-deletion',\n} })\n// event: 'completed' — danger box\n// event: 'cancelled' — success box`,
+  LoginActivity:     `await mailer.send(LoginActivity, { to: 'alice@example.com', props: {\n  name: 'Alice', appName: 'Acme',\n  events: [\n    { timestamp: 'Jun 18, 09:14 UTC', device: 'Chrome on macOS', location: 'San Francisco, CA', status: 'success' },\n    { timestamp: 'Jun 17, 14:55 UTC', device: 'Unknown on Linux', location: 'Moscow, Russia',   status: 'failed'  },\n  ],\n} })`,
+  DataExportRequest: `await mailer.send(DataExportRequest, { to: 'alice@example.com', props: {\n  name: 'Alice', event: 'ready', appName: 'Acme',\n  downloadUrl: 'https://app.acme.com/exports/acme-export-alice.zip',\n  expiresAt: new Date('2026-06-25'),\n} })\n// event: 'expired' — shows re-request CTA`,
+  OrderConfirmation: `await mailer.send(OrderConfirmation, { to: 'alice@example.com', props: {\n  customerName: 'Alice Johnson', orderNumber: 'ORD-2026-0892', currency: 'USD',\n  items: [\n    { name: 'Wireless Headphones Pro', quantity: 1, price: 12900 },\n    { name: 'USB-C Hub 7-in-1',        quantity: 1, price: 4900  },\n  ],\n} })`,
+  RefundConfirmation:`await mailer.send(RefundConfirmation, { to: 'alice@example.com', props: {\n  customerName: 'Alice Johnson', amount: 4900, currency: 'USD',\n  refundId: 'rfnd_a1b2c3d4', orderId: 'ORD-2026-0892',\n  paymentMethod: 'Visa ···· 4242', appName: 'Acme Shop',\n} })`,
+  PaymentFailed:     `await mailer.send(PaymentFailed, { to: 'alice@example.com', props: {\n  customerName: 'Alice Johnson', amount: 2900, currency: 'USD',\n  reason: 'Insufficient funds', updateUrl: 'https://app.acme.com/billing', appName: 'Acme',\n} })`,
+  BackInStock:       `await mailer.send(BackInStock, { to: 'alice@example.com', props: {\n  name: 'Alice', productName: 'Wireless Headphones Pro',\n  productUrl: 'https://shop.acme.com/products/headphones-pro', appName: 'Acme Shop',\n} })`,
+  NewsletterConfirmation: `await mailer.send(NewsletterConfirmation, { to: 'alice@example.com', props: {\n  name: 'Alice', confirmUrl: 'https://acme.com/newsletter/confirm/tok_abc',\n  unsubscribeUrl: 'https://acme.com/newsletter/unsubscribe/tok_xyz', appName: 'Acme',\n} })`,
+  WinBack:           `await mailer.send(WinBack, { to: 'alice@example.com', props: {\n  name: 'Alice', ctaUrl: 'https://app.acme.com/return?promo=COMEBACK30',\n  discount: 'COMEBACK30', appName: 'Acme',\n} })`,
+  Referral:          `await mailer.send(Referral, { to: 'alice@example.com', props: {\n  name: 'Alice', event: 'reward_earned', appName: 'Acme',\n  referralUrl: 'https://acme.com/ref/alice-j7k2',\n  rewardDescription: '$10 account credit applied to next invoice',\n} })`,
+  FeatureAnnouncement:`await mailer.send(FeatureAnnouncement, { to: 'alice@example.com', props: {\n  name: 'Alice', featureName: 'AI-powered search', appName: 'Acme',\n  ctaUrl: 'https://app.acme.com/search',\n  changes: [\n    'Ask questions in plain English — get instant answers',\n    'Works across documents, conversations, and data',\n    'Privacy-first: data never used for training',\n  ],\n} })`,
+  ReviewRequest:     `await mailer.send(ReviewRequest, { to: 'alice@example.com', props: {\n  name: 'Alice', productName: 'Wireless Headphones Pro',\n  reviewUrl: 'https://shop.acme.com/products/headphones-pro/review',\n  orderDate: 'Jun 10, 2026', appName: 'Acme Shop',\n} })`,
+  SupportTicket:     `await mailer.send(SupportTicket, { to: 'alice@example.com', props: {\n  name: 'Alice', ticketId: '4892', event: 'opened', appName: 'Acme Support',\n  subject: 'API rate limit errors in production',\n  ctaUrl: 'https://support.acme.com/tickets/4892',\n} })\n// event: 'replied' | 'resolved' | 'closed'`,
+  TeamInvite:        `await mailer.send(TeamInvite, { to: 'alice@example.com', props: {\n  name: 'Alice', inviterName: 'Bob Smith', teamName: 'Acme Engineering',\n  inviteUrl: 'https://app.acme.com/invite/tok_team123', appName: 'Acme',\n} })`,
+  CommentMention:    `await mailer.send(CommentMention, { to: 'alice@example.com', props: {\n  name: 'Alice', mentionedBy: 'Bob Smith', event: 'mentioned',\n  contextUrl: 'https://app.acme.com/projects/dashboard/comments#c-42', appName: 'Acme',\n} })`,
+  UsageAlert:        `await mailer.send(UsageAlert, { to: 'alice@example.com', props: {\n  name: 'Alice', resource: 'Storage', used: 18, limit: 20, severity: 'critical',\n  ctaUrl: 'https://app.acme.com/billing/upgrade', appName: 'Acme',\n} })\n// severity: 'warning' (>75%) | 'critical' (>90%) | 'exceeded'`,
+  ExportReady:       `await mailer.send(ExportReady, { to: 'alice@example.com', props: {\n  name: 'Alice', exportType: 'CSV', appName: 'Acme',\n  downloadUrl: 'https://app.acme.com/exports/users-export-2026-06-18.csv',\n  expiresAt: new Date(Date.now() + 72 * 60 * 60 * 1000),\n} })`,
+  MaintenanceNotification: `await mailer.send(MaintenanceNotification, { to: 'alice@example.com', props: {\n  name: 'Alice', event: 'scheduled', appName: 'Acme',\n  startTime: new Date('2026-06-22T02:00:00Z'),\n  endTime: new Date('2026-06-22T04:00:00Z'),\n  affectedServices: ['API', 'Dashboard', 'Webhooks'],\n} })\n// event: 'started' | 'completed' | 'extended'`,
+  Subscription:      `await mailer.send(Subscription, { to: 'alice@example.com', props: {\n  name: 'Alice', event: 'activated', plan: 'Pro Annual',\n  ctaUrl: 'https://app.acme.com/billing', appName: 'Acme',\n} })\n// event: 'trial_started' | 'trial_ending' | 'activated'\n//        'cancelled' | 'expired' | 'renewed' | 'paused'`,
+  PolicyUpdate:      `await mailer.send(PolicyUpdate, { to: 'alice@example.com', props: {\n  name: 'Alice', policyType: 'Terms of Service', appName: 'Acme',\n  effectiveDate: new Date('2026-07-01'),\n  ctaUrl: 'https://acme.com/legal/terms',\n  changes: [\n    'Data retention extended from 1 to 2 years',\n    'Clearer language on third-party integrations',\n    'New opt-out options for analytics',\n  ],\n} })`,
 }
 
 // ── Page ──────────────────────────────────────────────────────────────────────
@@ -397,7 +933,7 @@ export default function TierdeMailPage() {
             <p style={{ color: '#94a3b8', fontSize: '1.05rem', maxWidth: '520px', margin: '0 auto 0.5rem', lineHeight: 1.65 }}>JSX email templates · multi-provider · TypeScript-first</p>
             <p style={{ color: '#64748b', fontSize: '0.8rem', fontFamily: 'monospace', margin: '0 auto 2rem' }}>// тиэрдэ — "to deliver · to convey" (Sakha)</p>
             <div style={{ display: 'flex', gap: '0.55rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '1.75rem' }}>
-              {[`${totalTemplates} Templates`, '6 Providers', 'sendBatch + Rate Limiting', 'Webhooks (Resend · Postmark)', 'React <EmailPreview>', 'mailpit local dev', 'Unsubscribe Headers', 'tierde dev · send · render'].map(t => (
+              {[`${totalTemplates} Templates`, '6 Providers', 'sendBatch + Rate Limiting', 'Webhooks (Resend · Postmark)', 'React <EmailPreview>', 'mailpit local dev', 'Unsubscribe Headers', 'WCAG AA · 52 variants', '32 Design Tokens + PALETTE', 'tierde dev · send · render'].map(t => (
                 <span key={t} style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: '100px', padding: '0.28rem 0.75rem', fontSize: '0.72rem', color: '#fca5a5', fontFamily: 'monospace' }}>{t}</span>
               ))}
             </div>
@@ -415,14 +951,69 @@ export default function TierdeMailPage() {
 pnpm add @yedoma-labs/tierde-mail`}</Code>
         </Card>
 
+        {/* ── What's New in v0.5.0 ── */}
+        <Card style={{ marginBottom: '1.5rem', border: '1px solid rgba(239,68,68,0.3)', background: 'linear-gradient(135deg,#1a0505 0%,#0f0c29 100%)' }}>
+          <Label>What&apos;s New — v0.5.0</Label>
+          <h2 style={{ color: '#f1f5f9', fontSize: '1.15rem', margin: '0 0 1.25rem' }}>4 new templates · 14 design tokens · WCAG AA</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(260px,1fr))', gap: '0.85rem' }}>
+            {[
+              {
+                icon: '📅', color: '#14b8a6', title: 'AppointmentReminder',
+                desc: 'Booking / appointment reminders — date, time, provider, location, reschedule & cancel links',
+                cat: 'Scheduling',
+              },
+              {
+                icon: '🎟️', color: '#14b8a6', title: 'EventInvitation',
+                desc: 'Webinar & event invites — date, time, location, register CTA, add-to-calendar link',
+                cat: 'Scheduling',
+              },
+              {
+                icon: '🔐', color: '#84cc16', title: 'ApiKeyCreated',
+                desc: 'API key lifecycle — created / revoked / expiring; AlertBox severity matches event type',
+                cat: 'Developer',
+              },
+              {
+                icon: '🎁', color: '#f59e0b', title: 'GiftCard',
+                desc: 'Gift card delivery — amount, redemption code, personal message, expiry date',
+                cat: 'Commerce',
+              },
+            ].map(({ icon, color, title, desc, cat }) => (
+              <div key={title} className="tm-card" style={{ background: `linear-gradient(135deg,rgba(15,23,42,0.9),${color}10)`, border: `1px solid ${color}30`, borderRadius: '12px', padding: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
+                  <span style={{ fontSize: '1.3rem' }}>{icon}</span>
+                  <span style={{ color, fontWeight: 700, fontSize: '0.8rem', fontFamily: 'monospace' }}>{title}</span>
+                </div>
+                <div style={{ color: '#94a3b8', fontSize: '0.72rem', lineHeight: 1.55, marginBottom: '0.5rem' }}>{desc}</div>
+                <span style={{ display: 'inline-block', background: `${color}15`, border: `1px solid ${color}30`, borderRadius: '100px', padding: '0.15rem 0.55rem', fontSize: '0.63rem', color, fontFamily: 'monospace' }}>{cat}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: '1.25rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(220px,1fr))', gap: '0.65rem' }}>
+            {[
+              { color: '#6366f1', icon: '🎨', title: '14 new semantic tokens', desc: 'surfaceSubtle, borderSubtle, plus success/danger/warning/info (bg, border, text) on Theme' },
+              { color: '#6366f1', icon: '🎨', title: 'PALETTE const', desc: 'Fixed system colors for changelogs and severity indicators — exported alongside createTheme' },
+              { color: '#ef4444', icon: '♿', title: 'WCAG AA enforcement', desc: '52 template variants audited — pnpm wcag CLI + CI test suite (wcag.test.tsx)' },
+              { color: '#0891b2', icon: '🌙', title: 'Dark mode fixes', desc: 'Code boxes, badges, status indicators now use token-derived colors — no more invisible text' },
+            ].map(({ color, icon, title, desc }) => (
+              <div key={title} style={{ display: 'flex', gap: '0.6rem', background: 'rgba(30,41,59,0.4)', borderRadius: '10px', padding: '0.75rem', border: `1px solid ${color}18` }}>
+                <div style={{ width: '3px', borderRadius: '2px', background: color, alignSelf: 'stretch', flexShrink: 0 }} />
+                <div>
+                  <div style={{ color, fontWeight: 700, fontSize: '0.75rem', marginBottom: '0.15rem' }}>{icon} {title}</div>
+                  <div style={{ color: '#64748b', fontSize: '0.7rem', lineHeight: 1.5 }}>{desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+
         {/* ── CLI — tierde dev ── */}
         <Card style={{ marginBottom: '1.5rem' }}>
           <Label>CLI — tierde dev</Label>
           <h2 style={{ color: '#f1f5f9', fontSize: '1.15rem', margin: '0 0 0.35rem' }}>One-command email preview server</h2>
           <p style={{ color: '#64748b', fontSize: '0.85rem', margin: '0 0 1.25rem' }}>
-            Starts a local preview server with all {totalTemplates} built-in templates and canonical sample data — no config, no script needed.
+            Starts a local preview server with all {totalTemplates} built-in templates and canonical sample data — no config, no script needed. New in v0.5.0: WCAG AA audit via <code style={{ fontFamily: 'monospace', fontSize: '0.78rem', color: '#fca5a5' }}>pnpm wcag</code>.
           </p>
-          <Code>{`# Start the preview server with all 41 templates + sample data:
+          <Code>{`# Start the preview server with all 45 templates + sample data:
 npx tierde dev
 # → http://localhost:3000
 #   - live reload via SSE (auto-refreshes on file change)
@@ -431,18 +1022,21 @@ npx tierde dev
 
 npx tierde dev --port 4000  # custom port
 
+# WCAG AA audit — 52 variant tests, runs in CI:
+pnpm wcag    # audits all 52 template variants for color contrast
+
 # Render a single template to HTML (no server):
 npx tierde render Welcome --props '{"name":"Alice","loginUrl":"https://app.com/start"}'
-npx tierde render Invoice --props '{"customerName":"Alice","invoiceNumber":"INV-001","items":[]}' -o invoice.html
+npx tierde render GiftCard --props '{"recipientName":"Alice","amount":5000,"code":"GIFT-A1B2"}' -o gift.html
 npx tierde render Welcome --text  # plain-text output
 
 # Smoke-test real delivery via TIERDE_PROVIDER env:
 npx tierde send Welcome --to alice@example.com --props '{"name":"Alice","loginUrl":"..."}'
 
 # Eject built-in templates for full customization:
-npx tierde eject --list                # print all 41 template names (pipe-friendly)
-npx tierde eject --all emails/         # eject all 41 into emails/ directory
-npx tierde eject Welcome PasswordReset # eject specific templates`}</Code>
+npx tierde eject --list                           # print all 45 template names (pipe-friendly)
+npx tierde eject --all emails/                    # eject all 45 into emails/ directory
+npx tierde eject AppointmentReminder EventInvitation ApiKeyCreated GiftCard`}</Code>
         </Card>
 
         {/* ── Quick Start ── */}
@@ -827,10 +1421,16 @@ const myTheme = createTheme({
   accentBar: '${theme.accentBar}',
   borderRadius: '${theme.borderRadius}',
   buttonBorderRadius: '${theme.buttonBorderRadius}',
-  // All 18 tokens:
+  // All 32 tokens (18 original + 14 semantic new in v0.5.0):
   // primaryHover, primaryText, secondary, secondaryText,
   // background, cardBackground, textPrimary, textSecondary,
   // textMuted, border, fontFamily, maxWidth, logo?, logoAlt?, logoWidth?
+  // surfaceSubtle, borderSubtle,
+  // successBg, successBorder, successText,
+  // dangerBg, dangerBorder, dangerText,
+  // warningBg, warningBorder, warningText,
+  // infoBg, infoBorder, infoText
+  // PALETTE: fixed system colors (use for changelog, severity indicators)
 })`}</Code>
             </div>
             <div>
@@ -843,7 +1443,7 @@ const myTheme = createTheme({
         {/* ── Full template catalog ── */}
         <Card style={{ marginBottom: '1.5rem' }}>
           <Label>Full Template Catalog</Label>
-          <h2 style={{ color: '#f1f5f9', fontSize: '1.15rem', margin: '0 0 1.25rem' }}>{totalTemplates} templates across 7 categories</h2>
+          <h2 style={{ color: '#f1f5f9', fontSize: '1.15rem', margin: '0 0 1.25rem' }}>{totalTemplates} templates across 9 categories</h2>
           <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
             {allCats.map(cat => <Tab key={cat} active={catFilter === cat} onClick={() => setCatFilter(cat)}>{cat}</Tab>)}
           </div>
