@@ -6,5 +6,5 @@ allowBuilds:
   simple-git-hooks: true
 minimumReleaseAgeExclude:
   - '@css-inline/*'
-  - '@yedomalabs/*'
-  - '@yedoma-labs/tierde-mail@0.5.0'
+  - '@yedoma-labs/*'
+  - '@yedoma-labs/tierde-mail@0.6.0'
