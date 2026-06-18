@@ -5,17 +5,6 @@ allowBuilds:
   sharp: false
   simple-git-hooks: true
 minimumReleaseAgeExclude:
-  - '@css-inline/css-inline-android-arm-eabi@0.21.0'
-  - '@css-inline/css-inline-android-arm64@0.21.0'
-  - '@css-inline/css-inline-darwin-arm64@0.21.0'
-  - '@css-inline/css-inline-darwin-x64@0.21.0'
-  - '@css-inline/css-inline-linux-arm-gnueabihf@0.21.0'
-  - '@css-inline/css-inline-linux-arm64-gnu@0.21.0'
-  - '@css-inline/css-inline-linux-arm64-musl@0.21.0'
-  - '@css-inline/css-inline-linux-x64-gnu@0.21.0'
-  - '@css-inline/css-inline-linux-x64-musl@0.21.0'
-  - '@css-inline/css-inline-win32-arm64-msvc@0.21.0'
-  - '@css-inline/css-inline-win32-x64-msvc@0.21.0'
-  - '@css-inline/css-inline@0.21.0'
-  - '@yedoma-labs/tierde-mail@0.4.0'
+  - '@css-inline/*'
+  - '@yedomalabs/*'
   - '@yedoma-labs/tierde-mail@0.5.0'
