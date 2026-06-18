@@ -18,3 +18,4 @@ minimumReleaseAgeExclude:
   - '@css-inline/css-inline-win32-x64-msvc@0.21.0'
   - '@css-inline/css-inline@0.21.0'
   - '@yedoma-labs/tierde-mail@0.4.0'
+  - '@yedoma-labs/tierde-mail@0.5.0'
