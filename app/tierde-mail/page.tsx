@@ -947,7 +947,8 @@ export default function TierdeMailPage() {
         {/* ── Install ── */}
         <Card style={{ marginBottom: '1.5rem' }}>
           <Label>Install</Label>
-          <Code>{`pnpm add @yedoma-labs/tierde-mail`}</Code>
+          <Code>{`npm install @yedoma-labs/tierde-mail
+pnpm add @yedoma-labs/tierde-mail`}</Code>
         </Card>
 
         {/* ── What's New in v0.5.0 ── */}
