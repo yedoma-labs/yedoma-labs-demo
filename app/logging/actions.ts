@@ -1,15 +1,12 @@
 "use server";
 
-// dist/index.d.ts is absent from the published package; context exports live in dist/src but types resolve correctly at runtime
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-import {
-	bindRequestContext,
-	createLogger,
-	getContext,
-	runWithContext,
-	setContextValue,
-} from "@yedoma-labs/suruk-logger";
+// context exports (bindRequestContext/getContext/runWithContext/setContextValue) exist at runtime
+// but are not yet reflected in the published .d.ts — use require to avoid TS2305
+import { createLogger } from "@yedoma-labs/suruk-logger";
+// biome-ignore lint/suspicious/noExplicitAny: untyped runtime context exports from suruk-logger
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { bindRequestContext, getContext, runWithContext, setContextValue } =
+	require("@yedoma-labs/suruk-logger") as Record<string, (...args: unknown[]) => unknown>;
 import { actionLogger, logger } from "@/lib/logger";
 
 // Test 1: Log Levels
