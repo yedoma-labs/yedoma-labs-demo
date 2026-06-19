@@ -21,7 +21,7 @@
     "@yedoma-labs/sir-forms": "0.2.0",
     "@yedoma-labs/suruk-logger": "0.2.0",
     "@yedoma-labs/suruy-form-actions": "0.1.0",
-    "@yedoma-labs/tierde-mail": "0.6.0",
+    "@yedoma-labs/tierde-mail": "0.7.0",
     "@yedoma-labs/turar-config": "0.3.0",
     "@yedoma-labs/tuuru-chrono-tz": "0.3.1",
     "next": "16.2.9",
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.0",
-    "@types/node": "25.9.3",
+    "@types/node": "26.0.0",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
     "simple-git-hooks": "^2.13.1",

@@ -27,8 +27,8 @@ importers:
         specifier: 0.1.0
         version: 0.1.0(react@19.2.7)
       '@yedoma-labs/tierde-mail':
-        specifier: 0.6.0
-        version: 0.6.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: 0.7.0
+        version: 0.7.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@yedoma-labs/turar-config':
         specifier: 0.3.0
         version: 0.3.0(@yedoma-labs/bylyt-env-guard@0.3.5)
@@ -64,8 +64,8 @@ importers:
         specifier: 2.5.0
         version: 2.5.0
       '@types/node':
-        specifier: 25.9.3
-        version: 25.9.3
+        specifier: 26.0.0
+        version: 26.0.0
       '@types/react':
         specifier: 19.2.17
         version: 19.2.17
@@ -561,8 +561,8 @@ packages:
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
 
-  '@types/node@25.9.3':
-    resolution: {integrity: sha512-603BddQMv3pUcr4U2dhujk83N2tTDVr/34wII2B6bJy6g+8WD6yUb11jszNs0gdi4PesVWl7ABt8nYMVpnLUcg==}
+  '@types/node@26.0.0':
+    resolution: {integrity: sha512-vf2YFi1iY9lHGwNJMs01biZFbKJkrZR1T6/MlzjhJLPdntOHLhTrDSnSVcdtvjihi4VQNlrFRIxLsDBlQpAipA==}
 
   '@types/react-dom@19.2.3':
     resolution: {integrity: sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==}
@@ -602,8 +602,8 @@ packages:
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
 
-  '@yedoma-labs/tierde-mail@0.6.0':
-    resolution: {integrity: sha512-BJ0Qd95J182zZQAvHGe7r9Wv8eW0cjx4ALLnzlnvZQf21FIdwq3vOrxNfMMXwxhsr0Y3wQGwPVDEVDusET/NuQ==}
+  '@yedoma-labs/tierde-mail@0.7.0':
+    resolution: {integrity: sha512-n44zY5IWPfkDFHA8mw6pxaPCAl4jEk2gBe3DSmvAkBRYbZ/doa3ORWdEG7JA6sYTNlqSVjXprT1uknCR4Wztjw==}
     engines: {node: '>=20.0.0'}
     hasBin: true
     peerDependencies:
@@ -1067,8 +1067,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  undici-types@7.24.6:
-    resolution: {integrity: sha512-WRNW+sJgj5OBN4/0JpHFqtqzhpbnV0GuB+OozA9gCL7a993SmU+1JBZCzLNxYsbMfIeDL+lTsphD5jN5N+n0zg==}
+  undici-types@8.3.0:
+    resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
 
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
@@ -1579,9 +1579,9 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@types/node@25.9.3':
+  '@types/node@26.0.0':
     dependencies:
-      undici-types: 7.24.6
+      undici-types: 8.3.0
 
   '@types/react-dom@19.2.3(@types/react@19.2.17)':
     dependencies:
@@ -1609,7 +1609,7 @@ snapshots:
     dependencies:
       react: 19.2.7
 
-  '@yedoma-labs/tierde-mail@0.6.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@yedoma-labs/tierde-mail@0.7.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       '@css-inline/css-inline': 0.21.0
       '@yedoma-labs/bylyt-env-guard': 0.3.5
@@ -2133,7 +2133,7 @@ snapshots:
 
   typescript@6.0.3: {}
 
-  undici-types@7.24.6: {}
+  undici-types@8.3.0: {}
 
   wrappy@1.0.2: {}
 
