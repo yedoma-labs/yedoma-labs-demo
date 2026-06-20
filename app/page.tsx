@@ -15,6 +15,7 @@ const PKG = {
 	"suruy-form-actions": v("suruy-form-actions"),
 	"tuuru-chrono-tz": v("tuuru-chrono-tz"),
 	"tierde-mail": v("tierde-mail"),
+	"keler-temporal": "0.1.1",
 };
 
 const npm = (pkg: string) =>
@@ -130,6 +131,18 @@ const DEMOS = [
 		btnGrad: "linear-gradient(135deg, #ef4444, #f97316)",
 		pkg: "tierde-mail",
 	},
+	{
+		href: "/keler-temporal",
+		icon: "⏳",
+		title: "keler-temporal",
+		tag: `v${PKG["keler-temporal"]}`,
+		desc: "Gradual migration bridge from date-fns / moment / Luxon / Day.js to TC39 Temporal — converters, compat layer, migration warnings, adapter registry",
+		gradient: "linear-gradient(135deg, #0f0c29, #1e1040, #0c1830)",
+		accent: "#a78bfa",
+		border: "rgba(167,139,250,0.3)",
+		btnGrad: "linear-gradient(135deg, #a78bfa, #6366f1)",
+		pkg: "keler-temporal",
+	},
 ];
 
 const LIBRARIES = [
@@ -180,6 +193,12 @@ const LIBRARIES = [
 		version: PKG["tierde-mail"],
 		desc: "45 JSX email templates, 6 providers, sendBatch + rate limiting, webhooks, WCAG AA",
 		color: "#ef4444",
+	},
+	{
+		name: "keler-temporal",
+		version: PKG["keler-temporal"],
+		desc: "TC39 Temporal migration bridge — converters, compat layer, adapter registry, migration warnings",
+		color: "#a78bfa",
 	},
 ];
 
@@ -248,6 +267,14 @@ const LEXICON = [
 		meaning: "to deliver · to convey · to transmit",
 		lore: "The act of delivering — carrying a message across the taiga to its destination.",
 		color: "#ef4444",
+	},
+	{
+		name: "keler",
+		lib: "keler-temporal",
+		sakha: "кэлэр",
+		meaning: "coming · future",
+		lore: "The Sakha word for what is yet to arrive. A bridge to the future API — written for the code that isn't there yet.",
+		color: "#a78bfa",
 	},
 ];
 

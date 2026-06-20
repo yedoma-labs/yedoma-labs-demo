@@ -17,6 +17,9 @@ importers:
       '@yedoma-labs/ichchi-state':
         specifier: 0.1.0
         version: 0.1.0(react@19.2.7)
+      '@yedoma-labs/keler-temporal':
+        specifier: 0.1.1
+        version: 0.1.1(temporal-polyfill@1.0.1)
       '@yedoma-labs/sir-forms':
         specifier: 0.2.0
         version: 0.2.0(react@19.2.7)
@@ -56,6 +59,9 @@ importers:
       server-only:
         specifier: 0.0.1
         version: 0.0.1
+      temporal-polyfill:
+        specifier: ^1.0.1
+        version: 1.0.1
       zod:
         specifier: 4.4.3
         version: 4.4.3
@@ -584,6 +590,15 @@ packages:
       react:
         optional: true
 
+  '@yedoma-labs/keler-temporal@0.1.1':
+    resolution: {integrity: sha512-cDRK94LR63s6LXrt6+o1ujIY3qh4fYqM+gdZlMHUx5sgsJRjP5C11viN35pcSnOgT3NBaDjz6II5x6Tg8BKXww==}
+    engines: {node: '>=22.0.0'}
+    peerDependencies:
+      temporal-polyfill: '>=0.2.0'
+    peerDependenciesMeta:
+      temporal-polyfill:
+        optional: true
+
   '@yedoma-labs/sir-forms@0.2.0':
     resolution: {integrity: sha512-0qEDIAkbTLPxUhlJpMvS89r08a54Z4Ts3LPQmnFsqX7NzxmQcJHHhTOFEWXzWkad8RX1zk3I2W4jItasZIrqVg==}
     engines: {node: '>=20'}
@@ -1046,6 +1061,15 @@ packages:
         optional: true
       babel-plugin-macros:
         optional: true
+
+  temporal-polyfill@1.0.1:
+    resolution: {integrity: sha512-N2SoI9olnW7BUsU8RosDphZQl9s+WJ8O7PoJMFCr/e5/1rFkVI4GNOWaSeySG+UoP04foPYsnLWbJmbXOiShZg==}
+
+  temporal-spec@1.0.0:
+    resolution: {integrity: sha512-00Ahj1e1ifaERTMOIIGpOCdOo9IEk2m6GGSMedsn9a2SIsGLdOTbmME1Htv6IM82b6VHrzSUTIVc7YHy6hdhFQ==}
+
+  temporal-utils@1.0.1:
+    resolution: {integrity: sha512-HAixuesxFQIUaQk3ptX2jhfO/FsOkgVkDDMawvp6n/fkB1q6BKfs3lURw9I+pK/2e2e/q/vrLrxmeqauBoyGMQ==}
 
   thread-stream@4.2.0:
     resolution: {integrity: sha512-e2zZ96wSChazBsbENf/Pcm/4swHt2cEKQ92rhUjkL9GCKiTDJIaTBenjE/m9DXi0QBmTMDkFDdOomUy20A1tDQ==}
@@ -1597,6 +1621,10 @@ snapshots:
     optionalDependencies:
       react: 19.2.7
 
+  '@yedoma-labs/keler-temporal@0.1.1(temporal-polyfill@1.0.1)':
+    optionalDependencies:
+      temporal-polyfill: 1.0.1
+
   '@yedoma-labs/sir-forms@0.2.0(react@19.2.7)':
     dependencies:
       react: 19.2.7
@@ -2117,6 +2145,15 @@ snapshots:
     dependencies:
       client-only: 0.0.1
       react: 19.2.7
+
+  temporal-polyfill@1.0.1:
+    dependencies:
+      temporal-spec: 1.0.0
+      temporal-utils: 1.0.1
+
+  temporal-spec@1.0.0: {}
+
+  temporal-utils@1.0.1: {}
 
   thread-stream@4.2.0:
     dependencies:

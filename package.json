@@ -18,6 +18,7 @@
   "dependencies": {
     "@yedoma-labs/bylyt-env-guard": "0.3.5",
     "@yedoma-labs/ichchi-state": "0.1.0",
+    "@yedoma-labs/keler-temporal": "0.1.1",
     "@yedoma-labs/sir-forms": "0.2.0",
     "@yedoma-labs/suruk-logger": "0.2.0",
     "@yedoma-labs/suruy-form-actions": "0.1.0",
@@ -31,6 +32,7 @@
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "server-only": "0.0.1",
+    "temporal-polyfill": "^1.0.1",
     "zod": "4.4.3"
   },
   "devDependencies": {
