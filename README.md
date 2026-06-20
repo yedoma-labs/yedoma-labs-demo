@@ -15,7 +15,7 @@ Comprehensive demo showcasing Yedoma Labs' TypeScript ecosystem for building typ
 
 This demo showcases **seven** Yedoma Labs packages working together:
 
-**✨ Updated: tierde-mail v0.5.0** - 4 new templates (AppointmentReminder, EventInvitation, ApiKeyCreated, GiftCard), 14 new design tokens, WCAG AA enforcement!
+**✨ Updated: tierde-mail v0.8.1** - Middleware pipeline, embedImages, Attachments API, WireMock/LocalStack dev stack, collectResults:false for large batches, 33 design tokens!
 
 1. **[@yedoma-labs/sir-forms](https://www.npmjs.com/package/@yedoma-labs/sir-forms)** v0.2.0
    - Type-safe React Server Actions form library
@@ -51,12 +51,16 @@ This demo showcases **seven** Yedoma Labs packages working together:
    - Request context binding
    - Structured logging with TypeScript
 
-7. **[@yedoma-labs/tierde-mail](https://www.npmjs.com/package/@yedoma-labs/tierde-mail)** v0.5.0
+7. **[@yedoma-labs/tierde-mail](https://www.npmjs.com/package/@yedoma-labs/tierde-mail)** v0.8.1
    - 45 JSX email templates across 9 categories
    - 6 providers: Resend, SMTP, SES, SendGrid, Postmark, Mailpit
-   - sendBatch with rate limiting, Resend/Postmark webhooks
+   - Middleware pipeline (MailMiddleware, embedImages built-in)
+   - Attachments: per-send, per-recipient, shared batch, inline CID
+   - sendBatch with rate limiting, collectResults:false for large lists
+   - WireMock + LocalStack dev stack, baseUrl on providers
+   - Resend/Postmark webhooks (HMAC verified, normalized events)
    - WCAG AA enforcement (52 variant tests)
-   - 32 design tokens + PALETTE, dark mode support
+   - 33 design tokens + PALETTE, dark mode support
    - CLI: `tierde dev`, `tierde send`, `tierde render`, `tierde eject`
 
 ## 🚀 Quick Start

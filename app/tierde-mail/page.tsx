@@ -933,7 +933,7 @@ export default function TierdeMailPage() {
             <p style={{ color: '#94a3b8', fontSize: '1.05rem', maxWidth: '520px', margin: '0 auto 0.5rem', lineHeight: 1.65 }}>JSX email templates · multi-provider · TypeScript-first</p>
             <p style={{ color: '#64748b', fontSize: '0.8rem', fontFamily: 'monospace', margin: '0 auto 2rem' }}>// тиэрдэ — "to deliver · to convey" (Sakha)</p>
             <div style={{ display: 'flex', gap: '0.55rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '1.75rem' }}>
-              {[`${totalTemplates} Templates`, '6 Providers', 'sendBatch + Rate Limiting', 'Webhooks (Resend · Postmark)', 'React <EmailPreview>', 'mailpit local dev', 'Unsubscribe Headers', 'WCAG AA · 52 variants', '32 Design Tokens + PALETTE', 'tierde dev · send · render'].map(t => (
+              {[`${totalTemplates} Templates`, '6 Providers', 'sendBatch + Rate Limiting', 'Webhooks (Resend · Postmark)', 'React <EmailPreview>', 'mailpit local dev', 'Unsubscribe Headers', 'Middleware · embedImages', 'Attachments + CID inline', 'WireMock · LocalStack dev', 'WCAG AA · 52 variants', '33 Design Tokens + PALETTE', 'tierde dev · send · render'].map(t => (
                 <span key={t} style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: '100px', padding: '0.28rem 0.75rem', fontSize: '0.72rem', color: '#fca5a5', fontFamily: 'monospace' }}>{t}</span>
               ))}
             </div>
@@ -951,49 +951,20 @@ export default function TierdeMailPage() {
 pnpm add @yedoma-labs/tierde-mail`}</Code>
         </Card>
 
-        {/* ── What's New in v0.5.0 ── */}
+        {/* ── What's New in v0.8.1 ── */}
         <Card style={{ marginBottom: '1.5rem', border: '1px solid rgba(239,68,68,0.3)', background: 'linear-gradient(135deg,#1a0505 0%,#0f0c29 100%)' }}>
-          <Label>What&apos;s New — v0.5.0</Label>
-          <h2 style={{ color: '#f1f5f9', fontSize: '1.15rem', margin: '0 0 1.25rem' }}>4 new templates · 14 design tokens · WCAG AA</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(260px,1fr))', gap: '0.85rem' }}>
+          <Label>What&apos;s New — v0.8.1</Label>
+          <h2 style={{ color: '#f1f5f9', fontSize: '1.15rem', margin: '0 0 1.25rem' }}>Middleware pipeline · Attachments · embedImages · WireMock/LocalStack</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(220px,1fr))', gap: '0.65rem' }}>
             {[
-              {
-                icon: '📅', color: '#14b8a6', title: 'AppointmentReminder',
-                desc: 'Booking / appointment reminders — date, time, provider, location, reschedule & cancel links',
-                cat: 'Scheduling',
-              },
-              {
-                icon: '🎟️', color: '#14b8a6', title: 'EventInvitation',
-                desc: 'Webinar & event invites — date, time, location, register CTA, add-to-calendar link',
-                cat: 'Scheduling',
-              },
-              {
-                icon: '🔐', color: '#84cc16', title: 'ApiKeyCreated',
-                desc: 'API key lifecycle — created / revoked / expiring; AlertBox severity matches event type',
-                cat: 'Developer',
-              },
-              {
-                icon: '🎁', color: '#f59e0b', title: 'GiftCard',
-                desc: 'Gift card delivery — amount, redemption code, personal message, expiry date',
-                cat: 'Commerce',
-              },
-            ].map(({ icon, color, title, desc, cat }) => (
-              <div key={title} className="tm-card" style={{ background: `linear-gradient(135deg,rgba(15,23,42,0.9),${color}10)`, border: `1px solid ${color}30`, borderRadius: '12px', padding: '1rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
-                  <span style={{ fontSize: '1.3rem' }}>{icon}</span>
-                  <span style={{ color, fontWeight: 700, fontSize: '0.8rem', fontFamily: 'monospace' }}>{title}</span>
-                </div>
-                <div style={{ color: '#94a3b8', fontSize: '0.72rem', lineHeight: 1.55, marginBottom: '0.5rem' }}>{desc}</div>
-                <span style={{ display: 'inline-block', background: `${color}15`, border: `1px solid ${color}30`, borderRadius: '100px', padding: '0.15rem 0.55rem', fontSize: '0.63rem', color, fontFamily: 'monospace' }}>{cat}</span>
-              </div>
-            ))}
-          </div>
-          <div style={{ marginTop: '1.25rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(220px,1fr))', gap: '0.65rem' }}>
-            {[
-              { color: '#6366f1', icon: '🎨', title: '14 new semantic tokens', desc: 'surfaceSubtle, borderSubtle, plus success/danger/warning/info (bg, border, text) on Theme' },
-              { color: '#6366f1', icon: '🎨', title: 'PALETTE const', desc: 'Fixed system colors for changelogs and severity indicators — exported alongside createTheme' },
-              { color: '#ef4444', icon: '♿', title: 'WCAG AA enforcement', desc: '52 template variants audited — pnpm wcag CLI + CI test suite (wcag.test.tsx)' },
-              { color: '#0891b2', icon: '🌙', title: 'Dark mode fixes', desc: 'Code boxes, badges, status indicators now use token-derived colors — no more invisible text' },
+              { color: '#8b5cf6', icon: '⚙️', title: 'Middleware pipeline', desc: 'middleware: [] on createMailer — ordered MailMiddleware transforms run on every EmailMessage before the provider call' },
+              { color: '#10b981', icon: '🖼️', title: 'embedImages()', desc: 'Built-in middleware: fetches remote images and embeds them as CID inline attachments — email clients that block remote images still render them' },
+              { color: '#f59e0b', icon: '📎', title: 'Attachments API', desc: 'Send files via attachments[] on send() and sendBatch(). Shared + per-recipient, inline CID, content-type allowlist enforced before provider call' },
+              { color: '#06b6d4', icon: '🧪', title: 'WireMock + LocalStack', desc: 'Docker Compose dev stack: WireMock stubs Resend/SendGrid/Postmark HTTP APIs, LocalStack mocks SES — smoke-test delivery without real credentials' },
+              { color: '#ef4444', icon: '🗂️', title: 'collectResults: false', desc: 'sendBatch memory mode for large lists — skip per-recipient result retention, consume results via onResult, sent/failed counts stay accurate' },
+              { color: '#6366f1', icon: '🔌', title: 'baseUrl on providers', desc: 'Resend, SendGrid, Postmark now accept baseUrl to redirect calls at WireMock or any HTTP mock — no env var hacks needed' },
+              { color: '#84cc16', icon: '📝', title: 'htmlToPlainText()', desc: 'Convert rendered HTML to a readable plain-text fallback — utility exposed for custom template pipelines' },
+              { color: '#fca5a5', icon: '🛡️', title: 'validateAttachment()', desc: 'Explicit attachment validation before the send — surfaces filename/CID/content-type errors early in your own pipelines' },
             ].map(({ color, icon, title, desc }) => (
               <div key={title} style={{ display: 'flex', gap: '0.6rem', background: 'rgba(30,41,59,0.4)', borderRadius: '10px', padding: '0.75rem', border: `1px solid ${color}18` }}>
                 <div style={{ width: '3px', borderRadius: '2px', background: color, alignSelf: 'stretch', flexShrink: 0 }} />
@@ -1088,14 +1059,139 @@ const mailer = createMailerFromEnv()
 //
 // resend:    RESEND_API_KEY
 // smtp:      SMTP_HOST, SMTP_PORT (587), SMTP_USER, SMTP_PASS, SMTP_SECURE
-// ses:       SES_REGION (or AWS_REGION)
-// sendgrid:  SENDGRID_API_KEY
-// postmark:  POSTMARK_SERVER_TOKEN
+// ses:       SES_REGION (or AWS_REGION), SES_ENDPOINT (optional, e.g. LocalStack)
+// sendgrid:  SENDGRID_API_KEY, SENDGRID_BASE_URL (optional, e.g. WireMock)
+// postmark:  POSTMARK_SERVER_TOKEN, POSTMARK_BASE_URL (optional, e.g. WireMock)
 // mailpit:   MAILPIT_HOST (localhost), MAILPIT_PORT (1025)
 
 // Swap providers without changing application code:
 // TIERDE_PROVIDER=mailpit pnpm dev    ← captures to local Mailpit
 // TIERDE_PROVIDER=resend  pnpm start  ← delivers for real`}</Code>
+        </Card>
+
+        {/* ── Middleware ── */}
+        <Card style={{ marginBottom: '1.5rem' }}>
+          <Label>Middleware Pipeline</Label>
+          <h2 style={{ color: '#f1f5f9', fontSize: '1.15rem', margin: '0 0 0.35rem' }}>Transform every message before the provider call</h2>
+          <p style={{ color: '#64748b', fontSize: '0.85rem', margin: '0 0 1.25rem' }}>
+            <code style={{ fontFamily: 'monospace', color: '#94a3b8' }}>MailMiddleware</code> is <code style={{ fontFamily: 'monospace', color: '#94a3b8' }}>(message: EmailMessage) =&gt; EmailMessage | Promise&lt;EmailMessage&gt;</code>. Middleware runs in order, per-recipient, after rendering and before the provider. Built-in: <code style={{ fontFamily: 'monospace', color: '#fca5a5' }}>embedImages()</code>.
+          </p>
+          <Code>{`import { createMailer, embedImages } from '@yedoma-labs/tierde-mail'
+import type { MailMiddleware } from '@yedoma-labs/tierde-mail'
+import { smtp } from '@yedoma-labs/tierde-mail/providers/smtp'
+import { randomUUID } from 'node:crypto'
+
+// ── Built-in: embedImages ──────────────────────────────────────────
+// Fetches remote images and swaps src="https://..." → src="cid:<filename>"
+// Images are cached per middleware instance (batch-safe).
+// SSRF warning: embedImages() without a list fetches ALL remote src attrs.
+const mailer = createMailer({
+  provider: smtp({ host: 'smtp.acme.com', port: 587, auth: { user: '...', pass: '...' } }),
+  from: 'hello@acme.com',
+  middleware: [
+    embedImages([
+      'https://raw.githubusercontent.com/yedoma-labs/assets/main/banner.png',
+    ]),
+  ],
+})
+
+// ── Custom middleware: open-tracking pixel ─────────────────────────
+export const trackOpens = (baseUrl: string): MailMiddleware =>
+  (msg) => ({
+    ...msg,
+    html: msg.html + \`<img src="\${baseUrl}/\${randomUUID()}" width="1" height="1" alt="" />\`,
+  })
+
+// ── Custom middleware: click tracking ─────────────────────────────
+export const trackClicks = (baseUrl: string): MailMiddleware =>
+  (msg) => ({
+    ...msg,
+    html: msg.html.replace(
+      /href="(https?:[^"]+)"/g,
+      (_, url) => \`href="\${baseUrl}?url=\${encodeURIComponent(url)}"\`,
+    ),
+  })
+
+const trackedMailer = createMailer({
+  provider: smtp({ host: 'smtp.acme.com', port: 587, auth: { user: '...', pass: '...' } }),
+  from: 'hello@acme.com',
+  middleware: [
+    trackOpens('https://track.acme.com/open'),    // pixel injection first
+    trackClicks('https://track.acme.com/click'),  // then rewrite links
+  ],
+})
+
+// Middleware runs per-recipient — each send gets its own pixel URL.
+// Subject + attachments are re-validated AFTER middleware runs.`}</Code>
+        </Card>
+
+        {/* ── Attachments ── */}
+        <Card style={{ marginBottom: '1.5rem' }}>
+          <Label>Attachments</Label>
+          <h2 style={{ color: '#f1f5f9', fontSize: '1.15rem', margin: '0 0 0.35rem' }}>Files, inline images, per-recipient attachments</h2>
+          <p style={{ color: '#64748b', fontSize: '0.85rem', margin: '0 0 1.25rem' }}>
+            Pass <code style={{ fontFamily: 'monospace', color: '#94a3b8' }}>attachments[]</code> on <code style={{ fontFamily: 'monospace', color: '#94a3b8' }}>send()</code> or <code style={{ fontFamily: 'monospace', color: '#94a3b8' }}>sendBatch()</code>. Allowed types: PDF, ZIP, images, CSV, plain text. Filenames may not contain <code style={{ fontFamily: 'monospace', color: '#94a3b8' }}>..</code>, slashes, or control characters. SVG is blocked (active content). Validated before any provider call.
+          </p>
+          <Code>{`import { validateAttachment } from '@yedoma-labs/tierde-mail'
+import { InvoiceEmail } from '@/emails/InvoiceEmail'
+
+// ── Per-send attachment ────────────────────────────────────────────
+await mailer.send(InvoiceEmail, {
+  to: 'alice@example.com',
+  props: { customerName: 'Alice', invoiceNumber: 'INV-001', items: [...] },
+  attachments: [
+    {
+      filename: 'invoice-2026-06.pdf',
+      content: pdfBuffer,            // Buffer or base64 string
+      contentType: 'application/pdf',
+    },
+  ],
+})
+
+// ── Inline image (CID) ────────────────────────────────────────────
+// Embed logo directly — no remote fetch, works in all clients
+await mailer.send(WelcomeEmail, {
+  to: 'alice@example.com',
+  props: { name: 'Alice', loginUrl: '...' },
+  attachments: [
+    {
+      filename: 'logo.png',
+      content: logoBuffer,
+      contentType: 'image/png',
+      cid: 'logo.png',              // reference in JSX: src="cid:logo.png"
+    },
+  ],
+})
+
+// ── Batch: shared + per-recipient ────────────────────────────────
+await mailer.sendBatch(InvoiceEmail, {
+  attachments: [
+    // Shared: every recipient gets this
+    { filename: 'terms.pdf', content: termsBuffer, contentType: 'application/pdf' },
+  ],
+  recipients: [
+    {
+      to: 'alice@example.com',
+      props: { customerName: 'Alice', invoiceNumber: 'INV-001', items: [...] },
+      attachments: [
+        // Per-recipient: appended after shared
+        { filename: 'invoice-alice.pdf', content: alicePdf, contentType: 'application/pdf' },
+      ],
+    },
+    {
+      to: 'bob@example.com',
+      props: { customerName: 'Bob', invoiceNumber: 'INV-002', items: [...] },
+      attachments: [
+        { filename: 'invoice-bob.pdf', content: bobPdf, contentType: 'application/pdf' },
+      ],
+    },
+  ],
+})
+
+// ── Validate explicitly (optional) ───────────────────────────────
+// Use in your own pipelines before attachments reach the mailer:
+validateAttachment({ filename: 'report.csv', content: csvData, contentType: 'text/csv' })
+// throws TypeError on invalid filename, CID, or content type`}</Code>
         </Card>
 
         {/* ── sendBatch ── */}
@@ -1133,7 +1229,7 @@ const { results, sent, failed } = await mailer.sendBatch(Welcome, {
 
 console.log(\`Sent: \${sent}, Failed: \${failed}\`)`}</Code>
           </div>
-          <div style={{ color: '#94a3b8', fontSize: '0.78rem', fontFamily: 'monospace', fontWeight: 700, marginBottom: '0.75rem' }}>Rate limiting — v0.4.0: maxPerSecond (token-bucket)</div>
+          <div style={{ color: '#94a3b8', fontSize: '0.78rem', fontFamily: 'monospace', fontWeight: 700, marginBottom: '0.75rem' }}>Rate limiting — maxPerSecond (token-bucket)</div>
           <Code>{`// Token-bucket: ≤N sends per second regardless of concurrency
 // Ideal for Resend free tier (2 req/s) or provider API limits
 const result = await mailer.sendBatch(NewsletterEmail, {
@@ -1153,6 +1249,20 @@ import { captureEmails } from '@yedoma-labs/tierde-mail/testing'
 const { mailer, inbox } = captureEmails()
 await mailer.sendBatch(Welcome, { recipients: users, concurrency: 3 })
 expect(inbox).toHaveLength(users.length)`}</Code>
+          <div style={{ color: '#94a3b8', fontSize: '0.78rem', fontFamily: 'monospace', fontWeight: 700, margin: '1.25rem 0 0.75rem' }}>Large batches — collectResults: false</div>
+          <Code>{`// Default: results array holds one entry (with its props) per recipient — O(n) heap.
+// For very large batches set collectResults: false — sent/failed counts stay accurate,
+// consume each result via onResult as it completes, results array stays empty.
+let sent = 0
+await mailer.sendBatch(NewsletterEmail, {
+  recipients: hundredsOfThousands,
+  maxPerSecond: 10,
+  collectResults: false,
+  onResult(r) {
+    if (r.result) sent++
+    else logBounce(r.to, r.error)
+  },
+})`}</Code>
         </Card>
 
         {/* ── Webhooks ── */}
@@ -1245,33 +1355,48 @@ app.post('/webhooks/postmark',
 
         {/* ── mailpit local dev ── */}
         <Card style={{ marginBottom: '1.5rem' }}>
-          <Label>Local Dev — mailpit</Label>
-          <h2 style={{ color: '#f1f5f9', fontSize: '1.15rem', margin: '0 0 0.35rem' }}>Zero-config email capture for development</h2>
+          <Label>Local Dev</Label>
+          <h2 style={{ color: '#f1f5f9', fontSize: '1.15rem', margin: '0 0 0.35rem' }}>Mailpit · WireMock · LocalStack — zero real credentials needed</h2>
           <p style={{ color: '#64748b', fontSize: '0.85rem', margin: '0 0 1.25rem' }}>
-            The <code style={{ fontFamily: 'monospace', color: '#94a3b8' }}>mailpit()</code> provider targets <code style={{ fontFamily: 'monospace', color: '#94a3b8' }}>localhost:1025</code> — compatible with{' '}
-            <a href="https://mailpit.axllent.org" target="_blank" rel="noopener noreferrer" style={{ color: '#fca5a5' }}>Mailpit</a> and MailHog. No API key, no config, no test emails sent to real addresses.
+            A <code style={{ fontFamily: 'monospace', color: '#94a3b8' }}>docker-compose.yml</code> ships with the package. <strong style={{ color: '#e2e8f0' }}>Mailpit</strong> catches SMTP sends. <strong style={{ color: '#e2e8f0' }}>WireMock</strong> stubs the Resend/SendGrid/Postmark HTTP APIs. <strong style={{ color: '#e2e8f0' }}>LocalStack</strong> mocks SES — no real AWS account.
           </p>
-          <Code>{`import { createMailer } from '@yedoma-labs/tierde-mail'
+          <Code>{`# Start the full dev stack (Mailpit + WireMock + LocalStack):
+docker compose up -d
+# Mailpit SMTP  → localhost:1025   (catch-all SMTP sink)
+# Mailpit UI    → http://localhost:8025
+# WireMock      → http://localhost:8080  (Resend / SendGrid / Postmark stubs)
+# LocalStack    → http://localhost:4566  (SES API mock)
+
+# ── mailpit: direct SMTP, zero config ────────────────────────────
+import { createMailer } from '@yedoma-labs/tierde-mail'
 import { mailpit } from '@yedoma-labs/tierde-mail/providers/mailpit'
 
-// Zero-config — targets localhost:1025
 const mailer = createMailer({ provider: mailpit(), from: 'dev@localhost' })
+// → all sends captured at http://localhost:8025
 
-// Docker Compose setup:
-// mailpit({ host: 'mailpit', port: 1025 })
+# ── Resend/SendGrid/Postmark via WireMock (baseUrl) ──────────────
+import { resend }    from '@yedoma-labs/tierde-mail/providers/resend'
+import { sendgrid }  from '@yedoma-labs/tierde-mail/providers/sendgrid'
+import { postmark }  from '@yedoma-labs/tierde-mail/providers/postmark'
 
-// Or via createMailerFromEnv:
-// TIERDE_PROVIDER=mailpit
-// MAILPIT_HOST=mailpit   (optional, for Docker)
-// MAILPIT_PORT=1025      (optional)
+resend({   apiKey: 'test', baseUrl: 'http://localhost:8080' })
+sendgrid({ apiKey: 'test', baseUrl: 'http://localhost:8080' })
+postmark({ serverToken: 'test', baseUrl: 'http://localhost:8080' })
+// WireMock returns a mock message ID — zero real HTTP calls
 
-// Start Mailpit (web UI at http://localhost:8025):
-// docker run -d -p 1025:1025 -p 8025:8025 axllent/mailpit
-// brew install mailpit && mailpit
+# ── SES via LocalStack ───────────────────────────────────────────
+import { ses } from '@yedoma-labs/tierde-mail/providers/ses'
 
-// All sends are captured locally — never delivered externally
-await mailer.send(Welcome, { to: 'alice@example.com', props: { name: 'Alice', loginUrl: '...' } })
-// → appears at http://localhost:8025 with full HTML rendering`}</Code>
+ses({
+  region: 'us-east-1',
+  endpoint: 'http://localhost:4566',
+  credentials: { accessKeyId: 'test', secretAccessKey: 'test' },
+})
+// LocalStack accepts SES calls — no real AWS account needed
+
+# ── Or use env vars (createMailerFromEnv) ────────────────────────
+TIERDE_PROVIDER=mailpit pnpm dev          # → Mailpit
+TIERDE_PROVIDER=resend RESEND_BASE_URL=http://localhost:8080 pnpm dev  # → WireMock`}</Code>
         </Card>
 
         {/* ── React <EmailPreview> ── */}
@@ -1388,7 +1513,7 @@ await mailer.sendBatch(WeeklyDigest, {
         {/* ── Theme customization ── */}
         <Card style={{ marginBottom: '1.5rem' }}>
           <Label>Theme Customization</Label>
-          <h2 style={{ color: '#f1f5f9', fontSize: '1.15rem', margin: '0 0 0.35rem' }}>createTheme — 18 design tokens, live preview</h2>
+          <h2 style={{ color: '#f1f5f9', fontSize: '1.15rem', margin: '0 0 0.35rem' }}>createTheme — 33 design tokens + PALETTE, live preview</h2>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', alignItems: 'start' }}>
             <div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', marginBottom: '1.25rem' }}>
@@ -1421,16 +1546,17 @@ const myTheme = createTheme({
   accentBar: '${theme.accentBar}',
   borderRadius: '${theme.borderRadius}',
   buttonBorderRadius: '${theme.buttonBorderRadius}',
-  // All 32 tokens (18 original + 14 semantic new in v0.5.0):
+  // All 33 tokens (core + semantic):
   // primaryHover, primaryText, secondary, secondaryText,
-  // background, cardBackground, textPrimary, textSecondary,
-  // textMuted, border, fontFamily, maxWidth, logo?, logoAlt?, logoWidth?
-  // surfaceSubtle, borderSubtle,
+  // background, cardBackground, surfaceSubtle,
+  // textPrimary, textSecondary, textMuted,
+  // border, borderSubtle, fontFamily, maxWidth,
+  // logo?, logoAlt?, logoWidth?
   // successBg, successBorder, successText,
   // dangerBg, dangerBorder, dangerText,
   // warningBg, warningBorder, warningText,
   // infoBg, infoBorder, infoText
-  // PALETTE: fixed system colors (use for changelog, severity indicators)
+  // PALETTE: changelog (new/improvement/fix), impact, severity, trial
 })`}</Code>
             </div>
             <div>
