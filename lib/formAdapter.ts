@@ -52,6 +52,7 @@ export function adaptSuruyActionForSirForms<TOutput>(
 
 		// Log FormData contents
 		const formDataEntries = Array.from(formData.entries()).reduce(
+			// biome-ignore lint/performance/noAccumulatingSpread: bounded number of entries, readability preferred
 			(acc, [key, value]) => ({ ...acc, [key]: value }),
 			{} as Record<string, FormDataEntryValue>,
 		);

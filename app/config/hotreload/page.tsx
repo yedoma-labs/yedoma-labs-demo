@@ -8,7 +8,9 @@ type ConfigChange = {
 	type: "added" | "changed" | "removed";
 	path: string;
 	timestamp: string;
+	// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 	before?: any;
+	// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 	after?: any;
 };
 
@@ -26,6 +28,7 @@ const changeBg: Record<string, string> = {
 export default function HotReloadPage() {
 	const [isWatching, setIsWatching] = useState(false);
 	const [changes, setChanges] = useState<ConfigChange[]>([]);
+	// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 	const [currentConfig, setCurrentConfig] = useState<any>(null);
 	const [loading, setLoading] = useState(false);
 	const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
@@ -262,6 +265,7 @@ export default function HotReloadPage() {
 					}}
 				>
 					<button
+						type="button"
 						onClick={handleStartWatching}
 						disabled={isWatching || loading}
 						style={{
@@ -287,6 +291,7 @@ export default function HotReloadPage() {
 					</button>
 
 					<button
+						type="button"
 						onClick={handleStopWatching}
 						disabled={!isWatching || loading}
 						style={{
@@ -419,6 +424,7 @@ export default function HotReloadPage() {
 					<div style={{ display: "grid", gap: "0.75rem" }}>
 						{changes.map((change, idx) => (
 							<div
+								// biome-ignore lint/suspicious/noArrayIndexKey: static list, index is stable
 								key={`${change.timestamp}-${idx}`}
 								style={{
 									background: changeBg[change.type] ?? "rgba(30,41,59,0.5)",

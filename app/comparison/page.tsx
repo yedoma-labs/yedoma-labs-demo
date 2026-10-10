@@ -22,6 +22,7 @@ function SirFormsExample() {
 	const [result, setResult] = useState<string | null>(null);
 
 	const handleSubmit = useFormSubmit(submitContactForm, {
+		// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 		onSuccess: (data: any) =>
 			setResult(`✅ sir-forms: Success! ${data?.name || "Form submitted"}`),
 		onError: () => setResult("❌ sir-forms: Validation failed"),

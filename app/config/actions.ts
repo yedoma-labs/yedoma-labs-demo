@@ -90,6 +90,7 @@ export async function checkEnvHealth() {
 			NODE_ENV: {
 				value: env.NODE_ENV,
 				type: "enum",
+				// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 				valid: validNodeEnvValues.includes(env.NODE_ENV as any),
 			},
 			NEXT_PUBLIC_API_URL: {

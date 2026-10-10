@@ -2,8 +2,6 @@
 
 import "temporal-polyfill/shim";
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
 import {
 	extractFields,
 	fromTemporal,
@@ -30,6 +28,9 @@ import {
 	startOfMonth,
 	subDays,
 } from "@yedoma-labs/keler-temporal/compat";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
 const KELER_VERSION = "0.1.1";
 
 // ─── Shared UI ────────────────────────────────────────────────────────────────
@@ -841,7 +842,9 @@ enableMigrationWarnings({ level: 'error' });`}
 						>
 							{label}
 						</code>
-						<span style={{ color: "#475569", fontSize: "0.72rem" }}>{desc}</span>
+						<span style={{ color: "#475569", fontSize: "0.72rem" }}>
+							{desc}
+						</span>
 					</div>
 				))}
 			</div>
@@ -1089,7 +1092,14 @@ export default function KelerTemporalPage() {
 							marginBottom: "1.25rem",
 						}}
 					>
-						<span style={{ color: "#a78bfa", fontSize: "0.72rem", fontFamily: "monospace", fontWeight: 700 }}>
+						<span
+							style={{
+								color: "#a78bfa",
+								fontSize: "0.72rem",
+								fontFamily: "monospace",
+								fontWeight: 700,
+							}}
+						>
 							@yedoma-labs/keler-temporal
 						</span>
 						<span
@@ -1137,15 +1147,14 @@ export default function KelerTemporalPage() {
 							marginBottom: "1.5rem",
 						}}
 					>
-						Bridge library for gradual migration from legacy date libraries (date-fns,
-						moment.js, Luxon, Day.js) to the TC39 Temporal API. Converters,
-						drop-in compat functions, migration warnings, and a custom adapter
-						system — so you can adopt Temporal one file at a time.
+						Bridge library for gradual migration from legacy date libraries
+						(date-fns, moment.js, Luxon, Day.js) to the TC39 Temporal API.
+						Converters, drop-in compat functions, migration warnings, and a
+						custom adapter system — so you can adopt Temporal one file at a
+						time.
 					</p>
 
-					<div
-						style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}
-					>
+					<div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
 						{[
 							"toTemporal / fromTemporal",
 							"compat layer",
@@ -1177,25 +1186,34 @@ export default function KelerTemporalPage() {
 				<div
 					style={{ display: "flex", flexDirection: "column", gap: "3.5rem" }}
 				>
-					{SECTIONS.map(({ id, emoji, title, subtitle, gradient, component: Component }) => (
-						<section
-							key={id}
-							style={{
-								background: "rgba(15,23,42,0.6)",
-								borderRadius: "20px",
-								padding: "2rem",
-								border: "1px solid #1e293b",
-							}}
-						>
-							<SectionHeader
-								emoji={emoji}
-								title={title}
-								subtitle={subtitle}
-								gradient={gradient}
-							/>
-							<Component />
-						</section>
-					))}
+					{SECTIONS.map(
+						({
+							id,
+							emoji,
+							title,
+							subtitle,
+							gradient,
+							component: Component,
+						}) => (
+							<section
+								key={id}
+								style={{
+									background: "rgba(15,23,42,0.6)",
+									borderRadius: "20px",
+									padding: "2rem",
+									border: "1px solid #1e293b",
+								}}
+							>
+								<SectionHeader
+									emoji={emoji}
+									title={title}
+									subtitle={subtitle}
+									gradient={gradient}
+								/>
+								<Component />
+							</section>
+						),
+					)}
 				</div>
 
 				{/* ── Footer ── */}

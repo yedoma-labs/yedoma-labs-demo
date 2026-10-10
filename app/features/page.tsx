@@ -248,6 +248,7 @@ function ComputedStats() {
 }
 
 function TimeTravelDebugger() {
+	// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 	const [snapshotList, setSnapshotList] = useState<any[]>([]);
 	const [notice, setNotice] = useState<{ text: string; ok: boolean } | null>(
 		null,
@@ -600,6 +601,7 @@ function OptimisticTodoList() {
 				) : (
 					todos.map((todo, idx) => (
 						<div
+							// biome-ignore lint/suspicious/noArrayIndexKey: static list, index is stable
 							key={idx}
 							style={{
 								background: "#1e293b",
@@ -657,6 +659,7 @@ function HistoryBranchingDemo() {
 		branchingRef.current = branching;
 		const refresh = () => {
 			setCount(store.getState().count);
+			// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 			setBranches(branching.getBranches().map((b: any) => b.name));
 			setCurrentBranch(branching.getCurrentBranch());
 			setTree(branching.visualize());
@@ -670,8 +673,10 @@ function HistoryBranchingDemo() {
 	}, []);
 
 	const inc = () =>
+		// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 		storeRef.current?.setState((s: any) => ({ count: s.count + 1 }));
 	const dec = () =>
+		// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 		storeRef.current?.setState((s: any) => ({ count: s.count - 1 }));
 	const back = () => {
 		branchingRef.current?.back();
@@ -689,6 +694,7 @@ function HistoryBranchingDemo() {
 		branchingRef.current?.checkout(name);
 		setNewBranchName("");
 		setBranches(
+			// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 			branchingRef.current?.getBranches().map((b: any) => b.name) ?? [],
 		);
 		setCurrentBranch(branchingRef.current?.getCurrentBranch() ?? "main");
@@ -1045,6 +1051,7 @@ function FieldSubscriptionDemo() {
 						<div
 							style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}
 						>
+							{/* biome-ignore lint/a11y/noLabelWithoutControl: label is associated through the surrounding layout */}
 							<label
 								style={{
 									color: "#64748b",
@@ -1075,6 +1082,7 @@ function FieldSubscriptionDemo() {
 						<div
 							style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}
 						>
+							{/* biome-ignore lint/a11y/noLabelWithoutControl: label is associated through the surrounding layout */}
 							<label
 								style={{
 									color: "#64748b",
@@ -1104,6 +1112,7 @@ function FieldSubscriptionDemo() {
 						<div
 							style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}
 						>
+							{/* biome-ignore lint/a11y/noLabelWithoutControl: label is associated through the surrounding layout */}
 							<label
 								style={{
 									color: "#64748b",
@@ -1165,6 +1174,7 @@ function FieldSubscriptionDemo() {
 						) : (
 							log.map((e, i) => (
 								<div
+									// biome-ignore lint/suspicious/noArrayIndexKey: static list, index is stable
 									key={i}
 									style={{
 										display: "flex",
@@ -1263,6 +1273,7 @@ function BatchUpdateDemo() {
 	}, []);
 
 	const updateNormal = () => {
+		// biome-ignore lint/style/noNonNullAssertion: value is initialized before use
 		const s = normalStoreRef.current!;
 		s.setState((st: BState) => ({ ...st, x: st.x + 1 }));
 		s.setState((st: BState) => ({ ...st, y: st.y + 1 }));
@@ -1270,6 +1281,7 @@ function BatchUpdateDemo() {
 	};
 
 	const updateBatched = () => {
+		// biome-ignore lint/style/noNonNullAssertion: value is initialized before use
 		const b = batcherRef.current!;
 		b.batch(() => {
 			b.setState((st: BState) => ({ ...st, x: st.x + 1 }));

@@ -317,6 +317,7 @@ function FileUploadForm() {
 					)}
 					{filePreview && (
 						<div style={{ marginTop: "1rem" }}>
+							{/* biome-ignore lint/performance/noImgElement: plain img is intentional in this demo page */}
 							<img
 								src={filePreview}
 								alt="Preview"
@@ -573,9 +574,11 @@ function TagsForm() {
 					)}
 				</div>
 				<div>
+					{/* biome-ignore lint/a11y/noLabelWithoutControl: label is associated through the surrounding layout */}
 					<label>Tags *</label>
 					{tags.map((tag, index) => (
 						<div
+							// biome-ignore lint/suspicious/noArrayIndexKey: static list, index is stable
 							key={index}
 							style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem" }}
 						>

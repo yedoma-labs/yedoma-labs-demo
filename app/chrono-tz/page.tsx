@@ -875,6 +875,8 @@ function FormatPlayground() {
 				}}
 			>
 				{FORMAT_TOKENS.map(([tok, desc]) => (
+					// biome-ignore lint/a11y/useKeyWithClickEvents: demo overlay closes on click
+					// biome-ignore lint/a11y/noStaticElementInteractions: demo overlay closes on click
 					<div
 						key={tok}
 						onClick={() => setPattern((prev) => prev + tok)}
@@ -2865,6 +2867,7 @@ function GlobalLocaleDemo() {
 			>
 				{(Object.keys(LOCALE_MAP) as LocaleKey[]).map((key) => (
 					<button
+						type="button"
 						key={key}
 						onClick={() => {
 							setDefaultLocale(LOCALE_MAP[key]);

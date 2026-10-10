@@ -1,6 +1,6 @@
 "use client";
 
-export default function Error({
+export default function ErrorPage({
 	error,
 	reset,
 }: {
@@ -12,6 +12,7 @@ export default function Error({
 			<h2>Something went wrong!</h2>
 			<p style={{ color: "#666", marginTop: "1rem" }}>{error.message}</p>
 			<button
+				type="button"
 				onClick={reset}
 				style={{
 					marginTop: "1rem",

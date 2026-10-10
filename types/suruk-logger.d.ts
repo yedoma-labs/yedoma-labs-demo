@@ -4,25 +4,25 @@ declare module "@yedoma-labs/suruk-logger" {
 		level?: "trace" | "debug" | "info" | "warn" | "error" | "fatal";
 		pretty?: boolean;
 		redact?: string[];
-		destination?: any;
-		serializers?: Record<string, (value: any) => any>;
-		mixin?: () => Record<string, any>;
+		destination?: unknown;
+		serializers?: Record<string, (value: unknown) => unknown>;
+		mixin?: () => Record<string, unknown>;
 	}
 
 	export interface Logger {
-		trace: (msg: string | Error, obj?: any) => void;
-		trace: (obj: any, msg?: string) => void;
-		debug: (msg: string | Error, obj?: any) => void;
-		debug: (obj: any, msg?: string) => void;
-		info: (msg: string | Error, obj?: any) => void;
-		info: (obj: any, msg?: string) => void;
-		warn: (msg: string | Error, obj?: any) => void;
-		warn: (obj: any, msg?: string) => void;
-		error: (msg: string | Error, obj?: any) => void;
-		error: (obj: any, msg?: string) => void;
-		fatal: (msg: string | Error, obj?: any) => void;
-		fatal: (obj: any, msg?: string) => void;
-		child: (bindings: Record<string, any>) => Logger;
+		trace: (msg: string | Error, obj?: unknown) => void;
+		trace: (obj: unknown, msg?: string) => void;
+		debug: (msg: string | Error, obj?: unknown) => void;
+		debug: (obj: unknown, msg?: string) => void;
+		info: (msg: string | Error, obj?: unknown) => void;
+		info: (obj: unknown, msg?: string) => void;
+		warn: (msg: string | Error, obj?: unknown) => void;
+		warn: (obj: unknown, msg?: string) => void;
+		error: (msg: string | Error, obj?: unknown) => void;
+		error: (obj: unknown, msg?: string) => void;
+		fatal: (msg: string | Error, obj?: unknown) => void;
+		fatal: (obj: unknown, msg?: string) => void;
+		child: (bindings: Record<string, unknown>) => Logger;
 	}
 
 	export function createLogger(options?: LoggerOptions): Logger;

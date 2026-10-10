@@ -137,6 +137,7 @@ export async function getConfigChanges() {
 	};
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 function formatConfig(config: any) {
 	const isDatabaseLocal =
 		config.database_host === "localhost" ||

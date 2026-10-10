@@ -723,7 +723,7 @@ export default function ConfigPage() {
 										marginTop: "0.5rem",
 									}}
 								>
-									Error: {(schemaDocs as any).error}
+									Error: {(schemaDocs as { error?: string }).error}
 								</div>
 							)}
 						</div>
@@ -945,6 +945,7 @@ export async function getAppSettings() {
 								{
 									step: "3",
 									label: "Environment Variables",
+									// biome-ignore lint/suspicious/noTemplateCurlyInString: literal documentation text shown in the UI
 									desc: "Variable interpolation with ${VAR_NAME}",
 									color: "#10b981",
 								},
