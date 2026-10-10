@@ -286,6 +286,8 @@ export default function MatrixNeo() {
 	const currentText = currentLine ? currentLine.text.slice(0, charIdx) : "";
 
 	return (
+		// biome-ignore lint/a11y/noStaticElementInteractions: demo overlay closes on click
+		// biome-ignore lint/a11y/useKeyWithClickEvents: demo overlay closes on click
 		<div
 			onClick={close}
 			style={{
@@ -309,7 +311,6 @@ export default function MatrixNeo() {
 						"repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,65,0.015) 2px, rgba(0,255,65,0.015) 4px)",
 				}}
 			/>
-
 			{/* CRT vignette */}
 			<div
 				style={{
@@ -320,8 +321,9 @@ export default function MatrixNeo() {
 						"radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.7) 100%)",
 				}}
 			/>
-
 			{/* Terminal window */}
+			{/* biome-ignore lint/a11y/useKeyWithClickEvents: demo overlay closes on click */}
+			{/* biome-ignore lint/a11y/noStaticElementInteractions: demo overlay closes on click */}
 			<div
 				onClick={(e) => e.stopPropagation()}
 				style={{
@@ -379,6 +381,7 @@ export default function MatrixNeo() {
 						ICHCHI-CORE :: YAKUTSK-Ω :: TERMINAL v∞
 					</span>
 					<button
+						type="button"
 						onClick={close}
 						style={{
 							background: "none",
@@ -413,6 +416,7 @@ export default function MatrixNeo() {
 						const lineDef = LINES[i];
 						return (
 							<div
+								// biome-ignore lint/suspicious/noArrayIndexKey: static list, index is stable
 								key={i}
 								style={{
 									color: lineDef?.color ?? "#4ade80",
@@ -516,7 +520,6 @@ export default function MatrixNeo() {
 					</span>
 				</div>
 			</div>
-
 			<style>{`
         @keyframes blink-cursor {
           0%,100% { opacity:1; }

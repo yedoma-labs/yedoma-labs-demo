@@ -42,6 +42,7 @@ function ContactForm() {
 	} | null>(null);
 
 	const handleSubmit = useFormSubmit(submitContactForm, {
+		// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 		onSuccess: (data: any) => {
 			formLogger.info("Contact form submission succeeded", { data });
 			if (data?.name) {
@@ -418,7 +419,7 @@ function SubmissionTracker() {
 					<div
 						style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
 					>
-						{formState.recentSubmissions.map((sub: any) => (
+						{formState.recentSubmissions.map((sub) => (
 							<div
 								key={sub.timestamp}
 								style={{

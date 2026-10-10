@@ -3,10 +3,14 @@
 // context exports (bindRequestContext/getContext/runWithContext/setContextValue) exist at runtime
 // but are not yet reflected in the published .d.ts — use require to avoid TS2305
 import { createLogger } from "@yedoma-labs/suruk-logger";
-// biome-ignore lint/suspicious/noExplicitAny: untyped runtime context exports from suruk-logger
+
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const { bindRequestContext, getContext, runWithContext, setContextValue } =
-	require("@yedoma-labs/suruk-logger") as Record<string, (...args: unknown[]) => unknown>;
+	require("@yedoma-labs/suruk-logger") as Record<
+		string,
+		(...args: unknown[]) => unknown
+	>;
+
 import { actionLogger, logger } from "@/lib/logger";
 
 // Test 1: Log Levels
@@ -165,7 +169,9 @@ export async function testErrorLogging(): Promise<string> {
 	// Custom error object
 	try {
 		const customError = new Error("Validation failed");
+		// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 		(customError as any).code = "VALIDATION_ERROR";
+		// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 		(customError as any).fields = ["email", "password"];
 		throw customError;
 	} catch (error) {

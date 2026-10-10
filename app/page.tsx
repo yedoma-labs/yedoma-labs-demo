@@ -494,6 +494,7 @@ export default function Home() {
 
 					<div style={{ position: "relative" }}>
 						{/* Background Hero Image */}
+						{/* biome-ignore lint/performance/noImgElement: plain img is intentional in this demo page */}
 						<img
 							src="https://raw.githubusercontent.com/yedoma-labs/assets/main/resized/banner-resized.png"
 							alt="Yedoma Labs Hero"
@@ -651,6 +652,7 @@ export default function Home() {
 									fontWeight: 600,
 								}}
 							>
+								{/* biome-ignore lint/a11y/noSvgWithoutTitle: decorative icon in demo UI */}
 								<svg
 									width="16"
 									height="16"
@@ -679,6 +681,7 @@ export default function Home() {
 									fontWeight: 600,
 								}}
 							>
+								{/* biome-ignore lint/a11y/noSvgWithoutTitle: decorative icon in demo UI */}
 								<svg
 									width="16"
 									height="16"
@@ -1281,6 +1284,7 @@ export default function Home() {
 									fontWeight: 600,
 								}}
 							>
+								{/* biome-ignore lint/a11y/noSvgWithoutTitle: decorative icon in demo UI */}
 								<svg
 									width="14"
 									height="14"

@@ -40,6 +40,7 @@ function HybridProfileForm() {
 	const handleSubmit = useFormSubmit(
 		adaptSuruyActionForSirForms(hybridUpdateProfile),
 		{
+			// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 			onSuccess: (data: any) => {
 				setMessage(`✅ Profile updated! User ID: ${data.userId}`);
 			},
@@ -176,6 +177,7 @@ function HybridCheckoutForm() {
 	const handleSubmit = useFormSubmit(
 		adaptSuruyActionForSirForms(hybridProcessCheckout),
 		{
+			// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 			onSuccess: (data: any) => {
 				setMessage(
 					`✅ Payment processed! Transaction ID: ${data.transactionId} | Amount: $${data.amount}`,
@@ -224,6 +226,7 @@ function HybridCheckoutForm() {
 							const value = e.target.value.replace(/\D/g, "");
 							cardNumberField.onChange({
 								target: { name: cardNumberField.name, value },
+								// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 							} as any);
 						}}
 						placeholder="1234567812345678"
@@ -282,6 +285,7 @@ function HybridCheckoutForm() {
 								const value = e.target.value.replace(/\D/g, "");
 								cvvField.onChange({
 									target: { name: cvvField.name, value },
+									// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 								} as any);
 							}}
 							placeholder="123"
@@ -327,6 +331,7 @@ function HybridCheckoutForm() {
 										name: saveCardField.name,
 										value: e.target.checked ? "on" : "",
 									},
+									// biome-ignore lint/suspicious/noExplicitAny: generic payload types are intentionally open
 								} as any)
 							}
 							disabled={form.isSubmitting}

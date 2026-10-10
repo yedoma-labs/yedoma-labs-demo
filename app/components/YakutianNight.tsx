@@ -63,7 +63,9 @@ export default function YakutianNight() {
 		const fc = frostRef.current;
 		if (!mc || !fc) return;
 
+		// biome-ignore lint/style/noNonNullAssertion: value is initialized before use
 		const ctx = mc.getContext("2d")!;
+		// biome-ignore lint/style/noNonNullAssertion: value is initialized before use
 		const fCtx = fc.getContext("2d")!;
 
 		let W = 0,
