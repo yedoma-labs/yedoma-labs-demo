@@ -15,22 +15,22 @@ Comprehensive demo showcasing Yedoma Labs' TypeScript ecosystem for building typ
 
 This demo showcases **nine** Yedoma Labs packages working together:
 
-1. **[@yedoma-labs/sir-forms](https://www.npmjs.com/package/@yedoma-labs/sir-forms)** v0.2.0
+1. **[@yedoma-labs/sir-forms](https://www.npmjs.com/package/@yedoma-labs/sir-forms)** v0.3.2
    - Type-safe React Server Actions form library
    - Controlled components with field-level state
    - React 19 compatible
 
-2. **[@yedoma-labs/suruy-form-actions](https://www.npmjs.com/package/@yedoma-labs/suruy-form-actions)** v0.1.0
+2. **[@yedoma-labs/suruy-form-actions](https://www.npmjs.com/package/@yedoma-labs/suruy-form-actions)** v0.1.1
    - Progressive enhancement forms (~3KB)
    - Built-in zero-dependency validator
    - Server-first validation
 
-3. **[@yedoma-labs/ichchi-state](https://www.npmjs.com/package/@yedoma-labs/ichchi-state)** v0.1.0
+3. **[@yedoma-labs/ichchi-state](https://www.npmjs.com/package/@yedoma-labs/ichchi-state)** v0.1.2
    - Atomic state management
    - Persistent storage (localStorage)
    - Cross-tab synchronization
 
-4. **[@yedoma-labs/turar-config](https://www.npmjs.com/package/@yedoma-labs/turar-config)** v0.3.0
+4. **[@yedoma-labs/turar-config](https://www.npmjs.com/package/@yedoma-labs/turar-config)** v0.3.2
    - Multi-format config files (JSON, YAML, TOML)
    - Hot reload / file watching
    - Environment cascading (default → NODE_ENV)
@@ -38,18 +38,18 @@ This demo showcases **nine** Yedoma Labs packages working together:
    - HashiCorp Vault integration (token + AppRole)
    - Built on bylyt-env-guard
 
-5. **[@yedoma-labs/bylyt-env-guard](https://www.npmjs.com/package/@yedoma-labs/bylyt-env-guard)** v0.3.5
+5. **[@yedoma-labs/bylyt-env-guard](https://www.npmjs.com/package/@yedoma-labs/bylyt-env-guard)** v0.3.7
    - Environment variable validation
    - Type-safe env access
    - Runtime checks
 
-6. **[@yedoma-labs/suruk-logger](https://www.npmjs.com/package/@yedoma-labs/suruk-logger)** v0.2.0
+6. **[@yedoma-labs/suruk-logger](https://www.npmjs.com/package/@yedoma-labs/suruk-logger)** v0.3.1
    - Winston-compatible Pino wrapper
    - 5-10x faster than Winston
    - Request context binding
    - Structured logging with TypeScript
 
-7. **[@yedoma-labs/tierde-mail](https://www.npmjs.com/package/@yedoma-labs/tierde-mail)** v0.8.1
+7. **[@yedoma-labs/tierde-mail](https://www.npmjs.com/package/@yedoma-labs/tierde-mail)** v0.9.2
    - 45 JSX email templates across 9 categories
    - 6 providers: Resend, SMTP, SES, SendGrid, Postmark, Mailpit
    - Middleware pipeline (MailMiddleware, embedImages built-in)
@@ -61,14 +61,14 @@ This demo showcases **nine** Yedoma Labs packages working together:
    - 33 design tokens + PALETTE, dark mode support
    - CLI: `tierde dev`, `tierde send`, `tierde render`, `tierde eject`
 
-8. **[@yedoma-labs/keler-temporal](https://www.npmjs.com/package/@yedoma-labs/keler-temporal)** v0.1.1
+8. **[@yedoma-labs/keler-temporal](https://www.npmjs.com/package/@yedoma-labs/keler-temporal)** v0.1.3
    - TC39 Temporal API adapter (toTemporal, fromTemporal, extractFields)
    - date-fns compatible compat layer (addDays, format, differenceInDays, etc.)
    - Adapter registry (registerAdapter, listAdapters)
    - Type guards (isTemporalType) and epoch utilities (toEpochMs)
    - Works with temporal-polyfill for full browser support
 
-9. **[@yedoma-labs/tuuru-chrono-tz](https://www.npmjs.com/package/@yedoma-labs/tuuru-chrono-tz)** v0.3.1
+9. **[@yedoma-labs/tuuru-chrono-tz](https://www.npmjs.com/package/@yedoma-labs/tuuru-chrono-tz)** v0.3.3
    - DateTime, Duration, LocalDate, LocalTime types
    - Full IANA timezone database (TZDATA_VERSION, TIMEZONE_COUNT)
    - 50+ built-in locales, treeshakeable extended locale imports
@@ -139,7 +139,7 @@ yedoma-labs-demo/
 - Quick links to all demos
 
 ### 2. Configuration (`/config`)
-- **turar-config v0.2.0 + bylyt-env-guard integration**
+- **turar-config v0.3.2 + bylyt-env-guard integration**
 - Multi-format file loading (JSON, YAML, TOML)
 - Environment cascading (default → NODE_ENV)
 - Variable interpolation examples
@@ -188,7 +188,7 @@ yedoma-labs-demo/
 - Client-side logging wrapper
 
 ### 7. tierde-mail (`/tierde-mail`)
-- **tierde-mail v0.8.1 showcase**
+- **tierde-mail v0.9.2 showcase**
 - Interactive template catalog (45 templates, 9 categories)
 - Live mock-email preview with custom theming
 - sendBatch animated demo
@@ -200,7 +200,7 @@ yedoma-labs-demo/
 - What's New in v0.5.0 section
 
 ### 8. keler-temporal (`/keler-temporal`)
-- **keler-temporal v0.1.1 showcase**
+- **keler-temporal v0.1.3 showcase**
 - TC39 Temporal API conversion (toTemporal, fromTemporal)
 - date-fns compat layer live demo (addDays, format, differenceInDays, startOfMonth, etc.)
 - Adapter registry (registerAdapter, listAdapters)
@@ -208,7 +208,7 @@ yedoma-labs-demo/
 - temporal-polyfill integration examples
 
 ### 9. tuuru-chrono-tz (`/chrono-tz`)
-- **tuuru-chrono-tz v0.3.1 showcase**
+- **tuuru-chrono-tz v0.3.3 showcase**
 - DateTime / LocalDate / LocalTime / Duration live playground
 - World clock with IANA timezone support
 - 50+ locale switcher with RTL language support
@@ -437,15 +437,17 @@ function Counter() {
 ### bylyt-env-guard Example
 
 ```typescript
-import { createEnvGuard } from '@yedoma-labs/bylyt-env-guard'
+import { createEnv, eg } from '@yedoma-labs/bylyt-env-guard'
 
-export const env = createEnvGuard({
-  NEXT_PUBLIC_API_URL: { required: true },
-  DEMO_MODE: { required: false, default: 'true' },
+export const env = createEnv({
+  schema: {
+    NEXT_PUBLIC_API_URL: eg.url().default('http://localhost:3000/api'),
+    DEMO_MODE: eg.boolean().default(true),
+  },
 })
 
-// Type-safe access
-console.log(env.NEXT_PUBLIC_API_URL) // ✅ Validated
+// Validated at startup; type-safe access
+console.log(env.NEXT_PUBLIC_API_URL) // ✅ string
 ```
 
 ### turar-config Example
