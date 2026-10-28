@@ -13,24 +13,24 @@ Comprehensive demo showcasing Yedoma Labs' TypeScript ecosystem for building typ
 
 ## 🎯 What's Inside
 
-This demo showcases **nine** Yedoma Labs packages working together:
+This demo showcases **twenty** Yedoma Labs packages working together:
 
-1. **[@yedoma-labs/sir-forms](https://www.npmjs.com/package/@yedoma-labs/sir-forms)** v0.3.2
+1. **[@yedoma-labs/sir-forms](https://www.npmjs.com/package/@yedoma-labs/sir-forms)** v0.4.0
    - Type-safe React Server Actions form library
    - Controlled components with field-level state
    - React 19 compatible
 
-2. **[@yedoma-labs/suruy-form-actions](https://www.npmjs.com/package/@yedoma-labs/suruy-form-actions)** v0.1.1
+2. **[@yedoma-labs/suruy-form-actions](https://www.npmjs.com/package/@yedoma-labs/suruy-form-actions)** v0.2.0
    - Progressive enhancement forms (~3KB)
    - Built-in zero-dependency validator
    - Server-first validation
 
-3. **[@yedoma-labs/ichchi-state](https://www.npmjs.com/package/@yedoma-labs/ichchi-state)** v0.1.2
+3. **[@yedoma-labs/ichchi-state](https://www.npmjs.com/package/@yedoma-labs/ichchi-state)** v0.2.0
    - Atomic state management
    - Persistent storage (localStorage)
    - Cross-tab synchronization
 
-4. **[@yedoma-labs/turar-config](https://www.npmjs.com/package/@yedoma-labs/turar-config)** v0.3.2
+4. **[@yedoma-labs/turar-config](https://www.npmjs.com/package/@yedoma-labs/turar-config)** v0.4.0
    - Multi-format config files (JSON, YAML, TOML)
    - Hot reload / file watching
    - Environment cascading (default → NODE_ENV)
@@ -38,18 +38,18 @@ This demo showcases **nine** Yedoma Labs packages working together:
    - HashiCorp Vault integration (token + AppRole)
    - Built on bylyt-env-guard
 
-5. **[@yedoma-labs/bylyt-env-guard](https://www.npmjs.com/package/@yedoma-labs/bylyt-env-guard)** v0.3.7
+5. **[@yedoma-labs/bylyt-env-guard](https://www.npmjs.com/package/@yedoma-labs/bylyt-env-guard)** v0.4.0
    - Environment variable validation
    - Type-safe env access
    - Runtime checks
 
-6. **[@yedoma-labs/suruk-logger](https://www.npmjs.com/package/@yedoma-labs/suruk-logger)** v0.3.1
+6. **[@yedoma-labs/suruk-logger](https://www.npmjs.com/package/@yedoma-labs/suruk-logger)** v0.3.3
    - Winston-compatible Pino wrapper
    - 5-10x faster than Winston
    - Request context binding
    - Structured logging with TypeScript
 
-7. **[@yedoma-labs/tierde-mail](https://www.npmjs.com/package/@yedoma-labs/tierde-mail)** v0.9.2
+7. **[@yedoma-labs/tierde-mail](https://www.npmjs.com/package/@yedoma-labs/tierde-mail)** v0.10.0
    - 45 JSX email templates across 9 categories
    - 6 providers: Resend, SMTP, SES, SendGrid, Postmark, Mailpit
    - Middleware pipeline (MailMiddleware, embedImages built-in)
@@ -61,19 +61,63 @@ This demo showcases **nine** Yedoma Labs packages working together:
    - 33 design tokens + PALETTE, dark mode support
    - CLI: `tierde dev`, `tierde send`, `tierde render`, `tierde eject`
 
-8. **[@yedoma-labs/keler-temporal](https://www.npmjs.com/package/@yedoma-labs/keler-temporal)** v0.1.3
+8. **[@yedoma-labs/keler-temporal](https://www.npmjs.com/package/@yedoma-labs/keler-temporal)** v0.1.5
    - TC39 Temporal API adapter (toTemporal, fromTemporal, extractFields)
    - date-fns compatible compat layer (addDays, format, differenceInDays, etc.)
    - Adapter registry (registerAdapter, listAdapters)
    - Type guards (isTemporalType) and epoch utilities (toEpochMs)
    - Works with temporal-polyfill for full browser support
 
-9. **[@yedoma-labs/tuuru-chrono-tz](https://www.npmjs.com/package/@yedoma-labs/tuuru-chrono-tz)** v0.3.3
+9. **[@yedoma-labs/tuuru-chrono-tz](https://www.npmjs.com/package/@yedoma-labs/tuuru-chrono-tz)** v0.3.5
    - DateTime, Duration, LocalDate, LocalTime types
    - Full IANA timezone database (TZDATA_VERSION, TIMEZONE_COUNT)
    - 50+ built-in locales, treeshakeable extended locale imports
    - Locale-aware formatting and relative time
    - RTL language support
+
+10. **[@yedoma-labs/tuyar-webhook](https://www.npmjs.com/package/@yedoma-labs/tuyar-webhook)** v1.0.1
+   - Webhook signature verification on the raw body (Standard Webhooks, Stripe, GitHub, HMAC)
+   - Replay window and timing-safe comparison
+
+11. **[@yedoma-labs/ysyk-upload-guard](https://www.npmjs.com/package/@yedoma-labs/ysyk-upload-guard)** v1.0.1
+   - Magic-byte upload inspection with allowlist and size limit
+   - Safe file names, no trust in client MIME types
+
+12. **[@yedoma-labs/yaarys-idempotency](https://www.npmjs.com/package/@yedoma-labs/yaarys-idempotency)** v1.0.1
+   - Idempotency keys with in-flight locks and a pluggable store
+   - Replay of stored responses, 409 on payload mismatch
+
+13. **[@yedoma-labs/kulyn-flags](https://www.npmjs.com/package/@yedoma-labs/kulyn-flags)** v1.0.2
+   - Feature flag hygiene: owners, expiry dates, CI checks
+   - Source scanner for unregistered flag keys
+
+14. **[@yedoma-labs/tiduu-shutdown](https://www.npmjs.com/package/@yedoma-labs/tiduu-shutdown)** v1.0.1
+   - Ordered graceful shutdown with deadlines
+   - LIFO teardown, signal handling, HTTP keep-alive draining
+
+15. **[@yedoma-labs/tanur-ssrf](https://www.npmjs.com/package/@yedoma-labs/tanur-ssrf)** v1.0.1
+   - SSRF-safe fetch with pinned DNS resolution
+   - Per-hop redirect validation and strict IP ranges
+
+16. **[@yedoma-labs/ysyr-import](https://www.npmjs.com/package/@yedoma-labs/ysyr-import)** v1.0.1
+   - Partial-success CSV import with row-level errors
+   - Injection-safe CSV error report
+
+17. **[@yedoma-labs/yuryk-outbox](https://www.npmjs.com/package/@yedoma-labs/yuryk-outbox)** v1.0.1
+   - Signed outgoing webhooks with stable event IDs across retries
+   - Retry-After support and dead-letter callback
+
+18. **[@yedoma-labs/kelyk-queue](https://www.npmjs.com/package/@yedoma-labs/kelyk-queue)** v1.0.1
+   - Per-key ordered async queue
+   - Global concurrency limit, timeouts and abort
+
+19. **[@yedoma-labs/ysuly-problem](https://www.npmjs.com/package/@yedoma-labs/ysuly-problem)** v1.0.1
+   - RFC 9457 problem details
+   - Leak-safe error mapping and a client parser
+
+20. **[@yedoma-labs/ilyn-pages](https://www.npmjs.com/package/@yedoma-labs/ilyn-pages)** v1.0.2
+   - Cursor and Link-header pagination iterator
+   - Loop, page-limit and cross-origin guards
 
 ## 🚀 Quick Start
 
@@ -188,7 +232,7 @@ yedoma-labs-demo/
 - Client-side logging wrapper
 
 ### 7. tierde-mail (`/tierde-mail`)
-- **tierde-mail v0.9.2 showcase**
+- **tierde-mail v0.10.0 showcase**
 - Interactive template catalog (45 templates, 9 categories)
 - Live mock-email preview with custom theming
 - sendBatch animated demo
@@ -200,7 +244,7 @@ yedoma-labs-demo/
 - What's New in v0.5.0 section
 
 ### 8. keler-temporal (`/keler-temporal`)
-- **keler-temporal v0.1.3 showcase**
+- **keler-temporal v0.1.5 showcase**
 - TC39 Temporal API conversion (toTemporal, fromTemporal)
 - date-fns compat layer live demo (addDays, format, differenceInDays, startOfMonth, etc.)
 - Adapter registry (registerAdapter, listAdapters)
@@ -208,7 +252,7 @@ yedoma-labs-demo/
 - temporal-polyfill integration examples
 
 ### 9. tuuru-chrono-tz (`/chrono-tz`)
-- **tuuru-chrono-tz v0.3.3 showcase**
+- **tuuru-chrono-tz v0.3.5 showcase**
 - DateTime / LocalDate / LocalTime / Duration live playground
 - World clock with IANA timezone support
 - 50+ locale switcher with RTL language support
@@ -220,6 +264,10 @@ yedoma-labs-demo/
 - Feature matrix
 - Bundle size comparison
 - When to use which library
+
+### 11. toolkit (`/toolkit`)
+- **Eleven newer libraries running live on the server**: tuyar-webhook, ysyk-upload-guard, yaarys-idempotency, kulyn-flags, tiduu-shutdown, tanur-ssrf, ysyr-import, yuryk-outbox, kelyk-queue, ysuly-problem, ilyn-pages
+- Every example is deterministic and needs no network access
 
 ## 🔄 Can They Work Together?
 

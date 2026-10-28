@@ -15,7 +15,18 @@ const PKG = {
 	"suruy-form-actions": v("suruy-form-actions"),
 	"tuuru-chrono-tz": v("tuuru-chrono-tz"),
 	"tierde-mail": v("tierde-mail"),
-	"keler-temporal": "0.1.1",
+	"keler-temporal": v("keler-temporal"),
+	"tuyar-webhook": v("tuyar-webhook"),
+	"ysyk-upload-guard": v("ysyk-upload-guard"),
+	"yaarys-idempotency": v("yaarys-idempotency"),
+	"kulyn-flags": v("kulyn-flags"),
+	"tiduu-shutdown": v("tiduu-shutdown"),
+	"tanur-ssrf": v("tanur-ssrf"),
+	"ysyr-import": v("ysyr-import"),
+	"yuryk-outbox": v("yuryk-outbox"),
+	"kelyk-queue": v("kelyk-queue"),
+	"ysuly-problem": v("ysuly-problem"),
+	"ilyn-pages": v("ilyn-pages"),
 };
 
 const npm = (pkg: string) =>
@@ -143,6 +154,18 @@ const DEMOS = [
 		btnGrad: "linear-gradient(135deg, #a78bfa, #6366f1)",
 		pkg: "keler-temporal",
 	},
+	{
+		href: "/toolkit",
+		icon: "🧰",
+		title: "toolkit",
+		tag: "11 libraries",
+		desc: "Webhook signatures, upload guard, idempotency, flag hygiene, graceful shutdown, SSRF-safe fetch, CSV import, webhook sender, keyed queue, problem details, pagination — each running live on the server",
+		gradient: "linear-gradient(135deg, #04210f, #08301c, #031a2a)",
+		accent: "#10b981",
+		border: "rgba(16,185,129,0.3)",
+		btnGrad: "linear-gradient(135deg, #059669, #10b981)",
+		pkg: null,
+	},
 ];
 
 const LIBRARIES = [
@@ -199,6 +222,72 @@ const LIBRARIES = [
 		version: PKG["keler-temporal"],
 		desc: "TC39 Temporal migration bridge — converters, compat layer, adapter registry, migration warnings",
 		color: "#a78bfa",
+	},
+	{
+		name: "tuyar-webhook",
+		version: PKG["tuyar-webhook"],
+		desc: "Webhook signature verification on the raw body — Standard Webhooks, Stripe, GitHub, HMAC",
+		color: "#22d3ee",
+	},
+	{
+		name: "ysyk-upload-guard",
+		version: PKG["ysyk-upload-guard"],
+		desc: "Magic-byte upload inspection with allowlist, size limit and safe file names",
+		color: "#f472b6",
+	},
+	{
+		name: "yaarys-idempotency",
+		version: PKG["yaarys-idempotency"],
+		desc: "Idempotency keys with in-flight locks and pluggable stores",
+		color: "#facc15",
+	},
+	{
+		name: "kulyn-flags",
+		version: PKG["kulyn-flags"],
+		desc: "Feature flag hygiene — owned, expiring flags with CI checks and a source scanner",
+		color: "#34d399",
+	},
+	{
+		name: "tiduu-shutdown",
+		version: PKG["tiduu-shutdown"],
+		desc: "Ordered graceful shutdown — LIFO teardown, deadlines, HTTP keep-alive draining",
+		color: "#fb7185",
+	},
+	{
+		name: "tanur-ssrf",
+		version: PKG["tanur-ssrf"],
+		desc: "SSRF-safe fetch — pinned DNS, per-hop redirect validation, strict IP ranges",
+		color: "#f87171",
+	},
+	{
+		name: "ysyr-import",
+		version: PKG["ysyr-import"],
+		desc: "Partial-success CSV import with row-level errors and an injection-safe report",
+		color: "#60a5fa",
+	},
+	{
+		name: "yuryk-outbox",
+		version: PKG["yuryk-outbox"],
+		desc: "Signed outgoing webhooks — stable event IDs across retries, Retry-After, dead letters",
+		color: "#c084fc",
+	},
+	{
+		name: "kelyk-queue",
+		version: PKG["kelyk-queue"],
+		desc: "Per-key ordered async queue with global concurrency, timeouts and abort",
+		color: "#2dd4bf",
+	},
+	{
+		name: "ysuly-problem",
+		version: PKG["ysuly-problem"],
+		desc: "RFC 9457 problem details with leak-safe error mapping",
+		color: "#fbbf24",
+	},
+	{
+		name: "ilyn-pages",
+		version: PKG["ilyn-pages"],
+		desc: "Cursor and Link-header pagination with loop, page-limit and cross-origin guards",
+		color: "#a3e635",
 	},
 ];
 
