@@ -167,32 +167,65 @@ importers:
   .:
     dependencies:
       '@yedoma-labs/bylyt-env-guard':
-        specifier: 0.3.7
-        version: 0.3.7
+        specifier: 0.4.0
+        version: 0.4.0
       '@yedoma-labs/ichchi-state':
-        specifier: 0.1.2
-        version: 0.1.2(react@19.3.1)
+        specifier: 0.2.0
+        version: 0.2.0(react@19.3.1)
+      '@yedoma-labs/ilyn-pages':
+        specifier: 1.0.2
+        version: 1.0.2
       '@yedoma-labs/keler-temporal':
-        specifier: 0.1.3
-        version: 0.1.3(temporal-polyfill@1.0.6)
+        specifier: 0.1.5
+        version: 0.1.5(temporal-polyfill@1.0.6)
+      '@yedoma-labs/kelyk-queue':
+        specifier: 1.0.1
+        version: 1.0.1
+      '@yedoma-labs/kulyn-flags':
+        specifier: 1.0.2
+        version: 1.0.2
       '@yedoma-labs/sir-forms':
-        specifier: 0.3.2
-        version: 0.3.2(react@19.3.1)
+        specifier: 0.4.0
+        version: 0.4.0(react@19.3.1)
       '@yedoma-labs/suruk-logger':
-        specifier: 0.3.1
-        version: 0.3.1(pino@10.4.0)
-      '@yedoma-labs/suruy-form-actions':
-        specifier: 0.1.1
-        version: 0.1.1(react@19.3.1)
-      '@yedoma-labs/tierde-mail':
-        specifier: 0.9.2
-        version: 0.9.2(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@yedoma-labs/turar-config':
-        specifier: 0.3.2
-        version: 0.3.2(@yedoma-labs/bylyt-env-guard@0.3.7)
-      '@yedoma-labs/tuuru-chrono-tz':
         specifier: 0.3.3
-        version: 0.3.3
+        version: 0.3.3(pino@10.4.0)
+      '@yedoma-labs/suruy-form-actions':
+        specifier: 0.2.0
+        version: 0.2.0(react@19.3.1)
+      '@yedoma-labs/tanur-ssrf':
+        specifier: 1.0.1
+        version: 1.0.1
+      '@yedoma-labs/tiduu-shutdown':
+        specifier: 1.0.1
+        version: 1.0.1
+      '@yedoma-labs/tierde-mail':
+        specifier: 0.10.0
+        version: 0.10.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@yedoma-labs/turar-config':
+        specifier: 0.4.0
+        version: 0.4.0(@yedoma-labs/bylyt-env-guard@0.4.0)
+      '@yedoma-labs/tuuru-chrono-tz':
+        specifier: 0.3.5
+        version: 0.3.5
+      '@yedoma-labs/tuyar-webhook':
+        specifier: 1.0.1
+        version: 1.0.1
+      '@yedoma-labs/yaarys-idempotency':
+        specifier: 1.0.1
+        version: 1.0.1
+      '@yedoma-labs/ysuly-problem':
+        specifier: 1.0.1
+        version: 1.0.1
+      '@yedoma-labs/ysyk-upload-guard':
+        specifier: 1.0.1
+        version: 1.0.1
+      '@yedoma-labs/ysyr-import':
+        specifier: 1.0.1
+        version: 1.0.1
+      '@yedoma-labs/yuryk-outbox':
+        specifier: 1.0.1
+        version: 1.0.1
       next:
         specifier: 16.4.3
         version: 16.4.3(@types/node@26.6.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -375,78 +408,78 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@css-inline/css-inline-android-arm-eabi@0.21.2':
-    resolution: {integrity: sha512-XZotgJ4ENeJWWgueqaPAlcHNFZH+NqX/fb26Q1e85tW6b0DO0k0CBsZaOEyECJyznBkhgdkAyLlcWj6GAy9lRQ==}
+  '@css-inline/css-inline-android-arm-eabi@0.23.2':
+    resolution: {integrity: sha512-9ixRFPufJ9tDjxGnuflJq2kWwjFF8P7juBvD+OlWPpPvYPBeI4C9XOz1O7OuTk3fBkTEstJbZGVfwaForGI1zA==}
     engines: {node: '>= 10'}
     cpu: [arm]
     os: [android]
 
-  '@css-inline/css-inline-android-arm64@0.21.2':
-    resolution: {integrity: sha512-DNHRIiYty5QJgZFIHHzDigZBE9eNeV/p65KNQex/Kiwju98Q1gBrZuY/VydBrlaKkAqCMV4ySda5JzRvH6BJ7A==}
+  '@css-inline/css-inline-android-arm64@0.23.2':
+    resolution: {integrity: sha512-l7+mZj87W3Y/U8YU9NZp0mo9tDArE8K+2iSkJKmVOWYb8N526+z3xWWGqFSIrA0RFfZxXfQk1bKA+pVcEdV32g==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [android]
 
-  '@css-inline/css-inline-darwin-arm64@0.21.2':
-    resolution: {integrity: sha512-05ZSbzme3v971WdnarX6SIxucQVdxjMAZ+V2hGbhHHcvBhxW7vD1f2r/WevSo3jTKMBkaixmokHEzR2lWm/0yg==}
+  '@css-inline/css-inline-darwin-arm64@0.23.2':
+    resolution: {integrity: sha512-c7LuSFvmUcJX4xQb1kGqCS85ffZuwohFg+RpkQWfdBFWeBoZHfcQn0ldaXaVuUiNb44tLHDnAv1DPRlI3gXf5w==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@css-inline/css-inline-darwin-x64@0.21.2':
-    resolution: {integrity: sha512-XOJtDR5hOE8FoOOwBTDDn6rR1exkJZz5CDrqYl7AQli+Dbwdiiry9S7srjTUp7/dSudyd4FnawykKYtbJHkz3g==}
+  '@css-inline/css-inline-darwin-x64@0.23.2':
+    resolution: {integrity: sha512-Eqn8LMt6SLJtHCep/kg14BlDyA1Hn9xUC0h9pBZpOhwpNGavidjqoGjVDlPQroSrXr6yW1gYoclA+tsMaNImjQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@css-inline/css-inline-linux-arm-gnueabihf@0.21.2':
-    resolution: {integrity: sha512-a3TAnUBThENYHfSdrvh9PA+C2Iqvp8zbWlCpRY5iYdlaJ8sfSE+nmVNYbmjAZDTJiYOudUkKSKSiLkdTW3NuBg==}
+  '@css-inline/css-inline-linux-arm-gnueabihf@0.23.2':
+    resolution: {integrity: sha512-yCSw6eT4BzBfTOE59IpwCAinV08TZRPq9yMTX1MBCCYTcSqNyDm+6RXiUL3oSPRU1rzXIj/W39+nnpjjWC3fJA==}
     engines: {node: '>= 10'}
     cpu: [arm]
     os: [linux]
 
-  '@css-inline/css-inline-linux-arm64-gnu@0.21.2':
-    resolution: {integrity: sha512-4NFeOjs7nDI3F1oHNkj1Mh1Rj2ku27ARLe+7JRBYnEM5cXOCa6wvUGV07NNTY9jRGxueNxf60Iz0ibaP5IHXJQ==}
+  '@css-inline/css-inline-linux-arm64-gnu@0.23.2':
+    resolution: {integrity: sha512-9eSLlYCGVDeQ6DxIdCGeXWRFUOrSY2RJ9GYu18Jr4Ew9Ij4ipizeE8eKiQuzQsWuuCoWa/R3Zl1DgKNX0/EbHA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@css-inline/css-inline-linux-arm64-musl@0.21.2':
-    resolution: {integrity: sha512-Y0QRrRj4q/5pi6CECK7WI8C/6cWx5oZu02D6h3+LNJ6TdB7LTrmsqt66j2aj5+9MUUaTt9WzHDd1fAehOCSC5A==}
+  '@css-inline/css-inline-linux-arm64-musl@0.23.2':
+    resolution: {integrity: sha512-hBa+JYv9MBC+HFNriK6ev8X1FbiQVWburseoe69MVQj+epPicN00HgQQt54A8uHPcrButtgGHLdOW0AmFgG16A==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@css-inline/css-inline-linux-x64-gnu@0.21.2':
-    resolution: {integrity: sha512-HcJkXJr5aPWFASFOJEKGv1tZ14zHFHKCWLPu03iWhlnAWiCLqVjUyD4qS5DemVxEWoSsfvFVwXO833God1aBOA==}
+  '@css-inline/css-inline-linux-x64-gnu@0.23.2':
+    resolution: {integrity: sha512-IK41kTR9Ud3p24mjfwXoUCapRZOalZ/h7+rx5iQUipC5CgedtD0dNNK+0S68xDKoftMgdiKFLgz1DCVQM/kHbw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@css-inline/css-inline-linux-x64-musl@0.21.2':
-    resolution: {integrity: sha512-IEz/Sq6z25ClHaN/pODAQhuTu2LvFtrfuwwu8gvV893qEVoBHUYPXzpncdXYEr9K1UVzerVXiVabu6K8wUqNLQ==}
+  '@css-inline/css-inline-linux-x64-musl@0.23.2':
+    resolution: {integrity: sha512-mRYPaLbaI6Dws8uD82KSvi+xoLBmH8aC5trZTKLtEukX1nOMnC8o28/4IvD949+JO9u9cMBFQKCPepFPgDjg8Q==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@css-inline/css-inline-win32-arm64-msvc@0.21.2':
-    resolution: {integrity: sha512-x6gjBVqe2CRYgozppLRuwAs6kEcQ+qswmdJJj2xjsHq8xaGuQMaXvjh41y7aA70Rgx3gu25XRrSgowOdkLE/iQ==}
+  '@css-inline/css-inline-win32-arm64-msvc@0.23.2':
+    resolution: {integrity: sha512-iGi7aUFmjqcfETVYusbXi1E1E251UG3QKE8xDgbSZlpSyA4C1XmdNiYsMC7Z4LQ8Btge1b8gw4NsmmWYv2NePQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
 
-  '@css-inline/css-inline-win32-x64-msvc@0.21.2':
-    resolution: {integrity: sha512-4u5s09gFB0kkBx7VJNhC5NdDxKNAOu8CU+axkPMmTlD9IN/B1LbTG5cB4kYb0wkUwe3RTiBJE97J4CHhMje56Q==}
+  '@css-inline/css-inline-win32-x64-msvc@0.23.2':
+    resolution: {integrity: sha512-B1WdgkLhetvhhR9sbu5bC1IcukbBaEpRjkiJ5IB3f82DvqLHv8TJp18bL3ENwmkaTCmbuw2vxA+C7MEqvmUhyw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
 
-  '@css-inline/css-inline@0.21.2':
-    resolution: {integrity: sha512-9qIt9oVCd9vys9clJldLBkXEA3w3Rjj4boqoc6S1N6zVY+1QcvTJuPVzsgjz7pHYVTlNjNFKM8/hxQfoBJNluw==}
+  '@css-inline/css-inline@0.23.2':
+    resolution: {integrity: sha512-rP2AiP2Cw70h61Ssx2BSk4nRbQaqpLmb8MkDSDXQ3ZmCy04HMkfkDqZ6qOEBkYWRK/fdP+71uED6vcqPO8M3RA==}
     engines: {node: '>= 10'}
 
   '@emnapi/runtime@1.11.3':
@@ -842,16 +875,24 @@ packages:
     resolution: {integrity: sha512-mg56gOG6SK759FFTUvNAVyjTab0d4XILOUxwbNjscWPl0/IVeG6CL+6K1p9fTsMoZG4b5pUdMfenJgM1rPPJrw==}
     engines: {node: '>=20'}
 
-  '@yedoma-labs/ichchi-state@0.1.2':
-    resolution: {integrity: sha512-ue92de1Xni+b8u/Y6WhnaCHco/+oEMAyT5f7zt7D0y3sU8TUwEIPa7pB+nk4+c5yeAtultkk5XKqR+R8NWAhlA==}
+  '@yedoma-labs/bylyt-env-guard@0.4.0':
+    resolution: {integrity: sha512-jma1Mw/VCDcoZ8yqLtHHnicLwTI0ku69TcoVcDvkquDaDFxkcAzui25lj+kiKzDVI2EmPu2p2kEfLTGJD13v7g==}
+    engines: {node: '>=20'}
+
+  '@yedoma-labs/ichchi-state@0.2.0':
+    resolution: {integrity: sha512-CV/9jobUG0w2VwFNZ19s9RGM01BC4vygW8n1iW1jKuUTYQY04ySyXILCb5d/a1iiKhkecVlSGKiUtltI5GUM4w==}
     peerDependencies:
       react: '>=16.8.0'
     peerDependenciesMeta:
       react:
         optional: true
 
-  '@yedoma-labs/keler-temporal@0.1.3':
-    resolution: {integrity: sha512-W++J4QcLXxdOyM88bPMIkzeiSsi7WSlzYcWHah+IJ6NXDsZAuGHs2E+OZJBcWSQJZtGRZt7de1kXFPbusjjn1A==}
+  '@yedoma-labs/ilyn-pages@1.0.2':
+    resolution: {integrity: sha512-ALElMUCJEQhdJ/ocZKtHr0j6EPnZwujBQPvu7n4ZpGRG5d1aJbPGw5aqJDBNfq7CNeG/UKTrvWuS+yVetKhNow==}
+    engines: {node: '>=20'}
+
+  '@yedoma-labs/keler-temporal@0.1.5':
+    resolution: {integrity: sha512-geeKv3qwf5yDdWn/QtQ5T5TyHMOIFQLkAOw8V4PO3s4UgV6/yNCPEQBem9nZpzC8fC45d/OJBIusuZH7Yp4fyg==}
     engines: {node: '>=22.0.0'}
     peerDependencies:
       temporal-polyfill: '>=0.2.0'
@@ -859,47 +900,81 @@ packages:
       temporal-polyfill:
         optional: true
 
-  '@yedoma-labs/sir-forms@0.3.2':
-    resolution: {integrity: sha512-oQc3/SIYzDJO0d88ICHaf5NbvhXX+gMSSeyyrhz8pEDwQ9HkHOlncRPDBohwkPWTX3zw11NUlHlpbJ0Y2JQbKg==}
+  '@yedoma-labs/kelyk-queue@1.0.1':
+    resolution: {integrity: sha512-Iwh28oNnlpseyvqOBturKTmQXEAIDVbco/LiYWxTkVHoel+4y5+XnJs3zefa2876n0wVK4d2gbt6a3IcxgMNtg==}
+    engines: {node: '>=20'}
+
+  '@yedoma-labs/kulyn-flags@1.0.2':
+    resolution: {integrity: sha512-LcaLbRXn5TgkcxHlSfsnp2rlhfHoLaE4F1X9NChhxJC0T+9COyGncSsBKRMGqCq1HHyPI32u9pDJCeJRBw0/CA==}
+    engines: {node: '>=20'}
+
+  '@yedoma-labs/sir-forms@0.4.0':
+    resolution: {integrity: sha512-pv0HNSqs/7A+TUTTHN39vutQDnD7wnQ0G+Inz4Db6jDTjCVkiTeYWmmBVHfhEAd7ndWUDcPt5YO8YwYiqi6DHQ==}
     engines: {node: '>=20'}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
 
-  '@yedoma-labs/suruk-logger@0.2.0':
-    resolution: {integrity: sha512-vN9Ug0pRdXITfyrKMMCP59USlb2tADKAeRB0gi7ahBxAHqzl2prJbml3yfsSeYnu4IHxdqUrmGSnwVKcjyrcOw==}
+  '@yedoma-labs/suruk-logger@0.3.3':
+    resolution: {integrity: sha512-dwpdkvrX+1Gu7gLgArzqKjBPNPDUccH+nzSN1lWyuekgYkQ4rHQqM7SGxeH5WjKIRriFvBJXdCj4ugZdlM0Wfw==}
     engines: {node: '>=20'}
     peerDependencies:
       pino: ^10.3.1
 
-  '@yedoma-labs/suruk-logger@0.3.1':
-    resolution: {integrity: sha512-Tqg5ExH49A+EWqBui93iA6LyT+lbPEdFKRdzRG+CqXYBGmmdCE7W64KgOHP7Ar7emgpJE5UdRkDQh9JZTqTCsg==}
-    engines: {node: '>=20'}
-    peerDependencies:
-      pino: ^10.3.1
-
-  '@yedoma-labs/suruy-form-actions@0.1.1':
-    resolution: {integrity: sha512-mGnufkcdJ0vm3FxW9cEcpufvf/LVJzLhs2IVh1SQSKKpNCLVRyr3w0l+6MK1gDAPiYBdvSZ0QNLRg91lKfXeSA==}
+  '@yedoma-labs/suruy-form-actions@0.2.0':
+    resolution: {integrity: sha512-mztat/QnAhtqzDZdi2jneOuJUV+67hz3HBAf/Ik5wynnB9gQmY/Rmw2TM1glTf6lVFaEm/wfpYh5BdqVGo0zpQ==}
     engines: {node: '>=22.0.0'}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
 
-  '@yedoma-labs/tierde-mail@0.9.2':
-    resolution: {integrity: sha512-bi7ABOtYxxefT7bBwiqcocOpS77P3/8ZX0uGmOtPtVHQSuTC90lf6QcPTUCprU178/9nL55W1std71iYtMmEGQ==}
+  '@yedoma-labs/tanur-ssrf@1.0.1':
+    resolution: {integrity: sha512-CuMleG+D0F7bwRiW3SV4Jmy440T9UidVjWNOVMghJlLy2q4xtljR4OsG9HrkEf/2yUlvYagVKYvkp0dx0VPtgw==}
+    engines: {node: '>=20'}
+
+  '@yedoma-labs/tiduu-shutdown@1.0.1':
+    resolution: {integrity: sha512-W48sgM+PcwZaEAnCubgpw2rG6CsSPGCGpUBkim8lDQAGi09d6qK3cp8qfQjmS8ThYKmT4WqgyaIxudOsH0e1JA==}
+    engines: {node: '>=20'}
+
+  '@yedoma-labs/tierde-mail@0.10.0':
+    resolution: {integrity: sha512-aHIuoQNNmUoKWaQsPu4uFC4hL+sweeJ41XMPSunccIsfdbVB15q6T/NYeikozyxGCjSwLSnnFDxECL34nAq+8g==}
     engines: {node: '>=20.0.0'}
     hasBin: true
     peerDependencies:
       react: '>=19.2.7'
       react-dom: '>=19.2.7'
 
-  '@yedoma-labs/turar-config@0.3.2':
-    resolution: {integrity: sha512-Bay3btADhjZ0wSdfRZKm2zat9aTZeHpFzs8tG3i/yIzfwNRWqYPLjSCF+ZNTGsXURiCHPxe2ObvwVFywwUuK4w==}
+  '@yedoma-labs/turar-config@0.4.0':
+    resolution: {integrity: sha512-tbDn5SOjA9QK91saGjH29WBr845SOU4CYg5YdVDyJ1/iZbVZdaP+8xYoC8f7OKDUEvg9ESFbmKSVFiptlth13g==}
     engines: {node: '>=20'}
     peerDependencies:
       '@yedoma-labs/bylyt-env-guard': ^0.3.5
 
-  '@yedoma-labs/tuuru-chrono-tz@0.3.3':
-    resolution: {integrity: sha512-HN0XLz7EPzcGwpQRr8lAjUzAJSqev0Y8bSsr6El3VIoCyfcQv8tQl4e3AI0gLjS/VNoDipvnYE4AXc4qCjbN0A==}
+  '@yedoma-labs/tuuru-chrono-tz@0.3.5':
+    resolution: {integrity: sha512-6QswSwFtdsvC3QGzAI3iRexPj3Tmuk/UsDuKaZzA1jFb6P8DaMNo+E6XNGBVOswLhsK1jOmrUMfSB9eedh9exw==}
     engines: {node: '>=18.0.0'}
+
+  '@yedoma-labs/tuyar-webhook@1.0.1':
+    resolution: {integrity: sha512-EiK+SRzFseWv541yup9ELNzOIiwcjpQd/XRLCFrYYTh/aJg6uYjDm6HH0NDGTf3NomWxspXJCIiHJx9pHsTSyw==}
+    engines: {node: '>=20'}
+
+  '@yedoma-labs/yaarys-idempotency@1.0.1':
+    resolution: {integrity: sha512-Cdklqho8Pt+sQOA1FICGA8lsRGmAf0HuhErwF8tEn99dKMQu8mgrLaiUREukVObXVsWtXMosr2VxImm+OO5fCA==}
+    engines: {node: '>=20'}
+
+  '@yedoma-labs/ysuly-problem@1.0.1':
+    resolution: {integrity: sha512-gw5kEFZJntEYlL77ZyyAuuZOyKnMsdiMaF4+m+MD6nPMN2k0qpTfr78Gv5ey/4km24w6B2dlgWRm0G/dQdbQVA==}
+    engines: {node: '>=20'}
+
+  '@yedoma-labs/ysyk-upload-guard@1.0.1':
+    resolution: {integrity: sha512-1N9htyMRXzfDl8dqAXcpvMA3orPfSQvy8G/TIG8Hm8GOjn12L5meNky9nQTbLidP+emTpTu6QVNaLjKbNQNnOQ==}
+    engines: {node: '>=20'}
+
+  '@yedoma-labs/ysyr-import@1.0.1':
+    resolution: {integrity: sha512-g3M7cHiQ0KQ3iwp4dUwxS3d19DUHCKh6KxTi/9WsnEK6T/7UQ2t/DNaTavSsnAXTaY+NDmp543cmX4s9NOyazQ==}
+    engines: {node: '>=20'}
+
+  '@yedoma-labs/yuryk-outbox@1.0.1':
+    resolution: {integrity: sha512-g4DP760hJFXDhO7YGM41E2sEHH9/OQrcq8KpLMhT+/KsapsPNkwKfWoCnG8VtwOJt7AncL2OHik/guZVzma4rg==}
+    engines: {node: '>=20'}
 
   agent-base@6.0.2:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
@@ -930,9 +1005,9 @@ packages:
   caniuse-lite@1.0.30001819:
     resolution: {integrity: sha512-LFUqIIAwpzsIuevnKnsR9qnStBcgzPShTX61lBwN9uFkkf8o8zLiebEjbW8AYtZiF+1YKDWfdt/pWDtMuG8Xwg==}
 
-  chokidar@5.0.0:
-    resolution: {integrity: sha512-TQMmc3w+5AxjpL8iIiwebF73dRDF4fBIieAqGn9RGCWaEVwQ6Fb2cGe31Yns0RRIzii5goJ1Y7xbMwo1TxMplw==}
-    engines: {node: '>= 20.19.0'}
+  chokidar@6.0.0:
+    resolution: {integrity: sha512-Ec2Z7wpcKBiMpR7DxteoqS/sq5G5d2A4fpxzPv6+fD7xNNdrTghn7L11YwV5EN1B3i72Erc3XVT5FkWIDx90+A==}
+    engines: {node: '>= 22.22'}
 
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
@@ -1130,8 +1205,8 @@ packages:
       sass:
         optional: true
 
-  node-vault@0.12.0:
-    resolution: {integrity: sha512-+SL3DSREptI+UJMM8UUwlI3jR5agPuAgCxSdUfeybGKszXiILXTCUHxErDdpgNgug8oj4v2rOmyrXhRJ4LZsyQ==}
+  node-vault@0.13.0:
+    resolution: {integrity: sha512-agM7VGQX0ssy3ifykcOtJCiALCHkDEkg4NhavubGA/Cd6MbnRQc3gB9aa9yQZ6mjhO8+JQy+ZyxZGNGZVM9dKQ==}
     engines: {node: '>= 18.0.0'}
 
   nodemailer@10.2.1:
@@ -1515,52 +1590,52 @@ snapshots:
   '@biomejs/cli-win32-x64@2.6.3':
     optional: true
 
-  '@css-inline/css-inline-android-arm-eabi@0.21.2':
+  '@css-inline/css-inline-android-arm-eabi@0.23.2':
     optional: true
 
-  '@css-inline/css-inline-android-arm64@0.21.2':
+  '@css-inline/css-inline-android-arm64@0.23.2':
     optional: true
 
-  '@css-inline/css-inline-darwin-arm64@0.21.2':
+  '@css-inline/css-inline-darwin-arm64@0.23.2':
     optional: true
 
-  '@css-inline/css-inline-darwin-x64@0.21.2':
+  '@css-inline/css-inline-darwin-x64@0.23.2':
     optional: true
 
-  '@css-inline/css-inline-linux-arm-gnueabihf@0.21.2':
+  '@css-inline/css-inline-linux-arm-gnueabihf@0.23.2':
     optional: true
 
-  '@css-inline/css-inline-linux-arm64-gnu@0.21.2':
+  '@css-inline/css-inline-linux-arm64-gnu@0.23.2':
     optional: true
 
-  '@css-inline/css-inline-linux-arm64-musl@0.21.2':
+  '@css-inline/css-inline-linux-arm64-musl@0.23.2':
     optional: true
 
-  '@css-inline/css-inline-linux-x64-gnu@0.21.2':
+  '@css-inline/css-inline-linux-x64-gnu@0.23.2':
     optional: true
 
-  '@css-inline/css-inline-linux-x64-musl@0.21.2':
+  '@css-inline/css-inline-linux-x64-musl@0.23.2':
     optional: true
 
-  '@css-inline/css-inline-win32-arm64-msvc@0.21.2':
+  '@css-inline/css-inline-win32-arm64-msvc@0.23.2':
     optional: true
 
-  '@css-inline/css-inline-win32-x64-msvc@0.21.2':
+  '@css-inline/css-inline-win32-x64-msvc@0.23.2':
     optional: true
 
-  '@css-inline/css-inline@0.21.2':
+  '@css-inline/css-inline@0.23.2':
     optionalDependencies:
-      '@css-inline/css-inline-android-arm-eabi': 0.21.2
-      '@css-inline/css-inline-android-arm64': 0.21.2
-      '@css-inline/css-inline-darwin-arm64': 0.21.2
-      '@css-inline/css-inline-darwin-x64': 0.21.2
-      '@css-inline/css-inline-linux-arm-gnueabihf': 0.21.2
-      '@css-inline/css-inline-linux-arm64-gnu': 0.21.2
-      '@css-inline/css-inline-linux-arm64-musl': 0.21.2
-      '@css-inline/css-inline-linux-x64-gnu': 0.21.2
-      '@css-inline/css-inline-linux-x64-musl': 0.21.2
-      '@css-inline/css-inline-win32-arm64-msvc': 0.21.2
-      '@css-inline/css-inline-win32-x64-msvc': 0.21.2
+      '@css-inline/css-inline-android-arm-eabi': 0.23.2
+      '@css-inline/css-inline-android-arm64': 0.23.2
+      '@css-inline/css-inline-darwin-arm64': 0.23.2
+      '@css-inline/css-inline-darwin-x64': 0.23.2
+      '@css-inline/css-inline-linux-arm-gnueabihf': 0.23.2
+      '@css-inline/css-inline-linux-arm64-gnu': 0.23.2
+      '@css-inline/css-inline-linux-arm64-musl': 0.23.2
+      '@css-inline/css-inline-linux-x64-gnu': 0.23.2
+      '@css-inline/css-inline-linux-x64-musl': 0.23.2
+      '@css-inline/css-inline-win32-arm64-msvc': 0.23.2
+      '@css-inline/css-inline-win32-x64-msvc': 0.23.2
 
   '@emnapi/runtime@1.11.3':
     dependencies:
@@ -1827,36 +1902,44 @@ snapshots:
 
   '@yedoma-labs/bylyt-env-guard@0.3.7': {}
 
-  '@yedoma-labs/ichchi-state@0.1.2(react@19.3.1)':
+  '@yedoma-labs/bylyt-env-guard@0.4.0': {}
+
+  '@yedoma-labs/ichchi-state@0.2.0(react@19.3.1)':
     optionalDependencies:
       react: 19.3.1
 
-  '@yedoma-labs/keler-temporal@0.1.3(temporal-polyfill@1.0.6)':
+  '@yedoma-labs/ilyn-pages@1.0.2': {}
+
+  '@yedoma-labs/keler-temporal@0.1.5(temporal-polyfill@1.0.6)':
     optionalDependencies:
       temporal-polyfill: 1.0.6
 
-  '@yedoma-labs/sir-forms@0.3.2(react@19.3.1)':
+  '@yedoma-labs/kelyk-queue@1.0.1': {}
+
+  '@yedoma-labs/kulyn-flags@1.0.2': {}
+
+  '@yedoma-labs/sir-forms@0.4.0(react@19.3.1)':
     dependencies:
       react: 19.3.1
 
-  '@yedoma-labs/suruk-logger@0.2.0(pino@10.4.0)':
+  '@yedoma-labs/suruk-logger@0.3.3(pino@10.4.0)':
     dependencies:
       pino: 10.4.0
 
-  '@yedoma-labs/suruk-logger@0.3.1(pino@10.4.0)':
-    dependencies:
-      pino: 10.4.0
-
-  '@yedoma-labs/suruy-form-actions@0.1.1(react@19.3.1)':
+  '@yedoma-labs/suruy-form-actions@0.2.0(react@19.3.1)':
     dependencies:
       react: 19.3.1
 
-  '@yedoma-labs/tierde-mail@0.9.2(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@yedoma-labs/tanur-ssrf@1.0.1': {}
+
+  '@yedoma-labs/tiduu-shutdown@1.0.1': {}
+
+  '@yedoma-labs/tierde-mail@0.10.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
-      '@css-inline/css-inline': 0.21.2
+      '@css-inline/css-inline': 0.23.2
       '@yedoma-labs/bylyt-env-guard': 0.3.7
-      '@yedoma-labs/suruk-logger': 0.2.0(pino@10.4.0)
-      '@yedoma-labs/tuuru-chrono-tz': 0.3.3
+      '@yedoma-labs/suruk-logger': 0.3.3(pino@10.4.0)
+      '@yedoma-labs/tuuru-chrono-tz': 0.3.5
       html-to-text: 10.0.1
       pino: 10.4.0
       pino-pretty: 13.2.0
@@ -1865,19 +1948,31 @@ snapshots:
     optionalDependencies:
       nodemailer: 10.2.1
 
-  '@yedoma-labs/turar-config@0.3.2(@yedoma-labs/bylyt-env-guard@0.3.7)':
+  '@yedoma-labs/turar-config@0.4.0(@yedoma-labs/bylyt-env-guard@0.4.0)':
     dependencies:
       '@iarna/toml': 2.2.5
-      '@yedoma-labs/bylyt-env-guard': 0.3.7
-      chokidar: 5.0.0
+      '@yedoma-labs/bylyt-env-guard': 0.4.0
+      chokidar: 6.0.0
       yaml: 2.9.1
     optionalDependencies:
       '@aws-sdk/client-secrets-manager': 3.1156.0
-      node-vault: 0.12.0
+      node-vault: 0.13.0
     transitivePeerDependencies:
       - supports-color
 
-  '@yedoma-labs/tuuru-chrono-tz@0.3.3': {}
+  '@yedoma-labs/tuuru-chrono-tz@0.3.5': {}
+
+  '@yedoma-labs/tuyar-webhook@1.0.1': {}
+
+  '@yedoma-labs/yaarys-idempotency@1.0.1': {}
+
+  '@yedoma-labs/ysuly-problem@1.0.1': {}
+
+  '@yedoma-labs/ysyk-upload-guard@1.0.1': {}
+
+  '@yedoma-labs/ysyr-import@1.0.1': {}
+
+  '@yedoma-labs/yuryk-outbox@1.0.1': {}
 
   agent-base@6.0.2:
     dependencies:
@@ -1915,7 +2010,7 @@ snapshots:
 
   caniuse-lite@1.0.30001819: {}
 
-  chokidar@5.0.0:
+  chokidar@6.0.0:
     dependencies:
       readdirp: 5.1.1
 
@@ -2129,7 +2224,7 @@ snapshots:
       - '@types/node'
       - babel-plugin-macros
 
-  node-vault@0.12.0:
+  node-vault@0.13.0:
     dependencies:
       axios: 1.20.0(debug@4.4.3)
       debug: 4.4.3
