@@ -202,78 +202,50 @@ const LIBRARIES = [
 	},
 ];
 
-// Sakha/Yakut etymology for each library name
 const LEXICON = [
 	{
 		name: "sir",
 		lib: "sir-forms",
-		sakha: "сир",
-		meaning: "earth · land · ground",
-		lore: "The earth beneath every form. Grounds your data in solid terrain.",
 		color: "#8b5cf6",
 	},
 	{
 		name: "ichchi",
 		lib: "ichchi-state",
-		sakha: "ичи",
-		meaning: "spirit · guardian · keeper",
-		lore: "In Sakha animism, every object has its ichchi — its inner spirit. Your state store has one too.",
 		color: "#a78bfa",
 	},
 	{
 		name: "turar",
 		lib: "turar-config",
-		sakha: "тура",
-		meaning: "to stand · to hold firm",
-		lore: "Configuration that stands tall through every environment, runtime, and restart.",
 		color: "#06b6d4",
 	},
 	{
 		name: "bylyt",
 		lib: "bylyt-env-guard",
-		sakha: "былыт",
-		meaning: "cloud · mist · fog",
-		lore: "Environment variables drift above your application like clouds above the taiga.",
 		color: "#38bdf8",
 	},
 	{
 		name: "suruk",
 		lib: "suruk-logger",
-		sakha: "сурук",
-		meaning: "letter · writing · inscription",
-		lore: "Every log entry is a letter inscribed in the permanent record.",
 		color: "#10b981",
 	},
 	{
 		name: "suruy",
 		lib: "suruy-form-actions",
-		sakha: "суруй",
-		meaning: "to write · to inscribe",
-		lore: "The act of writing — Server Actions that inscribe intent to the server.",
 		color: "#fb923c",
 	},
 	{
 		name: "tuuru",
 		lib: "tuuru-chrono-tz",
-		sakha: "туур",
-		meaning: "pole · pillar · sacred post",
-		lore: "The Sakha serge — a ritual tethering post. Time anchored to a pillar you can trust.",
 		color: "#6366f1",
 	},
 	{
 		name: "tierde",
 		lib: "tierde-mail",
-		sakha: "тиэрдэ",
-		meaning: "to deliver · to convey · to transmit",
-		lore: "The act of delivering — carrying a message across the taiga to its destination.",
 		color: "#ef4444",
 	},
 	{
 		name: "keler",
 		lib: "keler-temporal",
-		sakha: "кэлэр",
-		meaning: "coming · future",
-		lore: "The Sakha word for what is yet to arrive. A bridge to the future API — written for the code that isn't there yet.",
 		color: "#a78bfa",
 	},
 ];
@@ -923,7 +895,7 @@ export default function Home() {
 									fontFamily: "monospace",
 								}}
 							>
-								🗺️ ORIGINS — THE YAKUT LEXICON
+								🗺️ ORIGINS
 							</div>
 
 							<div
@@ -1110,7 +1082,7 @@ export default function Home() {
 										margin: "0 0 1.25rem",
 									}}
 								>
-									── Library names decoded from Sakha ──
+									── Libraries ──
 								</p>
 								<div
 									style={{
@@ -1120,7 +1092,7 @@ export default function Home() {
 										gap: "0.85rem",
 									}}
 								>
-									{LEXICON.map(({ name, lib, sakha, meaning, lore, color }) => (
+									{LEXICON.map(({ name, lib, color }) => (
 										<div
 											key={name}
 											className="lexicon-card"
@@ -1147,39 +1119,8 @@ export default function Home() {
 														fontFamily: "monospace",
 													}}
 												>
-													{name}
+													{lib}
 												</span>
-												<span
-													style={{
-														color: "#334155",
-														fontSize: "0.82rem",
-														fontFamily: "serif",
-														fontStyle: "italic",
-													}}
-												>
-													{sakha}
-												</span>
-											</div>
-											<div
-												style={{
-													color: "#94a3b8",
-													fontSize: "0.72rem",
-													fontFamily: "monospace",
-													marginBottom: "0.5rem",
-													opacity: 0.85,
-												}}
-											>
-												{meaning}
-											</div>
-											<div
-												style={{
-													color: "#475569",
-													fontSize: "0.8rem",
-													lineHeight: 1.55,
-													marginBottom: "0.65rem",
-												}}
-											>
-												{lore}
 											</div>
 											<div style={{ display: "flex", gap: "0.4rem" }}>
 												<a

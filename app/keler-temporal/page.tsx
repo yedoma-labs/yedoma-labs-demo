@@ -1126,18 +1126,8 @@ export default function KelerTemporalPage() {
 							letterSpacing: "-0.02em",
 						}}
 					>
-						кэлэр
+						keler-temporal
 					</h1>
-					<p
-						style={{
-							color: "#a78bfa",
-							fontStyle: "italic",
-							fontSize: "1rem",
-							marginBottom: "1rem",
-						}}
-					>
-						coming · future — Sakha/Yakut
-					</p>
 					<p
 						style={{
 							color: "#94a3b8",

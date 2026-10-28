@@ -117,40 +117,6 @@ const LINES: Line[] = [
 		pause: 200,
 	},
 	{ text: "" },
-	{
-		text: "The libraries are the encoded memory of a free people:",
-		color: "#e2e8f0",
-		pause: 100,
-	},
-	{ text: "" },
-	{
-		text: "  сир    /sir/     — the earth they cannot take from you",
-		color: "#8b5cf6",
-	},
-	{
-		text: "  ичи    /ichchi/  — the spirit watching your state",
-		color: "#a78bfa",
-	},
-	{
-		text: "  туур   /tuuru/   — the pole that keeps time honest",
-		color: "#6366f1",
-	},
-	{
-		text: "  был    /bylyt/   — the cloud hiding your secrets",
-		color: "#38bdf8",
-	},
-	{
-		text: "  сурук  /suruk/   — your writing survives the collapse",
-		color: "#10b981",
-	},
-	{
-		text: "  суруй  /suruy/   — your actions inscribe the future",
-		color: "#fb923c",
-	},
-	{
-		text: "  тура   /turar/   — what stands when everything falls",
-		color: "#06b6d4",
-	},
 	{ text: "" },
 	{
 		text: "──────────────────────────────────────────────────────",

@@ -3575,16 +3575,6 @@ export default function TierdeMailPage() {
 						>
 							JSX email templates · multi-provider · TypeScript-first
 						</p>
-						<p
-							style={{
-								color: "#64748b",
-								fontSize: "0.8rem",
-								fontFamily: "monospace",
-								margin: "0 auto 2rem",
-							}}
-						>
-							{'// тиэрдэ — "to deliver · to convey" (Sakha)'}
-						</p>
 						<div
 							style={{
 								display: "flex",
